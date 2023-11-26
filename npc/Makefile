@@ -8,7 +8,6 @@ VERILATOR_FLAGS += --build
 sim:
 	$(call git_commit, "sim RTL") # DO NOT REMOVE THIS LINE!!!
 	verilator $(VERILATOR_FLAGS) $(VSRCS) ./csrc/sim_main.cpp
-	./obj_dir/Vtop
 clean:
 	rm -r obj_dir
 include ../Makefile
