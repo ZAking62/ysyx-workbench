@@ -62,6 +62,16 @@ static int cmd_si(char *args) {
 	return 0;
 }
 
+static int cmd_info(char *args) {
+	if (strcmp(args, "r") == 0)
+		printf("isa_reg_display()\n");
+	else if (strcmp(args, "w") == 0)
+		printf("todo print w\n");
+	else 
+		cpu_exec(0);
+	return 0;
+}		
+
 static int cmd_help(char *args);
 
 static struct {
@@ -73,6 +83,7 @@ static struct {
   { "c", "Continue the execution of the program", cmd_c },
   { "q", "Exit NEMU", cmd_q },
 	{ "si", "one step execution", cmd_si},
+	{ "info", "print status", cmd_info},
 
   /* TODO: Add more commands */
 
