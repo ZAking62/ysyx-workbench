@@ -63,12 +63,14 @@ static int cmd_si(char *args) {
 }
 
 static int cmd_info(char *args) {
+	if (args != NULL){
 	if (strcmp(args, "r") == 0)
 		printf("isa_reg_display()\n");
 	else if (strcmp(args, "w") == 0)
 		printf("todo print w\n");
 	else 
-		cpu_exec(0);
+		printf("args error\n");
+	}
 	return 0;
 }		
 
