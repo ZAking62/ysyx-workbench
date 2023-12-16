@@ -110,7 +110,9 @@ void cpu_exec(uint64_t n) {
   uint64_t timer_start = get_time();
 
   execute(n);
-
+	//execute end when (1) n circulate finish or (2) guest program finish(NEMU_TRAP)
+	//situation (1)state = RUNNING
+	//situation (2)state = END
   uint64_t timer_end = get_time();
   g_timer += timer_end - timer_start;
 
