@@ -49,7 +49,7 @@ static int cmd_c(char *args) {
 
 
 static int cmd_q(char *args) {
-  printf("%d", nemu_state.state); 
+  if(nemu_state.state == NEMU_STOP)printf("1");
   nemu_state.state = NEMU_END;
   return -1;
 }
