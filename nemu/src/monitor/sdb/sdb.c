@@ -71,6 +71,8 @@ static int cmd_info(char *args) {
 	else 
 		printf("args error\n");
 	}
+	else
+		printf("args null\n");
 	return 0;
 }		
 
