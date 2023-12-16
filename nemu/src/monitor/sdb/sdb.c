@@ -73,7 +73,7 @@ static int cmd_info(char *args) {
 			printf("Unknown argment '%s'\n", args);
 	}
 	else
-		printf("missing args");
+		printf("missing args\n");
 	return 0;
 }		
 
