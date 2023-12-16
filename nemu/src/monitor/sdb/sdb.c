@@ -44,8 +44,7 @@ static char* rl_gets() {
 
 static int cmd_c(char *args) {
   cpu_exec(-1);
-	if(nemu_state.state == NEMU_END)
-		printf("111\n");
+	//nemu_state.state = NEMU_END
   return 0;
 }
 
