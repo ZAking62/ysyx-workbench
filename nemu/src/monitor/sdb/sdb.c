@@ -83,8 +83,8 @@ static int cmd_x(char *args){
 		printf("missing args\n");
 		return 0;
 	}
-	args = strtok(NULL, " ");
 	char *args_end = args + strlen(args);
+	args = strtok(NULL, " ");
   char *address = args + strlen(args) + 1; //get arguments address
   if (address >= args_end){
 		printf("error args\n");
