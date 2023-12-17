@@ -81,11 +81,13 @@ static int cmd_x(char *args){
 	printf("print memory\n");	
 	char *args_end = args + strlen(args);
 	args = strtok(NULL, " ");
+	printf("%s\n", args);
   if (args == NULL){
 		printf("missing args\n");
 		return 0;
 	}
   char *address = args + strlen(args) + 1; //get arguments address
+	printf("%s\n", address);
   if (address >= args_end){
 		printf("error args\n");
 		return 0;
