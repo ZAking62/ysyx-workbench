@@ -77,6 +77,11 @@ static int cmd_info(char *args) {
 	return 0;
 }		
 
+static int cmd_x(char *args){
+	printf("print memory\n");	
+	return 0;
+}
+
 static int cmd_help(char *args);
 
 static struct {
@@ -89,7 +94,7 @@ static struct {
   { "q", "Exit NEMU", cmd_q },
 	{ "si", "one step execution", cmd_si},
 	{ "info", "print status", cmd_info},
-
+	{ "x", "scan memory", cmd_x},
   /* TODO: Add more commands */
 
 };
