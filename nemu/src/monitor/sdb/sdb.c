@@ -92,8 +92,8 @@ static int cmd_x(char *args){
 		return 0;
 	}
 	vaddr_t p_addr;
-	sscanf(address, "%x", &p_addr);
-	printf("%x", p_addr);
+	sscanf(address, "0x%x", &p_addr);
+	printf("0x%x\n", p_addr);
 	//vaddr_t p_addr = (vaddr_t)(atoi(address));	
 	word_t res = vaddr_read(p_addr, print_num);
 	printf("0x%.8x\n", res);
