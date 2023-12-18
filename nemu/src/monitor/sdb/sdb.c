@@ -93,7 +93,7 @@ static int cmd_x(char *args){
 	}
 	vaddr_t p_addr = (vaddr_t)(atoi(address));	
 	word_t res = vaddr_read(p_addr, print_num);
-	printf("0x%8x\n", res);
+	printf("0x%.8x\n", res);
 	return 0;
 }
 
