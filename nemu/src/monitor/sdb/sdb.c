@@ -84,13 +84,13 @@ static int cmd_x(char *args){
 	}
 	char *args_end = args + strlen(args);
 	args = strtok(NULL, " ");
-	int print_num = atoi(args);
-	printf("%d\n", print_num);	
+	//int print_num = atoi(args);
   char *address = args + strlen(args) + 1; //get arguments address
   if (address >= args_end){
 		printf("error args\n");
 		return 0;
 	}
+	
 	//vaddr_read(address, 4);
 	return 0;
 }
