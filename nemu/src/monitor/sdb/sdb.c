@@ -88,10 +88,13 @@ static int cmd_x(char *args){
 	int print_num = atoi(args);
   char *address = args + strlen(args) + 1; //get arguments address
   if (address >= args_end){
-		printf("error args\n");
+		printf("missing address\n");
 		return 0;
 	}
-	vaddr_t p_addr = (vaddr_t)(atoi(address));	
+	vaddr_t p_addr;
+	sscanf(address, "%x", &p_addr);
+	printf("%x", p_addr);
+	//vaddr_t p_addr = (vaddr_t)(atoi(address));	
 	word_t res = vaddr_read(p_addr, print_num);
 	printf("0x%.8x\n", res);
 	return 0;
