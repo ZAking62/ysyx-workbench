@@ -23,6 +23,7 @@ static int is_batch_mode = false;
 
 void init_regex();
 void init_wp_pool();
+word_t vaddr_read(vaddr_t addr, int len);
 
 /* We use the `readline' library to provide more flexibility to read from stdin. */
 static char* rl_gets() {
@@ -84,14 +85,15 @@ static int cmd_x(char *args){
 	}
 	char *args_end = args + strlen(args);
 	args = strtok(NULL, " ");
-	//int print_num = atoi(args);
+	int print_num = atoi(args);
   char *address = args + strlen(args) + 1; //get arguments address
   if (address >= args_end){
 		printf("error args\n");
 		return 0;
 	}
-	
-	//vaddr_read(address, 4);
+	vaddr_t p_addr = (vaddr_t)(atoi(address));	
+	word_t res = vaddr_read(p_addr, print_num);
+	printf("%8x", res);
 	return 0;
 }
 
