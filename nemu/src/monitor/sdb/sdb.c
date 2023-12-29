@@ -91,15 +91,15 @@ static int cmd_x(char *args){
 		printf("missing address\n");
 		return 0;
 	}
-	vaddr_t p_addr;
-	sscanf(address, "0x%x", &p_addr);
-	if(p_addr < 0x80000000 || p_addr > 0x87ffffff){
+	vaddr_t v_addr;
+	sscanf(address, "0x%x", &v_addr);
+	if(v_addr < 0x80000000 || v_addr > 0x87ffffff){
 		printf("Out-of-bounds addresses\n");
 		return 0;
 	}
 	for(int i = 0; i < print_num; i++){
-		word_t res = vaddr_read(p_addr + i * 4, 4);
-		printf("0x%.8x: 0x%.16x\n", p_addr + i * 4, res);
+		word_t res = vaddr_read(v_addr + i * 4, 4);
+		printf("0x%.8x: 0x%.16x\n", v_addr + i * 4, res);
 	}
 	return 0;
 }
