@@ -99,7 +99,7 @@ static int cmd_x(char *args){
 	}
 	for(int i = 0; i < print_num; i++){
 		word_t res = vaddr_read(v_addr + i * 4, 4);
-		printf("0x%.8x: 0x%.16x\n", v_addr + i * 4, res);
+		printf("0x%.8x: 0x%.8x\n", v_addr + i * 4, res);
 	}
 	return 0;
 }
