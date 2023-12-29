@@ -97,7 +97,7 @@ static int cmd_x(char *args){
 		printf("Out-of-bounds addresses\n");
 		return 0;
 	}
-	word_t res = vaddr_read(p_addr, print_num);
+	word_t res = vaddr_read(p_addr, print_num * 4);
 	printf("0x%.8x\n", res);
 	return 0;
 }
