@@ -93,10 +93,10 @@ static int cmd_x(char *args){
 	}
 	vaddr_t p_addr;
 	sscanf(address, "0x%x", &p_addr);
-	if(p_addr < 0x80000000 || p_addr > 0x87ffffff){
-		printf("Out-of-bounds addresses\n");
-		return 0;
-	}
+//	if(p_addr < 0x80000000 || p_addr > 0x87ffffff){
+//		printf("Out-of-bounds addresses\n");
+//		return 0;
+//	}
 	for(int i = 0; i < print_num; i++){
 		word_t res = vaddr_read(p_addr + i * 4, 4);
 		printf("0x%.8x: 0x%.8x\n", p_addr + i * 4, res);
