@@ -93,6 +93,7 @@ static int cmd_x(char *args){
 	}
 	vaddr_t v_addr;
 	sscanf(address, "0x%x", &v_addr);
+	Log("count = %d address = " FMT_WORD, print_num, v_addr);
 	if(v_addr < 0x80000000 || v_addr > 0x87ffffff){
 		printf("Out-of-bounds addresses\n");
 		return 0;
