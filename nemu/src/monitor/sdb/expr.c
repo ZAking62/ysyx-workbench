@@ -38,7 +38,7 @@ static struct rule {
 
   {" +", TK_NOTYPE},    // spaces
   {"\\+", '+'},         // plus
-	{"-", '-'},           
+	{"\\-", '-'},           
 	{"\\*", '*'},
 	{"/", '/'},
 	{"\\(", '('},
@@ -117,6 +117,8 @@ static bool make_token(char *e) {
       //    default:
 			//			tokens[nr_token].type = rules[i].token_type;
 			//			tokens[nr_token].str = e[position];
+			//			if(substr_len >= 32)
+			//				assert(0);
 			//			tokens[nr_token].str[substr_len] = '\0';
 			//			nr_token++;					 
 			//			break;
@@ -143,7 +145,7 @@ word_t expr(char *e, bool *success) {
   }
 
   /* TODO: Insert codes to evaluate the expression. */
-  TODO();
+  
 
   return 0;
 }
