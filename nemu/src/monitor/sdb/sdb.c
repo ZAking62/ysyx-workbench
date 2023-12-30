@@ -105,6 +105,18 @@ static int cmd_x(char *args){
 	return 0;
 }
 
+static int cmd_p(char *args){
+	bool success;
+	expr(args, &success);
+	printf("%d\n", success);
+	return 0;
+}
+
+static int cmd_w(char *args){
+	printf("cmd_w\n");
+	return 0;
+}
+
 static int cmd_help(char *args);
 
 static struct {
@@ -118,6 +130,8 @@ static struct {
 	{ "si", "one step execution", cmd_si},
 	{ "info", "print status", cmd_info},
 	{ "x", "scan memory", cmd_x},
+	{ "p", "expression evaluation", cmd_p},
+	{ "w", "set a monitor point", cmd_w},
   /* TODO: Add more commands */
 
 };
