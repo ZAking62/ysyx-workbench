@@ -106,9 +106,9 @@ static int cmd_x(char *args){
 }
 
 static int cmd_p(char *args){
-	bool success;
+	bool success = true;
 	expr(args, &success);
-	printf("%d\n", success);
+	printf("success = %d\n", success);
 	return 0;
 }
 
