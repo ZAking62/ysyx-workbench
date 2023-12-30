@@ -38,6 +38,11 @@ static struct rule {
 
   {" +", TK_NOTYPE},    // spaces
   {"\\+", '+'},         // plus
+	{"-", '-'},           
+	{"\\*", '*'},
+	{"/", '/'},
+	{"(", '('},
+	{")", ')'},
   {"==", TK_EQ},        // equal
 };
 
@@ -54,6 +59,8 @@ void init_regex() {
   int ret;
 
   for (i = 0; i < NR_REGEX; i ++) {
+	  //compile regular expression, then load in re array
+		//rules is before compile, re is after
     ret = regcomp(&re[i], rules[i].regex, REG_EXTENDED);
     if (ret != 0) {
       regerror(ret, &re[i], error_msg, 128);
@@ -80,6 +87,8 @@ static bool make_token(char *e) {
   while (e[position] != '\0') {
     /* Try all rules one by one. */
     for (i = 0; i < NR_REGEX; i ++) {
+			//As regexec returned 0, we know we have a match
+			//pmatch store the info of matching string, so is the start, eo is the end
       if (regexec(&re[i], e + position, 1, &pmatch, 0) == 0 && pmatch.rm_so == 0) {
         char *substr_start = e + position;
         int substr_len = pmatch.rm_eo;
@@ -94,9 +103,24 @@ static bool make_token(char *e) {
          * of tokens, some extra actions should be performed.
          */
 
-        switch (rules[i].token_type) {
-          default: TODO();
-        }
+      //  switch (rules[i].token_type) {
+			//		case 256 : break;  //notype
+			//		case '+' :
+			//		case '-' :
+			//		case '*' :
+			//		case '/' :
+			//		case '(' :
+			//		case ')' :
+			//			tokens[nr_token].type = rules[i].token_type;
+			//			nr_token++;
+			//			break;
+      //    default:
+			//			tokens[nr_token].type = rules[i].token_type;
+			//			tokens[nr_token].str = e[position];
+			//			tokens[nr_token].str[substr_len] = '\0';
+			//			nr_token++;					 
+			//			break;
+      //  }
 
         break;
       }
