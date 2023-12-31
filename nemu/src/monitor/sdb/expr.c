@@ -165,50 +165,83 @@ static bool make_token(char *e) {
 }
 
 bool check_parentheses(int p, int q){
+	if(tokens[p].type != 40 && tokens[q].type != 41){
+		return false;
+	}
 	int top = 0;
-	for(int i = p; i < q; i++){
+	int mintop = 0;
+	for(int i = p + 1; i <= q - 1; i++){
 		if(tokens[i].type == 40){
 			top++;
 		}
 		if(tokens[i].type == 41){
 			top--;
 		}
+		if(top < mintop){
+			mintop = top;
+		}
 	}
-	if(top == 0){
+	//(())
+	if(top == 0 && mintop == 0){
 		return true;
 	}
-	return false;
-} 
-//word_t eval(int p, int q) {
-//  if (p > q) {
-//    /* Bad expression */
-//  }
-//  else if (p == q) {
-//    /* Single token.
-//     * For now this token should be a number.
-//     * Return the value of the number.
-//     */
-//  }
-//  else if (check_parentheses(p, q) == true) {
-//    /* The expression is surrounded by a matched pair of parentheses.
-//     * If that is the case, just throw away the parentheses.
-//     */
-//    return eval(p + 1, q - 1);
-//  }
-//  else {
-//    op = the position of 主运算符 in the token expression;
-//    val1 = eval(p, op - 1);
-//    val2 = eval(op + 1, q);
-//
-//    switch (op_type) {
-//      case '+': return val1 + val2;
-//      case '-': /* ... */
-//      case '*': /* ... */
-//      case '/': /* ... */
-//      default: assert(0);
-//    }
-//  }
-//}
+	//()()
+	else if(top == 0 && mintop == -1){
+		return false;
+	}
+	else{
+		printf("Bad expression\n");
+		//need improve
+		return false;
+	} 
+}
+
+word_t eval(int p, int q) {
+  if (p > q) {
+    /* Bad expression */
+		printf("Bad expression\n");
+		return 1;
+  }
+  else if (p == q) {
+    /* Single token.
+     * For now this token should be a number.
+     * Return the value of the number.
+     */
+		word_t value;
+		sscanf(tokens[p].str, "%u", &value);
+		//Log("tokens[%d].str = %s, load value = %u", tokens[p].str, value);
+		return value;
+  }
+  else if (check_parentheses(p, q) == true) {
+    /* The expression is surrounded by a matched pair of parentheses.
+     * If that is the case, just throw away the parentheses.
+     */
+    return eval(p + 1, q - 1);
+  }
+  else {
+		int op = 0;
+		int op_type = '+';
+		word_t val1, val2;
+		for(int i = p; i <= q; i++){
+				op = i;
+		}
+    //op = the position of 主运算符 in the token expression;
+    val1 = eval(p, op - 1);
+    val2 = eval(op + 1, q);
+
+    switch (op_type) {
+      case '+': return val1 + val2;
+      case '-': return val1 - val2;
+      case '*': return val1 * val2;
+      case '/': 
+				if(val2 != 0){
+					return val1 / val2;
+				}
+      default: assert(0);
+			return p + q;
+    }
+  }
+}
 
 word_t expr(char *e, bool *success) {
   if (!make_token(e)) {
@@ -217,8 +250,9 @@ word_t expr(char *e, bool *success) {
   }
 
   /* TODO: Insert codes to evaluate the expression. */
-//	word_t res = eval(0, strlen(e));	
-//	Log("result = %d", res);
+	word_t res;
+	res = eval(0, 1);	
+	Log("result = %d", res);
 
   return 0;
 }
