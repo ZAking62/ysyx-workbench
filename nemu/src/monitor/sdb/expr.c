@@ -37,13 +37,13 @@ static struct rule {
    */
 
   {" +", TK_NOTYPE},    // spaces
-  {"\\+", '+'},         // plus
-	{"\\-", '-'},           
-	{"\\*", '*'},
-	{"/", '/'},
-	{"\\(", '('},
-	{"\\)", ')'},
-  {"==", TK_EQ},  	// equal
+  {"\\+", '+'},         // plus 43
+	{"\\-", '-'},					// sub 45
+	{"\\*", '*'},					// 42
+	{"/", '/'},						// 47
+	{"\\(", '('},					// 40
+	{"\\)", ')'},					// 41
+  {"==", TK_EQ},				// equal
 	{"[0-9]+", TK_NUM},
 };
 
@@ -115,8 +115,8 @@ static bool make_token(char *e) {
 					case ')' :
 					case TK_EQ:
 						tokens[nr_token].type = rules[i].token_type;
-						Log("Load tokens[%d], type = %d, str = %s",
-								nr_token, tokens[nr_token].type, tokens[nr_token].str);
+						Log("Load tokens[%d], type = %d",
+								nr_token, tokens[nr_token].type);
 						nr_token++;
 						break;
           case TK_NUM:
