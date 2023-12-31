@@ -115,6 +115,7 @@ static bool make_token(char *e) {
 					case ')' :
 					case TK_EQ:
 						tokens[nr_token].type = rules[i].token_type;
+						strncpy(tokens[nr_token].str, substr_start, substr_len);
 						Log("Load tokens[%d], type = %d, str = %s",
 								nr_token, tokens[nr_token].type, tokens[nr_token].str);
 						nr_token++;
