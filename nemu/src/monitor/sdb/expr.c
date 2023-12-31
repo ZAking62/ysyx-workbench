@@ -96,6 +96,7 @@ static bool make_token(char *e) {
 
         Log("match rules[%d] = \"%s\" at position %d with len %d: %.*s",
             i, rules[i].regex, position, substr_len, substr_len, substr_start);
+				//%.*s set printf %s precision as substr_len
 
         position += substr_len;
 
@@ -118,6 +119,7 @@ static bool make_token(char *e) {
           case TK_NUM:
 						tokens[nr_token].type = rules[i].token_type;
 						//tokens[nr_token].str = substr_start; 
+						strncpy(tokens[nr_token].str, substr_start, substr_len);
 						if(substr_len >= 32)
 							assert(0);
 						nr_token++;					 
