@@ -122,13 +122,13 @@ static bool make_token(char *e) {
 							assert(0);
 						strncpy(tokens[nr_token].str, substr_start, substr_len);
 						tokens[nr_token].str[substr_len] = '\0';
+						Log("Load tokens[%d], type = %d, str = %s",
+								nr_token, tokens[nr_token].type, tokens[nr_token].str);
 						nr_token++;					 
 						break;
 					default: ;
         }
 
-			  Log("Load tokens[%d], type = %d, str = %s",
-			  		nr_token, tokens[nr_token].type, tokens[nr_token].str);
         break;
       }
     }
