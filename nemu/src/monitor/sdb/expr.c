@@ -21,7 +21,7 @@
 #include <regex.h>
 
 enum {
-  TK_NOTYPE = 256, TK_EQ,
+  TK_NOTYPE = 256, TK_EQ, TK_NUM,
 
   /* TODO: Add more token types */
 
@@ -43,7 +43,8 @@ static struct rule {
 	{"/", '/'},
 	{"\\(", '('},
 	{"\\)", ')'},
-  {"==", TK_EQ},        // equal
+  {"==", TK_EQ},  	// equal
+	{"[0-9]+", TK_NUM},
 };
 
 #define NR_REGEX ARRLEN(rules)
