@@ -164,6 +164,21 @@ static bool make_token(char *e) {
   return true;
 }
 
+bool check_parentheses(int p, int q){
+	int top = 0;
+	for(int i = p; i < q; i++){
+		if(tokens[i].type == 40){
+			top++;
+		}
+		if(tokens[i].type == 41){
+			top--;
+		}
+	}
+	if(top == 0){
+		return true;
+	}
+	return false;
+} 
 //word_t eval(int p, int q) {
 //  if (p > q) {
 //    /* Bad expression */
