@@ -21,7 +21,7 @@
 #include <regex.h>
 
 enum {
-  TK_NOTYPE = 256, TK_EQ, TK_NUM,
+  TK_NOTYPE = 256, TK_EQ, TK_NUM, TK_HEX,
 
   /* TODO: Add more token types */
 
@@ -45,6 +45,7 @@ static struct rule {
 	{"\\)", ')'},					// 41
   {"==", TK_EQ},				// equal
 	{"[0-9]+", TK_NUM},
+	{"0x[0-9a-f]+", TK_HEX},
 };
 
 #define NR_REGEX ARRLEN(rules)
@@ -88,9 +89,6 @@ static bool make_token(char *e) {
 		tokens[i].type = 0;
 		memset(tokens[i].str, 0, sizeof(tokens[i].str));
 	}
-						Log("Load tokens[%d], type = %d, str = %s",
-								nr_token, tokens[nr_token].type, tokens[nr_token].str);
-
 
   while (e[position] != '\0') {
     /* Try all rules one by one. */
@@ -135,6 +133,17 @@ static bool make_token(char *e) {
 						Log("Load tokens[%d], type = %d, str = %s",
 								nr_token, tokens[nr_token].type, tokens[nr_token].str);
 						nr_token++;					 
+						break;
+					case TK_HEX:
+						tokens[nr_token].type = rules[i].token_type;
+						if(substr_len >= 34)
+							assert(0);
+						strncpy(tokens[nr_token].str, substr_start + 2, substr_len - 2);
+						tokens[nr_token].str[substr_len - 2] = '\0';
+						Log("Load tokens[%d], type = %d, str = %s",
+								nr_token, tokens[nr_token].type, tokens[nr_token].str);
+						nr_token++;					 
+					
 						break;
 					default: ;
         }
