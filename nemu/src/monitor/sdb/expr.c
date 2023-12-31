@@ -128,8 +128,8 @@ static bool make_token(char *e) {
         }
 
         break;
-			//Log("Load rules[%d] = \"%s\" at position %d with len %d: %.*s",
-        //  i, rules[i].regex, position, substr_len, substr_len, substr_start);
+			  Log("Load tokens[%d], type = %d, str = %s",
+			  		nr_token, tokens[nr_token].type, tokens[nr_token].str);
       }
     }
 
