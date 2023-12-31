@@ -84,8 +84,10 @@ static bool make_token(char *e) {
   regmatch_t pmatch;
 
   nr_token = 0;
-						Log("Load tokens[%d], type = %d, str = %s",
-								nr_token, tokens[nr_token].type, tokens[nr_token].str);
+	for(int i = 0; i < 32; i++){
+		tokens[i].type = 0;
+		memset(tokens[i].str, 0, sizeof(tokens[i].str));
+	}
 
 
   while (e[position] != '\0') {
