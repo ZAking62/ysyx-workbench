@@ -190,7 +190,7 @@ bool check_parentheses(int p, int q){
 		return false;
 	}
 	else{
-		printf("Bad expression\n");
+		printf("bracket Bad expression\n");
 		//need improve
 		return false;
 	} 
@@ -199,7 +199,7 @@ bool check_parentheses(int p, int q){
 word_t eval(int p, int q) {
   if (p > q) {
     /* Bad expression */
-		printf("Bad expression\n");
+		printf("p>q Bad expression\n");
 		return 1;
   }
   else if (p == q) {
