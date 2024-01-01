@@ -224,13 +224,13 @@ word_t eval(int p, int q) {
 		int in_bracket = 0;
 		word_t val1, val2;
 		for(int i = p; i <= q; i++){
-			if(tokens[i].type == 41){
+			if(tokens[i].type == '('){
 				in_bracket++;
 			}
-			if(tokens[i].type == 42){
+			if(tokens[i].type == ')'){
 				in_bracket--;
 			}
-			if(in_bracket == 0 && tokens[i].type < 256 && tokens[i].type > 42){
+			if(in_bracket == 0 && tokens[i].type < 256 && tokens[i].type > 41){
 				op = i;
 				op_type = tokens[i].type;
 			}		
@@ -260,7 +260,7 @@ word_t expr(char *e, bool *success) {
   }
 
   /* TODO: Insert codes to evaluate the expression. */
-	word_t res = 0;
+	word_t res;
 	res = eval(0, 1);	
 	Log("result = %d", res);
 
