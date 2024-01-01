@@ -260,7 +260,7 @@ word_t expr(char *e, bool *success) {
   }
 
   /* TODO: Insert codes to evaluate the expression. */
-	word_t res;
+	word_t res = 0;
 	res = eval(0, 1);	
 	Log("result = %d", res);
 
