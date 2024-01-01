@@ -183,6 +183,7 @@ bool check_parentheses(int p, int q){
 	}
 	//(())
 	if(top == 0 && mintop == 0){
+		printf("true bracket\n");
 		return true;
 	}
 	//()()
