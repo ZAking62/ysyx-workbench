@@ -219,7 +219,7 @@ word_t eval(int p, int q) {
     return eval(p + 1, q - 1);
   }
   else {
-		int op = 0;
+		int op = p;
 		int op_type = '+';
 		int in_bracket = 0;
 		word_t val1, val2;
@@ -230,8 +230,9 @@ word_t eval(int p, int q) {
 			if(tokens[i].type == 42){
 				in_bracket--;
 			}
-			if(in_bracket == 0){
+			if(in_bracket == 0 && tokens[i].type < 256 && tokens[i].type > 42){
 				op = i;
+				op_type = tokens[i].type;
 			}		
 		}
     //op = the position of 主运算符 in the token expression;
