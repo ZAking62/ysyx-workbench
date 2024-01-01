@@ -260,6 +260,8 @@ word_t expr(char *e, bool *success) {
 
   /* TODO: Insert codes to evaluate the expression. */
 	word_t res;
+	int e_lens = strlen(e) - 1;
+	printf("len%d\n", e_lens);
 	res = eval(0, strlen(e) - 1);	
 	Log("result = %d", res);
 
