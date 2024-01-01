@@ -264,5 +264,5 @@ word_t expr(char *e, bool *success) {
 	res = eval(0, 1);	
 	Log("result = %d", res);
 
-  return 0;
+  return res;
 }
