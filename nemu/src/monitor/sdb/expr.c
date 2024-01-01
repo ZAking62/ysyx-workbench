@@ -230,7 +230,7 @@ word_t eval(int p, int q) {
 			if(tokens[i].type == ')'){
 				in_bracket--;
 			}
-			if(in_bracket == 0 && tokens[i].type < 256 && tokens[i].type > 41){
+			if(in_bracket == 0 && tokens[i].type < 256 && tokens[i].type > ')'){
 				op = i;
 				op_type = tokens[i].type;
 			}		
@@ -248,7 +248,7 @@ word_t eval(int p, int q) {
 					return val1 / val2;
 				}
       default: assert(0);
-			return p + q;
+			return 0;
     }
   }
 }
