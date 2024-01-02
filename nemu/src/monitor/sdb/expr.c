@@ -267,8 +267,7 @@ word_t eval(int p, int q, bool *success) {
 					return val1 / val2;
 				}
 				else{
-					*success = 0;
-					assert(0);
+					printf("/0 error\n");
 				}
       default: assert(0);
     }
