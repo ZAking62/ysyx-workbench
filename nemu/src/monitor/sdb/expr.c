@@ -203,7 +203,7 @@ int prior_level(int type){
 		case '-': return 1;
     case '*': 
     case '/': return 2;
-		default: assert(0);
+		default: return 0; 
 	}
 }
 
@@ -238,10 +238,10 @@ word_t eval(int p, int q) {
 			if(tokens[i].type == '('){
 				in_bracket++;
 			}
-			if(tokens[i].type == ')'){
+			else if(tokens[i].type == ')'){
 				in_bracket--;
 			}
-			if(in_bracket == 0 && tokens[i].type < 256 && tokens[i].type > ')'){
+			else if(in_bracket == 0 && tokens[i].type < 256 && tokens[i].type > ')'){
 				if(prior_level(tokens[i].type) <= prior_level(tokens[op].type)){
 					op = i;
 					op_type = tokens[i].type;
