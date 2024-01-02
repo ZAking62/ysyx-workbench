@@ -266,6 +266,10 @@ word_t eval(int p, int q, bool *success) {
 				if(val2 != 0){
 					return val1 / val2;
 				}
+				else{
+					*success = 0;
+					assert(0);
+				}
       default: assert(0);
     }
   }
