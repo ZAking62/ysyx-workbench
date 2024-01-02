@@ -242,7 +242,7 @@ word_t eval(int p, int q) {
 				in_bracket--;
 			}
 			else if(in_bracket == 0 && tokens[i].type < 256 && tokens[i].type > ')'){
-				if(prior_level(tokens[i].type) <= prior_level(tokens[op].type)){
+				if(prior_level(tokens[i].type) <= prior_level(op_type)){
 					op = i;
 					op_type = tokens[i].type;
 				}
