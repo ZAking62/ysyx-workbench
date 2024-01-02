@@ -203,7 +203,7 @@ int prior_level(int type){
 		case '-': return 1;
     case '*': 
     case '/': return 2;
-		default: return 0; 
+		default: return 256; 
 	}
 }
 
