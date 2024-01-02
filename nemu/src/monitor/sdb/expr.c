@@ -127,6 +127,7 @@ static bool make_token(char *e) {
 						break;
           case TK_NUM:
 						tokens[nr_token].type = rules[i].token_type;
+						//substr overflow
 						if(substr_len >= 32)
 							assert(0);
 						strncpy(tokens[nr_token].str, substr_start, substr_len);
@@ -219,7 +220,12 @@ word_t eval(int p, int q) {
      * Return the value of the number.
      */
 		word_t value;
-		sscanf(tokens[p].str, "%u", &value);
+		if(tokens[p].type == 260){
+			sscanf(tokens[p].str, "%u", &value);
+		}
+		else if(tokens[p].type == 259){
+			sscanf(tokens[p].str, "%x", &value);
+		}
 		//Log("tokens[%d].str = %s, load value = %u", tokens[p].str, value);
 		return value;
   }
