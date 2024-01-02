@@ -203,9 +203,8 @@ int prior_level(int type){
 		case '-': return 1;
     case '*': 
     case '/': return 2;
-		default: ;
+		default: assert(0);
 	}
-	return 2;
 }
 
 word_t eval(int p, int q) {
