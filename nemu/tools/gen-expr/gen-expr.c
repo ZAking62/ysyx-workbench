@@ -22,6 +22,7 @@
 
 // this should be enough
 static char buf[65536] = {};
+static int nr_buf = 0;
 static char code_buf[65536 + 128] = {}; // a little larger than `buf`
 static char *code_format =
 "#include <stdio.h>\n"
@@ -32,7 +33,35 @@ static char *code_format =
 "}";
 
 static void gen_rand_expr() {
-  buf[0] = '\0';
+  switch (choose(3)) {
+    case 0: gen_num(); break;
+    case 1: gen('('); gen_rand_expr(); gen(')'); break;
+    default: gen_rand_expr(); gen_rand_op(); gen_rand_expr(); break;
+  }
+	buf[0] = '\0';
+}
+
+static void gen(char bracket){
+	buf[nr_buf] = bracket;
+	nr_buf++;	
+}
+
+static void gen_rand_expr(){
+	char op;
+	switch (choose(4)) {
+		case 0: op = '+'; break;
+		case 1: op = '-'; break;
+		case 2: op = '*'; break;
+		default: op = '/'; break;
+	}
+	buf[nr_buf] = op;
+	nr_buf++;
+}
+
+static void gen_num(){
+	word_t rand_num = choose(0x100000000);
+	int len = sprintf(buf, "%u", rand_num);
+	nr_buf += len;
 }
 
 int main(int argc, char *argv[]) {
@@ -44,6 +73,7 @@ int main(int argc, char *argv[]) {
   }
   int i;
   for (i = 0; i < loop; i ++) {
+		//need initialize
     gen_rand_expr();
 
     sprintf(code_buf, code_format, buf);
