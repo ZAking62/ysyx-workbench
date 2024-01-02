@@ -231,7 +231,7 @@ word_t eval(int p, int q) {
   }
   else {
 		int op = p;
-		int op_type = '+';
+		int op_type = '*';
 		int in_bracket = 0;
 		word_t val1, val2;
 		for(int i = p; i <= q; i++){
