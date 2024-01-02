@@ -208,10 +208,11 @@ int prior_level(int type){
 	}
 }
 
-word_t eval(int p, int q) {
+word_t eval(int p, int q, bool *success) {
   if (p > q) {
     /* Bad expression */
 		printf("p>q Bad expression\n");
+		*success = false;
 		return 1;
   }
   else if (p == q) {
@@ -233,7 +234,7 @@ word_t eval(int p, int q) {
     /* The expression is surrounded by a matched pair of parentheses.
      * If that is the case, just throw away the parentheses.
      */
-    return eval(p + 1, q - 1);
+    return eval(p + 1, q - 1, success);
   }
   else {
 		int op = p;
@@ -254,8 +255,8 @@ word_t eval(int p, int q) {
 			}		
 		}
     //op = the position of 主运算符 in the token expression;
-    val1 = eval(p, op - 1);
-    val2 = eval(op + 1, q);
+    val1 = eval(p, op - 1, success);
+    val2 = eval(op + 1, q, success);
 
     switch (op_type) {
       case '+': return val1 + val2;
@@ -278,7 +279,7 @@ word_t expr(char *e, bool *success) {
 
   /* TODO: Insert codes to evaluate the expression. */
 	word_t res;
-	res = eval(0, nr_token - 1);	
+	res = eval(0, nr_token - 1, success);	
 	Log("result = %u", res);
 
   return res;
