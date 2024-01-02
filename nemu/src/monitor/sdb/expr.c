@@ -221,7 +221,7 @@ word_t eval(int p, int q) {
      */
 		word_t value;
 		if(tokens[p].type == 260){
-			sscanf(tokens[p].str, "%u", &value);
+			sscanf(tokens[p].str, "%d", &value);
 		}
 		else if(tokens[p].type == 259){
 			sscanf(tokens[p].str, "%x", &value);
