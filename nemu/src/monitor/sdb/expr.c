@@ -184,7 +184,7 @@ bool check_parentheses(int p, int q, bool *success){
 	}
 	//(())
 	if(top == 0 && mintop == 0){
-		printf("true bracket\n");
+		//printf("true bracket\n");
 		return true;
 	}
 	//()()
@@ -280,7 +280,7 @@ word_t expr(char *e, bool *success) {
   /* TODO: Insert codes to evaluate the expression. */
 	word_t res;
 	res = eval(0, nr_token - 1, success);	
-	Log("result = %u", res);
+	//Log("result = %u", res);
 
   return res;
 }
