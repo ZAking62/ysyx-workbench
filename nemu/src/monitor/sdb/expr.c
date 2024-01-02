@@ -165,7 +165,7 @@ static bool make_token(char *e) {
   return true;
 }
 
-bool check_parentheses(int p, int q){
+bool check_parentheses(int p, int q, bool *success){
 	if(tokens[p].type != 40 || tokens[q].type != 41){
 		return false;
 	}
@@ -193,7 +193,7 @@ bool check_parentheses(int p, int q){
 	}
 	else{
 		printf("bracket Bad expression\n");
-		//need improve
+		*success = false;
 		return false;
 	} 
 }
@@ -230,7 +230,7 @@ word_t eval(int p, int q, bool *success) {
 		//Log("tokens[%d].str = %s, load value = %u", tokens[p].str, value);
 		return value;
   }
-  else if (check_parentheses(p, q) == true) {
+  else if (check_parentheses(p, q, success) == true) {
     /* The expression is surrounded by a matched pair of parentheses.
      * If that is the case, just throw away the parentheses.
      */
