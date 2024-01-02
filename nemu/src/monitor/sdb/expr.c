@@ -165,7 +165,7 @@ static bool make_token(char *e) {
 }
 
 bool check_parentheses(int p, int q){
-	if(tokens[p].type != 40 && tokens[q].type != 41){
+	if(tokens[p].type != 40 || tokens[q].type != 41){
 		return false;
 	}
 	int top = 0;
