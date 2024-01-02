@@ -241,11 +241,9 @@ word_t eval(int p, int q) {
 			else if(tokens[i].type == ')'){
 				in_bracket--;
 			}
-			else if(in_bracket == 0 && tokens[i].type < 256 && tokens[i].type > ')'){
-				if(prior_level(tokens[i].type) <= prior_level(op_type)){
+			else if(in_bracket == 0 && prior_level(tokens[i].type) <= prior_level(op_type)){
 					op = i;
 					op_type = tokens[i].type;
-				}
 			}		
 		}
     //op = the position of 主运算符 in the token expression;
