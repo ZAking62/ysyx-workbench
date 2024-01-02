@@ -197,6 +197,17 @@ bool check_parentheses(int p, int q){
 	} 
 }
 
+int prior_level(int type){
+	switch (type) {
+    case '+':
+		case '-': return 1;
+    case '*': 
+    case '/': return 2;
+		default: ;
+	}
+	return 2;
+}
+
 word_t eval(int p, int q) {
   if (p > q) {
     /* Bad expression */
@@ -232,8 +243,10 @@ word_t eval(int p, int q) {
 				in_bracket--;
 			}
 			if(in_bracket == 0 && tokens[i].type < 256 && tokens[i].type > ')'){
-				op = i;
-				op_type = tokens[i].type;
+				if(prior_level(tokens[i].type) <= prior_level(tokens[op].type)){
+					op = i;
+					op_type = tokens[i].type;
+				}
 			}		
 		}
     //op = the position of 主运算符 in the token expression;
