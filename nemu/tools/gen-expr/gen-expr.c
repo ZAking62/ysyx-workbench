@@ -23,6 +23,7 @@
 // this should be enough
 static char buf[65536] = {};
 static int nr_buf = 0;
+static int buf_overflow = 0;
 static char code_buf[65536 + 128] = {}; // a little larger than `buf`
 static char *code_format =
 "#include <stdio.h>\n"
@@ -32,18 +33,38 @@ static char *code_format =
 "  return 0; "
 "}";
 
-uint32_t choose(uint32_t n){
+static void init_buf(){
+	memset(buf, 0, sizeof(buf));
+	nr_buf = 0;
+	buf_overflow = 0;
+}
+
+static uint32_t choose(uint32_t n){
 	uint32_t rand_num = rand() % n;
 	return rand_num;
 }
 
-static void gen(char bracket){
-	buf[nr_buf] = bracket;
-	//printf("write bracket : %c\n", buf[nr_buf]);
+static void gen(char c){
+	buf[nr_buf] = c;
 	nr_buf++;	
+	if(nr_buf >= 65536){
+		init_buf();
+		buf_overflow = 1;
+	}
+}
+
+static void gen_space(){
+	int max_insert = choose(4);
+	while(max_insert--){
+		//25% insert space
+		if(choose(4) == 0){
+			gen(' ');
+		}
+	}
 }
 
 static void gen_rand_op(){
+	gen_space();
 	char op;
 	switch (choose(4)) {
 		case 0: op = '+'; break;
@@ -51,24 +72,36 @@ static void gen_rand_op(){
 		case 2: op = '*'; break;
 		default: op = '/'; break;
 	}
-	buf[nr_buf] = op;
-	//printf("write op: %c\n", buf[nr_buf]);
-	nr_buf++;
+	gen(op);
+	gen_space();
 }
 
 static void gen_num(){
-	uint32_t rand_num = choose(0xff) + 1;
+	uint32_t rand_num = choose(0xffffffff);
 	int len = sprintf(buf + nr_buf, "%u", rand_num);
-	//printf("write : %s\n", buf + nr_buf);
 	nr_buf += len;
+	if(nr_buf >= 65536){
+		init_buf();
+		buf_overflow = 1;
+	}
 }
 
 static void gen_rand_expr() {
+	gen_space();
   switch (choose(3)) {
     case 0: gen_num(); break;
-    case 1: gen('('); gen_rand_expr(); gen(')'); break;
+    case 1:
+		 	gen_space();
+		 	gen('(');
+		 	gen_space();
+		 	gen_rand_expr();
+		 	gen_space();
+		 	gen(')');
+		 	gen_space();
+		 	break;
     default: gen_rand_expr(); gen_rand_op(); gen_rand_expr(); break;
   }
+	gen_space();
 }
 
 int main(int argc, char *argv[]) {
@@ -80,10 +113,16 @@ int main(int argc, char *argv[]) {
   }
   int i;
   for (i = 0; i < loop; i ++) {
-		memset(buf, 0, sizeof(buf));
-		nr_buf = 0;
+		init_buf();
 
     gen_rand_expr();
+		
+		//filter buf overflow
+		if(buf_overflow == 1){
+			i--;
+			continue;
+		}
+
 		buf[nr_buf] = '\0';
 
     sprintf(code_buf, code_format, buf);
@@ -95,22 +134,21 @@ int main(int argc, char *argv[]) {
     fclose(fp);
 
 		//call shell command gcc compile, -w ignore warning
+		//-Werror filter integer overflow and /0 error
+    int ret = system("gcc -Werror -w /tmp/.code.c -o /tmp/.expr");
 		//linux return 0 when shell command executes successfully
-    int ret = system("gcc -w /tmp/.code.c -o /tmp/.expr");
-    if (ret != 0) continue;
+    if (ret != 0) {
+			i--;
+			continue;
+		}
 
 		//execute command /tmp/.expr, read the command's stdout
     fp = popen("/tmp/.expr", "r");
     assert(fp != NULL);
 
-		//load stdout into result
     int result;
     ret = fscanf(fp, "%d", &result);
     pclose(fp);
-		if(ret != 1){
-			i--;
-			continue;
-		}
 
     printf("result = %u, buf = %s\n", result, buf);
   }
