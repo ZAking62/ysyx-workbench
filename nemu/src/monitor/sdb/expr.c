@@ -76,7 +76,7 @@ typedef struct token {
   char str[32];
 } Token;
 
-static Token tokens[32] __attribute__((used)) = {};
+static Token tokens[65536] __attribute__((used)) = {};
 static int nr_token __attribute__((used))  = 0;
 
 static bool make_token(char *e) {
@@ -85,7 +85,7 @@ static bool make_token(char *e) {
   regmatch_t pmatch;
 
   nr_token = 0;
-	for(int i = 0; i < 32; i++){
+	for(int i = 0; i < 65536; i++){
 		tokens[i].type = 0;
 		memset(tokens[i].str, 0, sizeof(tokens[i].str));
 	}
