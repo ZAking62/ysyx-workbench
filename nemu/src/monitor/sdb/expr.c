@@ -287,6 +287,10 @@ word_t expr(char *e, bool *success) {
   return res;
 }
 
-void init_expr() {
-	return ;	
+void test_expr() {
+	//test
+		
+
+
+
 }

@@ -23,7 +23,7 @@ static int is_batch_mode = false;
 
 void init_regex();
 void init_wp_pool();
-void init_expr();
+void test_expr();
 word_t vaddr_read(vaddr_t addr, int len);
 
 /* We use the `readline' library to provide more flexibility to read from stdin. */
@@ -209,7 +209,7 @@ void init_sdb() {
   /* Compile the regular expressions. */
   init_regex();
 
-	init_expr();
+	test_expr();
   /* Initialize the watchpoint pool. */
   init_wp_pool();
 }
