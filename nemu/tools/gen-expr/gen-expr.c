@@ -150,7 +150,7 @@ int main(int argc, char *argv[]) {
     ret = fscanf(fp, "%d", &result);
     pclose(fp);
 
-    printf("result = %u, buf = %s\n", result, buf);
+    printf("%u %s\n", result, buf);
   }
   return 0;
 }
