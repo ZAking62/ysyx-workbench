@@ -14,7 +14,6 @@
 ***************************************************************************************/
 
 #include <isa.h>
-
 /* We use the POSIX regex functions to process regular expressions.
  * Type 'man regex' for more information about POSIX regex functions.
  */
@@ -286,4 +285,8 @@ word_t expr(char *e, bool *success) {
 	//Log("result = %u", res);
 
   return res;
+}
+
+void init_expr() {
+	return ;	
 }
