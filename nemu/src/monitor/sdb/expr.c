@@ -291,7 +291,7 @@ void test_expr() {
 	//test
 	int count = 0;
 	char buf[65536 + 128] = {};
-	word_t result = 0;
+	uint32_t result = 0;
 	char temp_expr[65536] = {};
 	bool success = 0;
 
@@ -301,7 +301,7 @@ void test_expr() {
 	char *is_read = fgets(buf, 65536 + 128, fp);
 	while(is_read != NULL){
 		sscanf(buf, "%d %[^\n]", &result, temp_expr);
-		word_t ans = expr(temp_expr, &success);
+		uint32_t ans = expr(temp_expr, &success);
 		printf("ans = %u, result = %u, temp_expr = %s\n", ans, result, temp_expr);
 		if(ans == result){
 			count++;
