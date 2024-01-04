@@ -300,10 +300,9 @@ void test_expr() {
 	
 	char *is_read = fgets(buf, 65536 + 128, fp);
 	while(is_read != NULL){
-		printf("buf = %s", buf);
 		sscanf(buf, "%d %[^\n]", &result, temp_expr);
 		word_t ans = expr(temp_expr, &success);
-		printf("ans = %d, result = %d, temp_expr = %s\n", ans, result, temp_expr);
+		printf("ans = %u, result = %u, temp_expr = %s\n", ans, result, temp_expr);
 		if(ans == result){
 			count++;
 		}
