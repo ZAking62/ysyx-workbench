@@ -239,7 +239,8 @@ uint32_t eval(int p, int q, bool *success) {
 		int op = p;
 		int op_type = '*'; 
 		int in_bracket = 0;
-		int val1, val2;
+		uint32_t val1, val2;
+		//int val1, val2;  need consider
 		for(int i = p; i <= q; i++){
 			if(tokens[i].type == '('){
 				in_bracket++;
