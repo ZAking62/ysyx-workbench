@@ -295,7 +295,7 @@ void test_expr() {
 	char temp_expr[65536] = {};
 	bool success = 0;
 
-	FILE *fp = fopen("tools/gen_expr/input", "r");
+	FILE *fp = fopen("./tools/gen-expr/input", "r");
 	assert(fp != NULL);
 	
 	char *is_read = fgets(buf, 65536 + 128, fp);
