@@ -27,9 +27,10 @@ static int buf_overflow = 0;
 static char code_buf[65536 + 128] = {}; // a little larger than `buf`
 static char *code_format =
 "#include <stdio.h>\n"
+"#include <stdint.h>\n"
 "int main() { "
-"  unsigned result = %s; "
-"  printf(\"%%u\", result); "
+"  uint32_t result = %s; "
+"  printf(\"%u\", result); "
 "  return 0; "
 "}";
 
