@@ -30,7 +30,7 @@ static char *code_format =
 "#include <stdint.h>\n"
 "int main() { "
 "  uint32_t result = %s; "
-"  printf(\"%u\", result); "
+"  printf(\"%%u\", result); "
 "  return 0; "
 "}";
 
