@@ -201,8 +201,8 @@ int prior_level(int type){
 	switch (type) {
     case '+':
 		case '-': return 1;
-    case '*': 
-    case '/': return 2;
+    case '*': return 2;
+    case '/': return 3;
 		default: assert(0);
 	}
 }
