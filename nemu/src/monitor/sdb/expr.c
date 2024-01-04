@@ -289,8 +289,6 @@ word_t expr(char *e, bool *success) {
 
 void test_expr() {
 	//test
-		
-
-
-
+	int count = 0;
+	Log("success count = %d", count);
 }
