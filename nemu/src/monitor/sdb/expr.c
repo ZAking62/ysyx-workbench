@@ -207,7 +207,7 @@ int prior_level(int type){
 	}
 }
 
-word_t eval(int p, int q, bool *success) {
+uint32_t eval(int p, int q, bool *success) {
   if (p > q) {
     /* Bad expression */
 		printf("p>q Bad expression\n");
@@ -219,7 +219,7 @@ word_t eval(int p, int q, bool *success) {
      * For now this token should be a number.
      * Return the value of the number.
      */
-		word_t value;
+		uint32_t value;
 		if(tokens[p].type == 260){
 			sscanf(tokens[p].str, "%u", &value);
 		}
@@ -239,7 +239,7 @@ word_t eval(int p, int q, bool *success) {
 		int op = p;
 		int op_type = '*'; 
 		int in_bracket = 0;
-		word_t val1, val2;
+		uint32_t val1, val2;
 		for(int i = p; i <= q; i++){
 			if(tokens[i].type == '('){
 				in_bracket++;
@@ -273,14 +273,14 @@ word_t eval(int p, int q, bool *success) {
   }
 }
 
-word_t expr(char *e, bool *success) {
+uint32_t expr(char *e, bool *success) {
   if (!make_token(e)) {
     *success = false;
     return 0;
   }
 
   /* TODO: Insert codes to evaluate the expression. */
-	word_t res;
+	uint32_t res;
 	res = eval(0, nr_token - 1, success);	
 	//Log("result = %u", res);
 
