@@ -302,7 +302,7 @@ void test_expr() {
 	while(is_read != NULL){
 		printf("buf = %s", buf);
 		sscanf(buf, "%s", temp_expr);
-		printf("result = %d, expr = %s\n", result, temp_expr);
+		printf("result = %d,temp_expr = %s\n", result, temp_expr);
 		word_t ans = expr(temp_expr, &success);
 		if(ans == result){
 			count++;
