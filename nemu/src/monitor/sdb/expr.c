@@ -290,6 +290,26 @@ word_t expr(char *e, bool *success) {
 void test_expr() {
 	//test
 	int count = 0;
+	char buf[65536 + 128] = {};
+	word_t result = 0;
+	char temp_expr[65536] = {};
+	bool success = 0;
+
+	FILE *fp = fopen("tools/gen_expr/input", "r");
+	assert(fp != NULL);
+	
+	char *is_read = fgets(buf, 65536 + 128, fp);
+	while(is_read != NULL){
+		sscanf(buf, "%d %s", &result, temp_expr);
+		printf("result = %d, expr = %s\n", result, temp_expr);
+		word_t ans = expr(temp_expr, &success);
+		if(ans == result){
+			count++;
+		}
+		memset(temp_expr, 0, sizeof(temp_expr));
+		memset(buf, 0, sizeof(buf));
+		is_read = fgets(buf, 65536 + 128, fp);
+	}
 
 	Log("success count = %d", count);
 }
