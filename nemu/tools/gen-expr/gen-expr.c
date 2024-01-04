@@ -77,7 +77,7 @@ static void gen_rand_op(){
 }
 
 static void gen_num(){
-	uint32_t rand_num = choose(0xffffffff);
+	uint32_t rand_num = choose(0xfff);
 	int len = sprintf(buf + nr_buf, "%u", rand_num);
 	nr_buf += len;
 	if(nr_buf >= 65536){
