@@ -300,7 +300,7 @@ void test_expr() {
 	
 	char *is_read = fgets(buf, 65536 + 128, fp);
 	while(is_read != NULL){
-		printf("buf = %s\n", buf);
+		printf("buf = %s", buf);
 		sscanf(buf, "%d %s\n", &result, temp_expr);
 		printf("result = %d, expr = %s\n", result, temp_expr);
 		word_t ans = expr(temp_expr, &success);
