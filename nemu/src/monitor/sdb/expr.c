@@ -304,7 +304,7 @@ void test_expr() {
 	while(is_read != NULL){
 		sscanf(buf, "%d %[^\n]", &result, temp_expr);
 		uint32_t ans = expr(temp_expr, &success);
-		printf("ans = %u, result = %u, temp_expr = %s\n", ans, result, temp_expr);
+		//printf("ans = %u, result = %u, temp_expr = %s\n", ans, result, temp_expr);
 		if(ans == result){
 			count++;
 		}
