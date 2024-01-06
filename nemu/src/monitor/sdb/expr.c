@@ -45,7 +45,7 @@ static struct rule {
   {"==", TK_EQ},				// equal
 	{"!=", TK_NEQ},			
 	{"&&", TK_AND},
-	//{"$s0", TK_REG},				// register
+	{"\\$s[0-11]|a[0-7]|t[0-6]|ra|sp|gp|tp", TK_REG},				// register
 	{"0x[0-9a-f]+u?", TK_HEX}, // precedence level hexnumber
 	{"[0-9]+u?", TK_NUM},   
 };
@@ -148,7 +148,10 @@ static bool make_token(char *e) {
 						nr_token++;					 
 						break;
 					case TK_REG:
-						//read register load in tokens
+						tokens[nr_token].type = rules[i].token_type;
+						strncpy(tokens[nr_token].str, substr_start + 1, substr_len - 1);
+						tokens[nr_token].str[substr_len - 1] = '\0';
+						nr_token++;
 						break;
 					default: ;
         }
@@ -227,6 +230,9 @@ uint32_t eval(int p, int q, bool *success) {
 		}
 		else if(tokens[p].type == TK_HEX){
 			sscanf(tokens[p].str, "%x", &value);
+		}
+		else if(tokens[p].type == TK_REG){
+			//read value
 		}
 		//Log("tokens[%d].str = %s, load value = %u", tokens[p].str, value);
 		return value;
