@@ -238,11 +238,12 @@ uint32_t eval(int p, int q, bool *success) {
 			bool *reg_success = false;
 			if(tokens[p].str[0] == '0'){
 				value = isa_reg_str2val("$0", reg_success);
+				printf("000\n");
 			}
 			else{
 				value = isa_reg_str2val(tokens[p].str, reg_success);	
 			}
-			printf("reg value = %u", value);
+			printf("reg value = %u\n", value);
 		}
 		//Log("tokens[%d].str = %s, load value = %u", tokens[p].str, value);
 		return value;
