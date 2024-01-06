@@ -122,8 +122,8 @@ static bool make_token(char *e) {
 					case ')' :
 					case TK_EQ:
 						tokens[nr_token].type = rules[i].token_type;
-						Log("Load tokens[%d], type = %d, str = %s",
-									nr_token, tokens[nr_token].type, tokens[nr_token].str);
+						//Log("Load tokens[%d], type = %d, str = %s",
+						//			nr_token, tokens[nr_token].type, tokens[nr_token].str);
 						nr_token++;
 						break;
           case TK_NUM:
@@ -133,8 +133,8 @@ static bool make_token(char *e) {
 							assert(0);
 						strncpy(tokens[nr_token].str, substr_start, substr_len);
 						tokens[nr_token].str[substr_len] = '\0';
-						Log("Load tokens[%d], type = %d, str = %s",
-								nr_token, tokens[nr_token].type, tokens[nr_token].str);
+						//Log("Load tokens[%d], type = %d, str = %s",
+						//		nr_token, tokens[nr_token].type, tokens[nr_token].str);
 						nr_token++;					 
 						break;
 					case TK_HEX:
@@ -151,8 +151,8 @@ static bool make_token(char *e) {
 						tokens[nr_token].type = rules[i].token_type;
 						strncpy(tokens[nr_token].str, substr_start + 1, substr_len - 1);
 						tokens[nr_token].str[substr_len - 1] = '\0';
-						Log("Load tokens[%d], type = %d, str = %s",
-								nr_token, tokens[nr_token].type, tokens[nr_token].str);
+						//Log("Load tokens[%d], type = %d, str = %s",
+						//		nr_token, tokens[nr_token].type, tokens[nr_token].str);
 						nr_token++;
 						break;
 					default: ;
@@ -235,6 +235,14 @@ uint32_t eval(int p, int q, bool *success) {
 		}
 		else if(tokens[p].type == TK_REG){
 			//read value
+			bool *reg_success = false;
+			if(tokens[p].str[0] == '0'){
+				value = isa_reg_str2val("$0", reg_success);
+			}
+			else{
+				value = isa_reg_str2val(tokens[p].str, reg_success);	
+			}
+			printf("reg value = %u", value);
 		}
 		//Log("tokens[%d].str = %s, load value = %u", tokens[p].str, value);
 		return value;
