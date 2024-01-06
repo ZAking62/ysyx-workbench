@@ -235,15 +235,15 @@ uint32_t eval(int p, int q, bool *success) {
 		}
 		else if(tokens[p].type == TK_REG){
 			//read value
-			bool *reg_success = false;
+			bool reg_success = false;
 			if(tokens[p].str[0] == '0'){
-				value = isa_reg_str2val("$0", reg_success);
+				value = isa_reg_str2val("$0", &reg_success);
 				printf("000\n");
 			}
 			else{
-				value = isa_reg_str2val(tokens[p].str, reg_success);	
+				value = isa_reg_str2val(tokens[p].str, &reg_success);	
 			}
-			//printf("reg value = %u, reg_success = %d\n", value, *reg_success);
+			printf("reg value = %u, reg_success = %d\n", value, reg_success);
 		}
 		//Log("tokens[%d].str = %s, load value = %u", tokens[p].str, value);
 		return value;
