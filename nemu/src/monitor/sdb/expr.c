@@ -222,10 +222,10 @@ uint32_t eval(int p, int q, bool *success) {
      * Return the value of the number.
      */
 		uint32_t value;
-		if(tokens[p].type == 260){
+		if(tokens[p].type == TK_HEX){
 			sscanf(tokens[p].str, "%u", &value);
 		}
-		else if(tokens[p].type == 259){
+		else if(tokens[p].type == TK_NUM){
 			sscanf(tokens[p].str, "%x", &value);
 		}
 		//Log("tokens[%d].str = %s, load value = %u", tokens[p].str, value);
