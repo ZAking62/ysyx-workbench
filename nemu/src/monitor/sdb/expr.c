@@ -45,7 +45,7 @@ static struct rule {
   {"==", TK_EQ},				// equal
 	//{"s0", TK_REG},				// register
 	{"0x[0-9a-f]+", TK_HEX}, // precedence level hexnumber
-	{"[0-9]+", TK_NUM},   
+	{"[0-9]+u", TK_NUM},   
 };
 
 #define NR_REGEX ARRLEN(rules)
