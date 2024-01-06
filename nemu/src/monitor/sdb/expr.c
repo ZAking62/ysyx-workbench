@@ -45,7 +45,7 @@ static struct rule {
   {"==", TK_EQ},				// equal
 	{"!=", TK_NEQ},			
 	{"&&", TK_AND},
-	{"\\$s[0-9]$|\\$s1[01]$|\\$0$|\\$[rsgt][ap]$|\\$t[0-6]$|\\$a[0-7]",TK_REG},				// register
+	{"\\$s[0-9]$|\\$s1[01]$|\\$t[0-6]$|\\$a[0-7]$|\\$0$|\\$[sgt][p]$|\\$ra$",TK_REG},				// register
 	{"0x[0-9a-f]+u?", TK_HEX}, // precedence level hexnumber
 	{"[0-9]+u?", TK_NUM},   
 };
