@@ -20,7 +20,7 @@
 #include <regex.h>
 
 enum {
-  TK_NOTYPE = 256, TK_EQ, TK_REG, TK_HEX, TK_NUM,
+  TK_NOTYPE = 256, TK_EQ, TK_NEQ, TK_AND, TK_REG, TK_HEX, TK_NUM,
 
   /* TODO: Add more token types */
 
@@ -43,8 +43,10 @@ static struct rule {
 	{"\\(", '('},					// 40
 	{"\\)", ')'},					// 41
   {"==", TK_EQ},				// equal
-	//{"s0", TK_REG},				// register
-	{"0x[0-9a-f]+", TK_HEX}, // precedence level hexnumber
+	{"!=", TK_NEQ},			
+	{"&&", TK_AND},
+	//{"$s0", TK_REG},				// register
+	{"0x[0-9a-f]+u?", TK_HEX}, // precedence level hexnumber
 	{"[0-9]+u?", TK_NUM},   
 };
 
@@ -240,7 +242,6 @@ uint32_t eval(int p, int q, bool *success) {
 		int op_type = '*'; 
 		int in_bracket = 0;
 		uint32_t val1, val2;
-		//int val1, val2;  need consider
 		for(int i = p; i <= q; i++){
 			if(tokens[i].type == '('){
 				in_bracket++;
