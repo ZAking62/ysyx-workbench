@@ -45,7 +45,7 @@ static struct rule {
   {"==", TK_EQ},				// equal
 	{"!=", TK_NEQ},			
 	{"&&", TK_AND},
-	{"\\$s[0-9]|\\$s1[01]|\\$t[0-6]|\\$a[0-7]|\\$0|\\$[sgt][p]|\\$ra",TK_REG},				// register
+	{"\\$s[0-9]|\\$s1[01]|\\$t[0-6]|\\$a[0-7]|\\$0|\\$[sgt][p]|\\$ra|\\$pc",TK_REG},				// register
 	{"0x[0-9a-f]+u?", TK_HEX}, // precedence level hexnumber
 	{"[0-9]+u?", TK_NUM},   
 };
@@ -238,7 +238,6 @@ uint32_t eval(int p, int q, bool *success) {
 			bool reg_success = false;
 			if(tokens[p].str[0] == '0'){
 				value = isa_reg_str2val("$0", &reg_success);
-				printf("000\n");
 			}
 			else{
 				value = isa_reg_str2val(tokens[p].str, &reg_success);	

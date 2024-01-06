@@ -38,5 +38,9 @@ word_t isa_reg_str2val(const char *s, bool *success) {
 			*success = true;
 		}
 	}
+	if(strcmp("pc", s) == 0){
+		value = cpu.pc;
+		*success = true;
+	}
   return value;
 }
