@@ -32,10 +32,8 @@ void isa_reg_display() {
 
 word_t isa_reg_str2val(const char *s, bool *success) {
 	word_t value = 0;
-			printf("s= %s\n", s);
 	for(int i = 0; i < 32; i++){
-			printf("regs= %s\n", regs[i]);
-		if(regs[i] == s){
+		if(strcmp(regs[i],s) == 0){
 			value = cpu.gpr[i];
 			*success = true;
 		}
