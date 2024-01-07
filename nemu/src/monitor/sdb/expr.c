@@ -260,7 +260,7 @@ uint32_t eval(int p, int q, bool *success) {
   }
   else {
 		int op = p;
-		int op_type = '*'; 
+		int op_type = 280; 
 		int in_bracket = 0;
 		uint32_t val1, val2;
 		for(int i = p; i <= q; i++){
@@ -270,7 +270,7 @@ uint32_t eval(int p, int q, bool *success) {
 			else if(tokens[i].type == ')'){
 				in_bracket--;
 			}
-			else if(in_bracket == 0 && tokens[i].type < 256 && 
+			else if(in_bracket == 0 && tokens[i].type < TK_REG && 
 							prior_level(tokens[i].type) <= prior_level(op_type)){
 				op = i;
 				op_type = tokens[i].type;
