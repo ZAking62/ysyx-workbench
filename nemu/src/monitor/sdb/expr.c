@@ -245,30 +245,11 @@ uint32_t eval(int p, int q, bool *success) {
 				else{
 					value = isa_reg_str2val(tokens[p].str, &reg_success);	
 				}
+				if(reg_success == false) printf("read reg unsuccess\n");
 				//printf("reg value = 0x%x, reg_success = %d\n", value, reg_success);
 				break;
 			default: assert(0);
 		}
-
-
-
-//		if(tokens[p].type == TK_NUM){
-//			sscanf(tokens[p].str, "%u", &value);
-//		}
-//		else if(tokens[p].type == TK_HEX){
-//			sscanf(tokens[p].str, "%x", &value);
-//		}
-//		else if(tokens[p].type == TK_REG){
-//			//read value
-//			bool reg_success = false;
-//			if(tokens[p].str[0] == '0'){
-//				value = isa_reg_str2val("$0", &reg_success);
-//			}
-//			else{
-//				value = isa_reg_str2val(tokens[p].str, &reg_success);	
-//			}
-//			//printf("reg value = 0x%x, reg_success = %d\n", value, reg_success);
-//		}
 		//Log("tokens[%d].str = %s, load value = %u", tokens[p].str, value);
 		return value;
   }
