@@ -20,7 +20,7 @@
 #include <regex.h>
 
 enum {
-  TK_NOTYPE = 256, TK_EQ, TK_NEQ, TK_AND, TK_REG, TK_HEX, TK_NUM, 
+  TK_NOTYPE = 256, TK_EQ, TK_NEQ, TK_AND, TK_REG, TK_HEX, TK_NUM, DEREF,
 
   /* TODO: Add more token types */
 
@@ -234,9 +234,9 @@ uint32_t eval(int p, int q, bool *success) {
 		uint32_t value;
 		switch(tokens[p].type){
 			case TK_NUM:
-				sscanf(tokens[p].str, "%u", &value);
+				sscanf(tokens[p].str, "%u", &value); break;
 			case TK_HEX:
-				sscanf(tokens[p].str, "%x", &value);
+				sscanf(tokens[p].str, "%x", &value); break;
 			case TK_REG:
 				bool reg_success = false;
 				if(tokens[p].str[0] == '0'){
@@ -246,6 +246,8 @@ uint32_t eval(int p, int q, bool *success) {
 					value = isa_reg_str2val(tokens[p].str, &reg_success);	
 				}
 				//printf("reg value = 0x%x, reg_success = %d\n", value, reg_success);
+				break;
+			default: ;
 		}
 
 
