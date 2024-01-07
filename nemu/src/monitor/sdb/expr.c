@@ -280,9 +280,24 @@ uint32_t eval(int p, int q, bool *success) {
 				op_type = tokens[i].type;
 			}		
 		}
+		for(int i = q; i >= p; i--){
+			if(tokens[i].type == ')'){
+				in_bracket++;
+			}
+			else if(tokens[i].type == '('){
+				in_bracket--;
+			}
+			else if(in_bracket == 0 && tokens[i].type == DEREF){
+				op = i;
+				op_type = tokens[i].type;
+			}	
+		}
     //op = the position of 主运算符 in the token expression;
-    val1 = eval(p, op - 1, success);
-    val2 = eval(op + 1, q, success);
+		val2 = eval(op + 1, q, success);
+    if(op_type == DEREF){
+			return val2;		
+		}
+		val1 = eval(p, op - 1, success);
 
     switch (op_type) {
       case '+': return val1 + val2;
@@ -299,7 +314,6 @@ uint32_t eval(int p, int q, bool *success) {
 			case TK_EQ: return val1 == val2;
 			case TK_NEQ: return val1 != val2;
 			case TK_AND: return val1 && val2;
-			case DEREF: return val2; 
       default: assert(0);
     }
   }
