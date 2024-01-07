@@ -247,7 +247,7 @@ uint32_t eval(int p, int q, bool *success) {
 				}
 				//printf("reg value = 0x%x, reg_success = %d\n", value, reg_success);
 				break;
-			default: ;
+			default: assert(0);
 		}
 
 
