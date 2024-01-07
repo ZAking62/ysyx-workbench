@@ -121,6 +121,8 @@ static bool make_token(char *e) {
 					case '(' :
 					case ')' :
 					case TK_EQ:
+					case TK_NEQ:
+					case TK_AND:
 						tokens[nr_token].type = rules[i].token_type;
 						//Log("Load tokens[%d], type = %d, str = %s",
 						//			nr_token, tokens[nr_token].type, tokens[nr_token].str);
@@ -242,7 +244,7 @@ uint32_t eval(int p, int q, bool *success) {
 			else{
 				value = isa_reg_str2val(tokens[p].str, &reg_success);	
 			}
-			printf("reg value = 0x%x, reg_success = %d\n", value, reg_success);
+			//printf("reg value = 0x%x, reg_success = %d\n", value, reg_success);
 		}
 		//Log("tokens[%d].str = %s, load value = %u", tokens[p].str, value);
 		return value;
