@@ -20,7 +20,7 @@
 #include <regex.h>
 
 enum {
-  TK_NOTYPE = 256, TK_EQ, TK_NEQ, TK_AND, TK_REG, TK_HEX, TK_NUM,
+  TK_NOTYPE = 256, TK_EQ, TK_NEQ, TK_AND, TK_REG, TK_HEX, TK_NUM, DEREF,
 
   /* TODO: Add more token types */
 
@@ -156,6 +156,8 @@ static bool make_token(char *e) {
 						//Log("Load tokens[%d], type = %d, str = %s",
 						//		nr_token, tokens[nr_token].type, tokens[nr_token].str);
 						nr_token++;
+						break;
+					case DEREF:
 						break;
 					default: ;
         }
@@ -309,6 +311,13 @@ uint32_t expr(char *e, bool *success) {
     *success = false;
     return 0;
   }
+
+	//determin * or multi
+	for (int i = 0; i < nr_token; i ++) {
+	  if (tokens[i].type == '*' && (i == 0 || tokens[i - 1].type != TK_NUM)) {
+	    tokens[i].type = DEREF;
+	  }
+	}
 
   /* TODO: Insert codes to evaluate the expression. */
 	uint32_t res;
