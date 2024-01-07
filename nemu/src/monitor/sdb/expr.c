@@ -295,7 +295,7 @@ uint32_t eval(int p, int q, bool *success) {
    //op = the position of 主运算符 in the token expression;
 		val2 = eval(op + 1, q, success);
     if(op_type == DEREF){
-			return *(uint32_t*)guest_to_host(val2);		
+			return paddr_read(val2, 1);		
 		}
 		val1 = eval(p, op - 1, success);
 
