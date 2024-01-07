@@ -113,7 +113,7 @@ static int cmd_p(char *args){
 	}
 	bool success = true;
 	word_t res = expr(args, &success);
-	printf("result = %u, hex = 0x%x, success = %d\n", res, res, success);
+	printf("result = %u, hex = 0x%.8x, success = %d\n", res, res, success);
 	return 0;
 }
 
