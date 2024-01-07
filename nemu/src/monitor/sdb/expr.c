@@ -157,8 +157,6 @@ static bool make_token(char *e) {
 						//		nr_token, tokens[nr_token].type, tokens[nr_token].str);
 						nr_token++;
 						break;
-					case DEREF:
-						break;
 					default: ;
         }
 
@@ -234,23 +232,41 @@ uint32_t eval(int p, int q, bool *success) {
      * Return the value of the number.
      */
 		uint32_t value;
-		if(tokens[p].type == TK_NUM){
-			sscanf(tokens[p].str, "%u", &value);
+		switch(tokens[p].type){
+			case TK_NUM:
+				sscanf(tokens[p].str, "%u", &value);
+			case TK_HEX:
+				sscanf(tokens[p].str, "%x", &value);
+			case TK_REG:
+				bool reg_success = false;
+				if(tokens[p].str[0] == '0'){
+					value = isa_reg_str2val("$0", &reg_success);
+				}
+				else{
+					value = isa_reg_str2val(tokens[p].str, &reg_success);	
+				}
+				//printf("reg value = 0x%x, reg_success = %d\n", value, reg_success);
 		}
-		else if(tokens[p].type == TK_HEX){
-			sscanf(tokens[p].str, "%x", &value);
-		}
-		else if(tokens[p].type == TK_REG){
-			//read value
-			bool reg_success = false;
-			if(tokens[p].str[0] == '0'){
-				value = isa_reg_str2val("$0", &reg_success);
-			}
-			else{
-				value = isa_reg_str2val(tokens[p].str, &reg_success);	
-			}
-			//printf("reg value = 0x%x, reg_success = %d\n", value, reg_success);
-		}
+
+
+
+//		if(tokens[p].type == TK_NUM){
+//			sscanf(tokens[p].str, "%u", &value);
+//		}
+//		else if(tokens[p].type == TK_HEX){
+//			sscanf(tokens[p].str, "%x", &value);
+//		}
+//		else if(tokens[p].type == TK_REG){
+//			//read value
+//			bool reg_success = false;
+//			if(tokens[p].str[0] == '0'){
+//				value = isa_reg_str2val("$0", &reg_success);
+//			}
+//			else{
+//				value = isa_reg_str2val(tokens[p].str, &reg_success);	
+//			}
+//			//printf("reg value = 0x%x, reg_success = %d\n", value, reg_success);
+//		}
 		//Log("tokens[%d].str = %s, load value = %u", tokens[p].str, value);
 		return value;
   }
@@ -262,7 +278,7 @@ uint32_t eval(int p, int q, bool *success) {
   }
   else {
 		int op = p;
-		int op_type = '*'; 
+		int op_type = '*';
 		int in_bracket = 0;
 		uint32_t val1, val2;
 		for(int i = p; i <= q; i++){
