@@ -266,6 +266,18 @@ uint32_t eval(int p, int q, bool *success) {
 		int op_type = '*';
 		int in_bracket = 0;
 		uint32_t val1, val2;
+		for(int i = q; i >= p; i--){
+			if(tokens[i].type == ')'){
+				in_bracket++;
+			}
+			else if(tokens[i].type == '('){
+				in_bracket--;
+			}
+			else if(in_bracket == 0 && tokens[i].type == DEREF){
+				op = i;
+				op_type = tokens[i].type;
+			}	
+		}
 		for(int i = p; i <= q; i++){
 			if(tokens[i].type == '('){
 				in_bracket++;
@@ -279,19 +291,7 @@ uint32_t eval(int p, int q, bool *success) {
 				op_type = tokens[i].type;
 			}		
 		}
-		for(int i = q; i >= p; i--){
-			if(tokens[i].type == ')'){
-				in_bracket++;
-			}
-			else if(tokens[i].type == '('){
-				in_bracket--;
-			}
-			else if(in_bracket == 0 && tokens[i].type == DEREF){
-				op = i;
-				op_type = tokens[i].type;
-			}	
-		}
-    //op = the position of 主运算符 in the token expression;
+   //op = the position of 主运算符 in the token expression;
 		val2 = eval(op + 1, q, success);
     if(op_type == DEREF){
 			return val2;		
