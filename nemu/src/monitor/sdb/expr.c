@@ -209,9 +209,12 @@ bool check_parentheses(int p, int q, bool *success){
 int prior_level(int type){
 	switch (type) {
     case '+':
-		case '-': return 1;
+		case '-': return 3;
     case '*': 
-    case '/': return 2;
+    case '/': return 4;
+		case TK_EQ:
+		case TK_NEQ: return 2;
+		case TK_AND: return 1;
 		default: assert(0);
 	}
 }
