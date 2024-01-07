@@ -298,7 +298,7 @@ uint32_t eval(int p, int q, bool *success) {
 			case TK_EQ: return val1 == val2;
 			case TK_NEQ: return val1 != val2;
 			case TK_AND: return val1 && val2;
-			case DEREF: return 1; 
+			case DEREF: return val2; 
       default: assert(0);
     }
   }
@@ -314,6 +314,7 @@ uint32_t expr(char *e, bool *success) {
 	for (int i = 0; i < nr_token; i ++) {
 	  if (tokens[i].type == '*' && (i == 0 || tokens[i - 1].type != TK_NUM)) {
 	    tokens[i].type = DEREF;
+			printf("position %d %c modify to DEREF\n", i, tokens[i].type);
 	  }
 	}
 
