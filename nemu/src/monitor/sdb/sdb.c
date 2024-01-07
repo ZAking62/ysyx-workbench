@@ -107,6 +107,10 @@ static int cmd_x(char *args){
 }
 
 static int cmd_p(char *args){
+  if (args == NULL){
+		printf("missing args\n");
+		return 0;
+	}
 	bool success = true;
 	word_t res = expr(args, &success);
 	printf("result = %u, success = %d\n", res, success);
