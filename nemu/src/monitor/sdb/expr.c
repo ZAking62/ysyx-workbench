@@ -312,7 +312,8 @@ uint32_t expr(char *e, bool *success) {
 
 	//determin * or multi
 	for (int i = 0; i < nr_token; i ++) {
-	  if (tokens[i].type == '*' && (i == 0 || tokens[i - 1].type != TK_NUM || tokens[i - 1].type != ')')) {
+	  if (tokens[i].type == '*' && (i == 0 || 
+					(tokens[i - 1].type != TK_NUM && tokens[i - 1].type != ')'))) {
 	    tokens[i].type = DEREF;
 			printf("position %d %c modify to DEREF\n", i, tokens[i].type);
 	  }
