@@ -287,7 +287,15 @@ uint32_t eval(int p, int q, bool *success) {
 				}
 				else{
 					printf("/0 error\n");
+					assert(0);
 				}
+			case TK_EQ:
+				if(val1 == val2) return 1;
+				else return 0;
+			case TK_NEQ:
+				if(val1 != val2) return 1;
+				else return 0;
+			case TK_AND: return val1 && val2;
       default: assert(0);
     }
   }
