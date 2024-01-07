@@ -12,7 +12,7 @@
 *
 * See the Mulan PSL v2 for more details.
 ***************************************************************************************/
-
+#include <memory/paddr.h>
 #include <isa.h>
 /* We use the POSIX regex functions to process regular expressions.
  * Type 'man regex' for more information about POSIX regex functions.
@@ -295,7 +295,7 @@ uint32_t eval(int p, int q, bool *success) {
    //op = the position of 主运算符 in the token expression;
 		val2 = eval(op + 1, q, success);
     if(op_type == DEREF){
-			return val2;		
+			return *(uint32_t*)guest_to_host(val2);		
 		}
 		val1 = eval(p, op - 1, success);
 
