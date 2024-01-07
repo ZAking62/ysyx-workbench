@@ -215,6 +215,7 @@ int prior_level(int type){
 		case TK_EQ:
 		case TK_NEQ: return 2;
 		case TK_AND: return 1;
+		case DEREF: return 5;
 		default: assert(0);
 	}
 }
@@ -263,7 +264,7 @@ uint32_t eval(int p, int q, bool *success) {
 //	}
   else {
 		int op = p;
-		int op_type = '*';
+		int op_type = DEREF;
 		int in_bracket = 0;
 		uint32_t val1, val2;
 		for(int i = p; i <= q; i++){
