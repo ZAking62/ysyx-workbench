@@ -22,7 +22,8 @@ typedef struct watchpoint {
   struct watchpoint *next;
 
   /* TODO: Add more members if necessary */
-
+	char *expr;
+	word_t value;
 } WP;
 
 static WP wp_pool[NR_WP] = {};
@@ -33,6 +34,8 @@ void init_wp_pool() {
   for (i = 0; i < NR_WP; i ++) {
     wp_pool[i].NO = i;
     wp_pool[i].next = (i == NR_WP - 1 ? NULL : &wp_pool[i + 1]);
+		wp_pool[i].expr = NULL;
+		wp_pool[i].value = 0;
   }
 
   head = NULL;
@@ -40,4 +43,39 @@ void init_wp_pool() {
 }
 
 /* TODO: Implement the functionality of watchpoint */
+WP* new_wp(){
+	WP *cur = free_;
+	if(cur == NULL){
+		assert(0);
+	}
+	free_ = free_->next;
 
+	cur->next = head;
+	head = cur;
+	return cur;
+}
+
+void free_wp(WP *wp){
+	WP *pre = head;
+	if(pre == NULL){
+		assert(0);
+	}
+	while(pre->next != wp) pre = pre->next;
+	pre->next = wp->next;
+
+	wp->next = free_;
+	free_ = wp;
+}
+
+//watchpoint 
+//	bool success;
+//	WP *tem = head;
+//	word_t pre_value = tem->value;
+//	while(tem != NULL){
+//		pre_value = tem->value;
+//		tem->value = expr(tem->expr, &success);
+//		if(tem->value != pre_value){
+//			nemu_state.state = NEMU_STOP;
+//			printf("watchpoint %d, pre value = %u, next value = %u\n", tem->NO, pre_value, tem->value);
+//		}
+//	}
