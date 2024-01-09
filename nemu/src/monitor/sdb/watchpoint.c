@@ -70,7 +70,7 @@ WP* find_wp_head(int id){
 void wp_display(){
 	WP *cur = head;
 	if(cur == NULL){
-		printf("nothing watchpoint");
+		printf("nothing watchpoint\n");
 	}
 	else{
 		printf("exist watchpoint list\n");
