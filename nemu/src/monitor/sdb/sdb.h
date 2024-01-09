@@ -29,7 +29,7 @@ typedef struct watchpoint {
 	word_t value;
 } WP;
 
-WP* new_wp();
+void new_wp(char *arge);
 
 void free_wp(WP *wp);
 
