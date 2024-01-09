@@ -118,7 +118,15 @@ static int cmd_p(char *args){
 }
 
 static int cmd_w(char *args){
-	printf("cmd_w\n");
+	if(args == NULL){
+		printf("missing args\n");
+		return 0;
+	}
+	WP *wpoint = new_wp();
+	wpoint->expr = args;
+	bool success = true;
+	wpoint->value = expr(args, &success);
+	printf("cmd_w success is %d\n", success);
 	return 0;
 }
 
