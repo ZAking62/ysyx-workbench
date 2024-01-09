@@ -124,6 +124,7 @@ static int cmd_w(char *args){
 	}
 	WP *wpoint = new_wp();
 	wpoint->expr = args;
+	wpoint->expr[strlen(args)] = '\0';
 	bool success = true;
 	wpoint->value = expr(args, &success);
 	if(success == true){
