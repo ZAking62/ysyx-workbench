@@ -127,7 +127,8 @@ static int cmd_w(char *args){
 	bool success = true;
 	wpoint->value = expr(args, &success);
 	if(success == true){
-		printf("new watchpoint id = %d, expr = %s, value = %x\n", wpoint->NO, wpoint->expr, wpoint->value);
+		printf("new watchpoint id = %d, expr = %s, value = 0x%x, %u\n", 
+				wpoint->NO, wpoint->expr, wpoint->value, wpoint->value);
 	}
 	return 0;
 }
