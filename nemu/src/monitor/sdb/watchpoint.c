@@ -72,11 +72,13 @@ void wp_display(){
 	if(cur == NULL){
 		printf("nothing watchpoint");
 	}
-	printf("exist watchpoint list\n");
-	while(cur != NULL){
-		printf("id = %d, expr = %s, value = %x, %u\n",
-				cur->NO, cur->expr, cur->value, cur->value);
-		cur = cur->next;
+	else{
+		printf("exist watchpoint list\n");
+		while(cur != NULL){
+			printf("id = %d, expr = %s, value = %x, %u\n",
+					cur->NO, cur->expr, cur->value, cur->value);
+			cur = cur->next;
+		}
 	}
 }
 //watchpoint 
