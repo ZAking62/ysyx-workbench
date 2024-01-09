@@ -123,6 +123,7 @@ static int cmd_w(char *args){
 		return 0;
 	}
 	WP *wpoint = new_wp();
+	printf("dd\n");
 	strcpy(wpoint->expr, args);
 	bool success = true;
 	wpoint->value = expr(args, &success);
