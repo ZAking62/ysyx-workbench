@@ -49,8 +49,7 @@ void new_wp(char *args){
 	}
 	cur->next = head;
 	head = cur;
-	free(cur);
-	
+	cur = NULL;
 }
 
 void free_wp(WP *wp){
