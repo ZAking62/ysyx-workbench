@@ -35,19 +35,11 @@ void init_wp_pool() {
 
 /* TODO: Implement the functionality of watchpoint */
 void new_wp(char *args){
-	if(head != NULL){
-		printf("new watchpoint id = %d, expr = %s, value = 0x%x, %u\n", 
-				head->NO, head->expr, head->value, head->value);
-	}
-printf("new watchpoint id = %d, expr = %s, value = 0x%x, %u\n", 
-				free_->NO, free_->expr, free_->value, free_->value);
 	WP *cur = free_;
 	if(cur == NULL){
 		assert(0);
 	}
 	free_ = free_->next;	
-	printf("new watchpoint id = %d, expr = %s, value = 0x%x, %u\n", 
-				free_->NO, free_->expr, free_->value, free_->value);
 
 	strcpy(cur->expr, args);
 	bool success = true;
@@ -58,7 +50,6 @@ printf("new watchpoint id = %d, expr = %s, value = 0x%x, %u\n",
 	}
 	cur->next = head;
 	head = cur;
-	cur = NULL;
 }
 
 void free_wp(WP *wp){
