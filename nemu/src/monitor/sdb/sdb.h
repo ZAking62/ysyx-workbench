@@ -33,4 +33,6 @@ WP* new_wp();
 
 void free_wp(WP *wp);
 
+WP* find_wp_head(int id);
+
 #endif

@@ -58,6 +58,16 @@ void free_wp(WP *wp){
 	free_ = wp;
 }
 
+WP* find_wp_head(int id){
+	WP* cur = head;
+	while(cur != NULL && cur->NO != id){
+		cur = cur->next;
+	}
+	if(cur == NULL) printf("fail to find\n");
+	return cur;
+}
+
+
 //watchpoint 
 //	bool success;
 //	WP *tem = head;

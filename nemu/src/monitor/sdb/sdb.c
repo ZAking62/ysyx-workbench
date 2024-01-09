@@ -133,6 +133,16 @@ static int cmd_w(char *args){
 	return 0;
 }
 
+static int cmd_d(char *args){
+	if(args == NULL){
+		printf("missing args\n");
+		return 0;
+	}
+	WP* fpoint = find_wp_head(atoi(args));
+	free_wp(fpoint);
+	return 0;
+}
+
 static int cmd_help(char *args);
 
 static struct {
@@ -143,11 +153,12 @@ static struct {
   { "help", "Display information about all supported commands", cmd_help },
   { "c", "Continue the execution of the program", cmd_c },
   { "q", "Exit NEMU", cmd_q },
-	{ "si", "one step execution", cmd_si},
-	{ "info", "print status", cmd_info},
-	{ "x", "scan memory", cmd_x},
-	{ "p", "expression evaluation", cmd_p},
-	{ "w", "set a monitor point", cmd_w},
+	{ "si", "one step execution could add number", cmd_si},
+	{ "info", "print status of r or w", cmd_info},
+	{ "x", "scan memory need number and address", cmd_x},
+	{ "p", "expression evaluation need expression", cmd_p},
+	{ "w", "set a watchpoint need expression", cmd_w},
+	{ "d", "delet a watchpoint need id", cmd_d},
   /* TODO: Add more commands */
 
 };
