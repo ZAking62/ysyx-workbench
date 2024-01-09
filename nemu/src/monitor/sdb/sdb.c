@@ -122,14 +122,7 @@ static int cmd_w(char *args){
 		printf("missing args\n");
 		return 0;
 	}
-	WP *wpoint = new_wp();
-	strcpy(wpoint->expr, args);
-	bool success = true;
-	wpoint->value = expr(args, &success);
-	if(success == true){
-		printf("new watchpoint id = %d, expr = %s, value = 0x%x, %u\n", 
-				wpoint->NO, wpoint->expr, wpoint->value, wpoint->value);
-	}
+	new_wp(args);
 	return 0;
 }
 

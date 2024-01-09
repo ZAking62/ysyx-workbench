@@ -34,15 +34,22 @@ void init_wp_pool() {
 }
 
 /* TODO: Implement the functionality of watchpoint */
-WP* new_wp(){
+WP* new_wp(char *args){
 	WP *cur = free_;
 	if(cur == NULL){
 		assert(0);
 	}
 	free_ = free_->next;
-
+	strcpy(cur->expr, args);
+	bool success = true;
+	cur->value = expr(args, &success);
+	if(success == true){
+		printf("new watchpoint id = %d, expr = %s, value = 0x%x, %u\n", 
+				cur->NO, cur->expr, cur->value, cur->value);
+	}
 	cur->next = head;
 	head = cur;
+	
 	return cur;
 }
 
