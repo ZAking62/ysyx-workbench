@@ -53,6 +53,7 @@ void new_wp(char *args){
 }
 
 void free_wp(WP *wp){
+	if(wp == NULL) return ;
 	WP *pre = head;
 	if(pre == NULL){
 		assert(0);
