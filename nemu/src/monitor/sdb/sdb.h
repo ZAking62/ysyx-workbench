@@ -35,4 +35,5 @@ void free_wp(WP *wp);
 
 WP* find_wp_head(int id);
 
+void wp_display();
 #endif

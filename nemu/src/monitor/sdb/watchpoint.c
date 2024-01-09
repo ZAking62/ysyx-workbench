@@ -67,7 +67,18 @@ WP* find_wp_head(int id){
 	return cur;
 }
 
-
+void wp_display(){
+	WP *cur = head;
+	if(cur == NULL){
+		printf("nothing watchpoint");
+	}
+	printf("exist watchpoint list\n");
+	while(cur != NULL){
+		printf("id = %d, expr = %s, value = %x, %u\n",
+				cur->NO, cur->expr, cur->value, cur->value);
+		cur = cur->next;
+	}
+}
 //watchpoint 
 //	bool success;
 //	WP *tem = head;

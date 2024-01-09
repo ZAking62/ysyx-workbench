@@ -70,7 +70,7 @@ static int cmd_info(char *args) {
 		if (strcmp(args, "r") == 0)
 			isa_reg_display();
 		else if (strcmp(args, "w") == 0)
-			printf("todo print w\n");
+			wp_display();
 		else 
 			printf("Unknown argment '%s'\n", args);
 	}
