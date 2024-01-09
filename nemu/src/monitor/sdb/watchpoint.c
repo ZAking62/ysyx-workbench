@@ -39,7 +39,10 @@ void new_wp(char *args){
 	if(cur == NULL){
 		assert(0);
 	}
-	free_ = free_->next;
+	free_ = free_->next;	
+	printf("new watchpoint id = %d, expr = %s, value = 0x%x, %u\n", 
+				free_->NO, free_->expr, free_->value, free_->value);
+
 	strcpy(cur->expr, args);
 	bool success = true;
 	cur->value = expr(args, &success);
