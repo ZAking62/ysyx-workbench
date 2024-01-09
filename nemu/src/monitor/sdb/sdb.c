@@ -126,7 +126,9 @@ static int cmd_w(char *args){
 	wpoint->expr = args;
 	bool success = true;
 	wpoint->value = expr(args, &success);
-	printf("cmd_w success is %d\n", success);
+	if(success == true){
+		printf("new watchpoint id = %d, expr = %s, value = %u\n", wpoint->NO, wpoint->expr, wpoint->value);
+	}
 	return 0;
 }
 
