@@ -104,6 +104,7 @@ bool wp_change(){
 				cur->NO, cur->expr, pre_value, pre_value, cur->value, cur->value);
 			res = true;
 		}
+		cur = cur->next;
 	}
 	return res;
 }
