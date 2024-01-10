@@ -100,7 +100,7 @@ bool wp_change(){
 		pre_value = cur->value;
 		cur->value = expr(cur->expr, &success);
 		if(cur->value != pre_value && success == true){
-			printf("watchpoint id = %d, expr = %s\nvalue = 0x%x, %u change to 0x%x, %u\n", 
+			printf("watchpoint id = %d, expr = %s, value = 0x%x, %u change to 0x%x, %u\n", 
 				cur->NO, cur->expr, pre_value, pre_value, cur->value, cur->value);
 			res = true;
 		}
