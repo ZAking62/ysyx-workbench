@@ -109,16 +109,3 @@ bool wp_change(){
 	return res;
 }
 
-
-//watchpoint 
-//	bool success;
-//	WP *tem = head;
-//	word_t pre_value = tem->value;
-//	while(tem != NULL){
-//		pre_value = tem->value;
-//		tem->value = expr(tem->expr, &success);
-//		if(tem->value != pre_value){
-//			nemu_state.state = NEMU_STOP;
-//			printf("watchpoint %d, pre value = %u, next value = %u\n", tem->NO, pre_value, tem->value);
-//		}
-//	}
