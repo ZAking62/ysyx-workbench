@@ -18,6 +18,7 @@
 
 #include <common.h>
 
+#define NR_WP_EXPR 32
 word_t expr(char *e, bool *success);
 
 typedef struct watchpoint {
@@ -25,7 +26,7 @@ typedef struct watchpoint {
   struct watchpoint *next;
 
   /* TODO: Add more members if necessary */
-	char expr[65536];
+	char expr[NR_WP_EXPR];
 	word_t value;
 } WP;
 
