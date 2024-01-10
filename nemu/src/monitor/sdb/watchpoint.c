@@ -91,7 +91,21 @@ void wp_display(){
 }
 
 bool wp_change(){
-	return true;
+	bool res = false;
+	bool success = true;
+	word_t pre_value = 0;
+	WP* cur = head;
+	while(cur != NULL){
+		success = true;
+		pre_value = cur->value;
+		cur->value = expr(cur->expr, &success);
+		if(cur->value != pre_value && success == true){
+			printf("watchpoint id = %d, expr = %s\nvalue = 0x%x, %u change to 0x%x, %u\n", 
+				cur->NO, cur->expr, pre_value, pre_value, cur->value, cur->value);
+			res = true;
+		}
+	}
+	return res;
 }
 
 
