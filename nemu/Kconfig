@@ -120,7 +120,7 @@ config CC_DEBUG
 
 config WATCHPOINT
 	bool "Enable watchpoint" 
-	default y
+	default n
 
 config CC_ASAN
   depends on MODE_SYSTEM
