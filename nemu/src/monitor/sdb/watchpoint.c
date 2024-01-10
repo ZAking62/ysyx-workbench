@@ -94,7 +94,7 @@ bool wp_change(){
 	bool res = false;
 	bool success = true;
 	word_t pre_value = 0;
-	char *tem_expr = NULL;
+	char tem_expr[65536] = {};
 	WP* cur = head;
 	while(cur != NULL){
 		success = true;
