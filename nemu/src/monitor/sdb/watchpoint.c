@@ -89,6 +89,12 @@ void wp_display(){
 		}
 	}
 }
+
+bool wp_change(){
+	return true;
+}
+
+
 //watchpoint 
 //	bool success;
 //	WP *tem = head;
