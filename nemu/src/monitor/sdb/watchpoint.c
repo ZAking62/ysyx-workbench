@@ -91,7 +91,7 @@ void wp_display(){
 }
 
 bool wp_change(){
-	return false;
+	return true;
 }
 
 
