@@ -91,6 +91,8 @@ static int cmd_x(char *args){
 		printf("missing address\n");
 		return 0;
 	}
+	//bool success = true;
+	//cur->value = expr(cur->expr, &success);
 	vaddr_t v_addr;
 	sscanf(address, "0x%x", &v_addr);
 	Log("count = %d address = " FMT_WORD, print_num, v_addr);
