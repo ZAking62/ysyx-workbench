@@ -24,6 +24,7 @@ void display_itrace(){
 	if(full == false && p_cur == 0){
 		return;
 	}
+#ifdef CONFIG_ITRACE
 	void disassemble(char *str, int size, uint64_t pc, uint8_t *code, int nbyte);
 	char buf[128];
 	char* p;
@@ -39,6 +40,7 @@ void display_itrace(){
 		i = (i + 1) % MAX_IRINGBUF; 
   }while (i != end);
 	puts(ANSI_NONE);
+#endif
 }
 
 void display_pread(paddr_t addr, int len) {
