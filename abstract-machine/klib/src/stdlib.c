@@ -5,7 +5,7 @@
 #if !defined(__ISA_NATIVE__) || defined(__NATIVE_USE_KLIB__)
 static unsigned long int next = 1;
 static char *m_addr;
-static bool init_flag = false;
+static int init_flag = 0;
 
 int rand(void) {
   // RAND_MAX assumed to be 32767
@@ -38,7 +38,7 @@ void *malloc(size_t size) {
 #if !(defined(__ISA_NATIVE__) && defined(__NATIVE_USE_KLIB__))
 	if(!init_flag){
 		m_addr = (void*)ROUNDUP(heap.start, 8);
-		init_flag = true;
+		init_flag = 1;
 	}
   size = (size_t)ROUNDUP(size, 8);
   char *old = m_addr;
