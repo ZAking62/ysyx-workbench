@@ -42,7 +42,7 @@ void *malloc(size_t size) {
 //	}
 //  size = (size_t)ROUNDUP(size, 8);
 //  char *old = m_addr;
-		char *old = heap.start;
+		char *old = (void*)heap.start;
 //  m_addr += size;
   return old;
 #endif
