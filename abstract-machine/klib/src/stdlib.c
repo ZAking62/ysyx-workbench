@@ -40,10 +40,11 @@ void *malloc(size_t size) {
 		m_addr = (void *)ROUNDUP(heap.start, 8);
 		init_flag = 1;
 	}
+
+  assert((uintptr_t)heap.start <= (uintptr_t)m_addr && (uintptr_t)m_addr < (uintptr_t)heap.end);
   size = (size_t)ROUNDUP(size, 8);
   char *old = m_addr;
   m_addr += size;
-  assert((uintptr_t)heap.start <= (uintptr_t)m_addr && (uintptr_t)m_addr < (uintptr_t)heap.end);
   return old;
 #endif
   return NULL;
