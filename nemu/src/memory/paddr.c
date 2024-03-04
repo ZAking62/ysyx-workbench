@@ -52,6 +52,7 @@ void init_mem() {
   Log("physical memory area [" FMT_PADDR ", " FMT_PADDR "]", PMEM_LEFT, PMEM_RIGHT);
 }
 
+//paddr_read()和paddr_write()会判断地址addr落在物理内存空间还是设备空间, 若落在物理内存空间, 就会通过pmem_read()和pmem_write()来访问真正的物理内存; 否则就通过map_read()和map_write()来访问相应的设备.
 word_t paddr_read(paddr_t addr, int len) {
 	IFDEF(CONFIG_MTRACE, display_pread(addr, len));
   if (likely(in_pmem(addr))) return pmem_read(addr, len);

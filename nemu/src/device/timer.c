@@ -19,8 +19,11 @@
 
 static uint32_t *rtc_port_base = NULL;
 
+//typedef void(*io_callback_t)(uint32_t, int, bool);
 static void rtc_io_handler(uint32_t offset, int len, bool is_write) {
   assert(offset == 0 || offset == 4);
+	//获取一次系统时间会触发两次这个回调函数，加一个判断避免重复get_time
+	//先获取高32位数据(即RTC_ADDR + 4的数据), 满足offset = 4的条件, 从而更新rtc_port_base
   if (!is_write && offset == 4) {
     uint64_t us = get_time();
     rtc_port_base[0] = (uint32_t)us;
@@ -37,11 +40,13 @@ static void timer_intr() {
 }
 #endif
 
+//设备的名称, addr, 映射的目标空间, 空间长度和回调函数.
 void init_timer() {
   rtc_port_base = (uint32_t *)new_space(8);
 #ifdef CONFIG_HAS_PORT_IO
   add_pio_map ("rtc", CONFIG_RTC_PORT, rtc_port_base, 8, rtc_io_handler);
 #else
+	//void add_mmio_map(**,  io_callback_t callback) 
   add_mmio_map("rtc", CONFIG_RTC_MMIO, rtc_port_base, 8, rtc_io_handler);
 #endif
   IFNDEF(CONFIG_TARGET_AM, add_alarm_handle(timer_intr));
