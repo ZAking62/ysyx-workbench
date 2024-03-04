@@ -39,6 +39,7 @@ void *malloc(size_t size) {
 //  char *old = m_hbrk;
 //  m_hbrk += size;
 //  return old;
+		panic("Not implement");
 #endif
   return NULL;
 }
