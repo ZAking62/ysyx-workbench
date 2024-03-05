@@ -76,7 +76,7 @@ int vsnprintf(char *out, size_t n, const char *fmt, va_list ap) {
 						}
 						break;
 					case 'c':
-						char m_s = va_arg(ap, int);
+						char m_s = va_arg(ap, int);//1
 						out[len++] = m_s;
 						break;
 				}
