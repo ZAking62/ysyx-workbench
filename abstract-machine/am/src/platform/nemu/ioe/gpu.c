@@ -2,6 +2,7 @@
 #include <nemu.h>
 
 #define SYNC_ADDR (VGACTL_ADDR + 4)
+//sync保存在vgactl_port_base[1]中
 
 void __am_gpu_init() {
 }
