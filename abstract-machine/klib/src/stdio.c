@@ -75,6 +75,10 @@ int vsnprintf(char *out, size_t n, const char *fmt, va_list ap) {
                 out[len++] = s[i];
 						}
 						break;
+					case 'c':
+						char m_s = va_arg(ap, int);
+						out[len++] = m_s;
+						break;
 				}
 				break;
 			case '\n':
