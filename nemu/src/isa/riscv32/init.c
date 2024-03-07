@@ -18,6 +18,7 @@
 
 // this is not consistent with uint8_t
 // but it is ok since we do not access the array directly
+//默认示例程序
 static const uint32_t img [] = {
   0x00000297,  // auipc t0,0
   0x00028823,  // sb  zero,16(t0)
@@ -28,7 +29,8 @@ static const uint32_t img [] = {
 
 static void restart() {
   /* Set the initial program counter. */
-  cpu.pc = RESET_VECTOR;
+	//pc从起始地址开始
+	cpu.pc = RESET_VECTOR;
 
   /* The zero register is always 0. */
   cpu.gpr[0] = 0;
@@ -36,6 +38,7 @@ static void restart() {
 
 void init_isa() {
   /* Load built-in image. */
+	//将程序装入内存, RESET_VECTOR是程序写入cpu的起始地址
   memcpy(guest_to_host(RESET_VECTOR), img, sizeof(img));
 
   /* Initialize this virtual computer system. */

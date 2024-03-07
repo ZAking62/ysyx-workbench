@@ -123,8 +123,11 @@ static int decode_exec(Decode *s) {
 }
 
 int isa_exec_once(Decode *s) {
+	//取指
   s->isa.inst.val = inst_fetch(&s->snpc, 4);
+	//trace记录
 	void trace_inst(word_t pc, uint32_t inst);
 	IFDEF(CONFIG_ITRACE, trace_inst(s->pc, s->isa.inst.val));
-  return decode_exec(s);
+  //译码+执行(匹配指令，模拟执行行为)
+	return decode_exec(s);
 }
