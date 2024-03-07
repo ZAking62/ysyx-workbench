@@ -40,8 +40,11 @@ static void trace_and_difftest(Decode *_this, vaddr_t dnpc) {
 #endif
 	//print when cmd_si
   if (g_print_step) { IFDEF(CONFIG_ITRACE, puts(_this->logbuf)); }
+	//itrace打印
   IFDEF(CONFIG_DIFFTEST, difftest_step(_this->pc, dnpc));
+	//difftest功能
 #ifdef CONFIG_WATCHPOINT
+	//监视点
 	if (wp_change() == true){
 		puts(_this->logbuf);
 		if(nemu_state.state != NEMU_END){
@@ -55,8 +58,11 @@ static void exec_once(Decode *s, vaddr_t pc) {
   s->pc = pc;
   s->snpc = pc;
   isa_exec_once(s);
+	//取指译码执行在isa里面实现
   cpu.pc = s->dnpc;
+	//更新pc
 #ifdef CONFIG_ITRACE
+	//记录itrace内容
   char *p = s->logbuf;
 	//write pc address into string p (s->logbuf) 
   p += snprintf(p, sizeof(s->logbuf), FMT_WORD ":", s->pc);
@@ -75,10 +81,9 @@ static void exec_once(Decode *s, vaddr_t pc) {
   memset(p, ' ', space_len);
   p += space_len;
 
-//if not def
+//如果不是龙芯isa,记录反汇编内容
 #ifndef CONFIG_ISA_loongarch32r
   void disassemble(char *str, int size, uint64_t pc, uint8_t *code, int nbyte);
-	//copy remaining inst into p  反汇编
   disassemble(p, s->logbuf + sizeof(s->logbuf) - p,
       MUXDEF(CONFIG_ISA_x86, s->snpc, s->pc), (uint8_t *)&s->isa.inst.val, ilen);
 #else
@@ -96,6 +101,7 @@ static void execute(uint64_t n) {
     trace_and_difftest(&s, cpu.pc);
     if (nemu_state.state != NEMU_RUNNING) break;
     IFDEF(CONFIG_DEVICE, device_update());
+		//更新设备
   }
 }
 
@@ -108,10 +114,15 @@ static void statistic() {
   else Log("Finish running in less than 1 us and can not calculate the simulation frequency");
 }
 
+//
 void assert_fail_msg() {
+	//出错处理
 	IFDEF(CONFIG_ITRACE, display_itrace());
+	//展示最近执行的指令
   isa_reg_display();
+	//展示此时寄存器状态
   statistic();
+	//输出统计结果
 }
 
 /* Simulate how the CPU works. */

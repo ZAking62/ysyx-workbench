@@ -18,6 +18,7 @@
 #include <device/mmio.h>
 #include <isa.h>
 
+//物理内存pmem
 #if   defined(CONFIG_PMEM_MALLOC)
 static uint8_t *pmem = NULL;
 #else // CONFIG_PMEM_GARRAY
@@ -26,6 +27,8 @@ static uint8_t pmem[CONFIG_MSIZE] PG_ALIGN = {};
 
 void display_pread(paddr_t addr, int len);
 void display_pwrite(paddr_t addr, int len, word_t data);
+//riscv的内存起始地址为0x80000000,CONFIG_MBASE将会被定义成0x80000000
+//CPU打算访问内存地址0x80000000时, 通过guest_to_host()让它最终访问pmem[0]
 uint8_t* guest_to_host(paddr_t paddr) { return pmem + paddr - CONFIG_MBASE; }
 paddr_t host_to_guest(uint8_t *haddr) { return haddr - pmem + CONFIG_MBASE; }
 
@@ -38,6 +41,7 @@ static void pmem_write(paddr_t addr, int len, word_t data) {
   host_write(guest_to_host(addr), len, data);
 }
 
+//判断越界
 static void out_of_bound(paddr_t addr) {
   panic("address = " FMT_PADDR " is out of bound of pmem [" FMT_PADDR ", " FMT_PADDR "] at pc = " FMT_WORD,
       addr, PMEM_LEFT, PMEM_RIGHT, cpu.pc);
@@ -46,16 +50,19 @@ static void out_of_bound(paddr_t addr) {
 void init_mem() {
 #if   defined(CONFIG_PMEM_MALLOC)
   pmem = malloc(CONFIG_MSIZE);
+	//分配物理内存
   assert(pmem);
 #endif
   IFDEF(CONFIG_MEM_RANDOM, memset(pmem, rand(), CONFIG_MSIZE));
   Log("physical memory area [" FMT_PADDR ", " FMT_PADDR "]", PMEM_LEFT, PMEM_RIGHT);
 }
 
-//paddr_read()和paddr_write()会判断地址addr落在物理内存空间还是设备空间, 若落在物理内存空间, 就会通过pmem_read()和pmem_write()来访问真正的物理内存; 否则就通过map_read()和map_write()来访问相应的设备.
 word_t paddr_read(paddr_t addr, int len) {
+	//内存trace
 	IFDEF(CONFIG_MTRACE, display_pread(addr, len));
+	//落在物理内存空间, 就会通过pmem_read()和pmem_write()来访问真正的物理内存;
   if (likely(in_pmem(addr))) return pmem_read(addr, len);
+	//落在设备空间
   IFDEF(CONFIG_DEVICE, return mmio_read(addr, len));
   out_of_bound(addr);
   return 0;

@@ -16,6 +16,7 @@
 #include <isa.h>
 #include "local-include/reg.h"
 
+//寄存器编号
 const char *regs[] = {
   "$0", "ra", "sp", "gp", "tp", "t0", "t1", "t2",
   "s0", "s1", "a0", "a1", "a2", "a3", "a4", "a5",
@@ -30,6 +31,7 @@ void isa_reg_display() {
 	printf("pc\t0x%x\t%u\n", cpu.pc, cpu.pc);
 }
 
+//根据寄存器名字取寄存器的值
 word_t isa_reg_str2val(const char *s, bool *success) {
 	word_t value = 0;
 	for(int i = 0; i < 32; i++){
