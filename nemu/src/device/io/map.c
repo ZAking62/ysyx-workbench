@@ -18,6 +18,7 @@
 #include <memory/vaddr.h>
 #include <device/map.h>
 
+//映射的管理, 包括I/O空间的分配及其映射, 还有映射的访问接口
 #define IO_SPACE_MAX (2 * 1024 * 1024)
 
 static uint8_t *io_space = NULL;
@@ -52,13 +53,17 @@ void init_map() {
   p_space = io_space;
 }
 
+//map_read()和map_write()用于将地址addr映射到map所指示的目标空间
 word_t map_read(paddr_t addr, int len, IOMap *map) {
   assert(len >= 1 && len <= 8);
   check_bound(map, addr);
+	//low是映射的起始地址
   paddr_t offset = addr - map->low;
-  invoke_callback(map->callback, offset, len, false); // prepare data to read
+	// prepare data to read
+  invoke_callback(map->callback, offset, len, false); 
   word_t ret = host_read(map->space + offset, len);
 #ifdef CONFIG_DTARCE
+	//设备trace
 	log_write("dtrace: read %10s at " FMT_PADDR ",%d\n", map->name, addr, len);
 #endif
   return ret;
@@ -69,6 +74,7 @@ void map_write(paddr_t addr, int len, word_t data, IOMap *map) {
   check_bound(map, addr);
   paddr_t offset = addr - map->low;
   host_write(map->space + offset, len, data);
+	//访问时, 可能会触发相应的回调函数, 对设备和目标空间的状态进行更新
   invoke_callback(map->callback, offset, len, true);
 #ifdef CONFIG_DTARCE_COND
   log_write("dtrace: write %10s at " FMT_PADDR ",%d with " FMT_WORD "\n",
