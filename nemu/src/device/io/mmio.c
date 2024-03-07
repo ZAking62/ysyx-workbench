@@ -21,11 +21,13 @@
 static IOMap maps[NR_MAP] = {};
 static int nr_map = 0;
 
+//通过地址从map池子里找map
 static IOMap* fetch_mmio_map(paddr_t addr) {
   int mapid = find_mapid_by_addr(maps, nr_map, addr);
   return (mapid == -1 ? NULL : &maps[mapid]);
 }
 
+//两个设备地址重叠了
 static void report_mmio_overlap(const char *name1, paddr_t l1, paddr_t r1,
     const char *name2, paddr_t l2, paddr_t r2) {
   panic("MMIO region %s@[" FMT_PADDR ", " FMT_PADDR "] is overlapped "
@@ -36,21 +38,24 @@ static void report_mmio_overlap(const char *name1, paddr_t l1, paddr_t r1,
 void add_mmio_map(const char *name, paddr_t addr, void *space, uint32_t len, io_callback_t callback) {
   assert(nr_map < NR_MAP);
   paddr_t left = addr, right = addr + len - 1;
+	//检查是不是在外设专用内存里
   if (in_pmem(left) || in_pmem(right)) {
     report_mmio_overlap(name, left, right, "pmem", PMEM_LEFT, PMEM_RIGHT);
   }
+	//检查设备内存是否分配冲突
   for (int i = 0; i < nr_map; i++) {
     if (left <= maps[i].high && right >= maps[i].low) {
       report_mmio_overlap(name, left, right, maps[i].name, maps[i].low, maps[i].high);
     }
   }
 
-	//add IOMap
+	//往map池子里添加map
   maps[nr_map] = (IOMap){ .name = name, .low = addr, .high = addr + len - 1,
     .space = space, .callback = callback };
   Log("Add mmio map '%s' at [" FMT_PADDR ", " FMT_PADDR "]",
       maps[nr_map].name, maps[nr_map].low, maps[nr_map].high);
 
+	//map数量++
   nr_map ++;
 }
 

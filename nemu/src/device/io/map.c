@@ -24,6 +24,7 @@
 static uint8_t *io_space = NULL;
 static uint8_t *p_space = NULL;
 
+//使用(已开辟)的space范围{p, p__space},返回space起始地址
 uint8_t* new_space(int size) {
   uint8_t *p = p_space;
   // page aligned;
@@ -43,23 +44,26 @@ static void check_bound(IOMap *map, paddr_t addr) {
   }
 }
 
+//调用map的回调函数，对设备和目标空间的状态进行更新
 static void invoke_callback(io_callback_t c, paddr_t offset, int len, bool is_write) {
   if (c != NULL) { c(offset, len, is_write); }
 }
 
 void init_map() {
+	//给io分配内存
   io_space = malloc(IO_SPACE_MAX);
   assert(io_space);
   p_space = io_space;
 }
 
+//有mmio和pio方式都会调用map映射
 //map_read()和map_write()用于将地址addr映射到map所指示的目标空间
 word_t map_read(paddr_t addr, int len, IOMap *map) {
   assert(len >= 1 && len <= 8);
   check_bound(map, addr);
 	//low是映射的起始地址
   paddr_t offset = addr - map->low;
-	// prepare data to read
+	//prepare data to read
   invoke_callback(map->callback, offset, len, false); 
   word_t ret = host_read(map->space + offset, len);
 #ifdef CONFIG_DTARCE
