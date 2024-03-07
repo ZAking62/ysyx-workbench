@@ -27,6 +27,7 @@
 
 CPU_state cpu = {};
 uint64_t g_nr_guest_inst = 0;
+//count total guest instructions 
 static uint64_t g_timer = 0; // unit: us
 static bool g_print_step = false;
 
@@ -77,7 +78,7 @@ static void exec_once(Decode *s, vaddr_t pc) {
 //if not def
 #ifndef CONFIG_ISA_loongarch32r
   void disassemble(char *str, int size, uint64_t pc, uint8_t *code, int nbyte);
-	//copy remaining inst into p
+	//copy remaining inst into p  反汇编
   disassemble(p, s->logbuf + sizeof(s->logbuf) - p,
       MUXDEF(CONFIG_ISA_x86, s->snpc, s->pc), (uint8_t *)&s->isa.inst.val, ilen);
 #else
