@@ -20,6 +20,7 @@
 #include <assert.h>
 #include <string.h>
 
+//自动生成测试表达式求值功能
 // this should be enough
 static char buf[65536] = {};
 static int nr_buf = 0;

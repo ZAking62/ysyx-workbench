@@ -12,6 +12,8 @@
 # define nemu_trap(code) asm volatile ("move $v0, %0; sdbbp" : :"r"(code))
 #elif defined(__riscv)
 # define nemu_trap(code) asm volatile("mv a0, %0; ebreak" : :"r"(code))
+//宏的定义是和ISA相关的,内联汇编
+//这段汇编代码的功能就和nemu/src/isa/$ISA/inst.c中nemu_trap的行为对应起来了: 通用寄存器中的值将会作为参数传给set_nemu_state(), 将halt()中的结束码设置到NEMU的monitor中, monitor将会根据结束码来报告程序结束的原因
 #elif defined(__ISA_LOONGARCH32R__)
 # define nemu_trap(code) asm volatile("move $a0, %0; break 0" : :"r"(code))
 #elif
