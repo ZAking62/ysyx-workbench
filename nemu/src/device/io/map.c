@@ -58,6 +58,7 @@ void init_map() {
 
 //有mmio和pio方式都会调用map映射
 //map_read()和map_write()用于将地址addr映射到map所指示的目标空间
+//核心是从设备虚拟地址到物理地址的转换
 word_t map_read(paddr_t addr, int len, IOMap *map) {
   assert(len >= 1 && len <= 8);
   check_bound(map, addr);
@@ -77,8 +78,10 @@ void map_write(paddr_t addr, int len, word_t data, IOMap *map) {
   assert(len >= 1 && len <= 8);
   check_bound(map, addr);
   paddr_t offset = addr - map->low;
+	//low和high只是虚拟地址，真正写入的地方是io_space(通过host_write)
   host_write(map->space + offset, len, data);
 	//访问时, 可能会触发相应的回调函数, 对设备和目标空间的状态进行更新
+	//回调函数是真正进行对宿主设备操作的部分
   invoke_callback(map->callback, offset, len, true);
 #ifdef CONFIG_DTARCE_COND
   log_write("dtrace: write %10s at " FMT_PADDR ",%d with " FMT_WORD "\n",

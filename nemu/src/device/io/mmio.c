@@ -18,6 +18,7 @@
 
 #define NR_MAP 16
 
+//结构体IOMap，核心是从设备虚拟地址到设备的转换
 static IOMap maps[NR_MAP] = {};
 static int nr_map = 0;
 
@@ -64,6 +65,8 @@ word_t mmio_read(paddr_t addr, int len) {
   return map_read(addr, len, fetch_mmio_map(addr));
 }
 
+//每个设备以IOMap结构体的形式存储
+//fetch_mmio_map功能就是获取给定地址对应的IOMap结构体
 void mmio_write(paddr_t addr, int len, word_t data) {
   map_write(addr, len, data, fetch_mmio_map(addr));
 }

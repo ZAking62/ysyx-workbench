@@ -15,6 +15,7 @@ static const char mainargs[] = MAINARGS;
 
 //用于输出一个字符
 void putch(char ch) {
+	//outb定义abstract-machine/am/src/riscv/riscv.h
   outb(SERIAL_PORT, ch);
 }
 
