@@ -10,9 +10,15 @@ AM_SRCS := platform/nemu/trm.c \
 
 ###编译flags
 CFLAGS    += -fdata-sections -ffunction-sections
+
+###defsym为程序中的标志pmem_start设定地址,_pmem_start这个标志是在nemu.h中声明的
 LDFLAGS   += -T $(AM_HOME)/scripts/linker.ld \
              --defsym=_pmem_start=0x80000000 --defsym=_entry_offset=0x0
+
+###在链接过程中用-e指定程序的入口
+##程序入口是_start函数，被定义在am/src/riscv/nemu/start.S文件中, _start函数会调用_trm_init函数
 LDFLAGS   += --gc-sections -e _start
+
 ##模拟器运行参数NEMUFLAGS
 NEMUFLAGS += -l $(shell dirname $(IMAGE).elf)/nemu-log.txt -b
 
