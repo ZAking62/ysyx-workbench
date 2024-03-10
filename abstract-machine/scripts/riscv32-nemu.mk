@@ -1,3 +1,4 @@
+###分别引入了ISA和PLATFORM相关的makefile，最后添加一些编译flags和am相关的sources
 include $(AM_HOME)/scripts/isa/riscv.mk
 include $(AM_HOME)/scripts/platform/nemu.mk
 CFLAGS  += -DISA_H=\"riscv/riscv.h\"
