@@ -26,11 +26,12 @@ void __am_gpu_fbdraw(AM_GPU_FBDRAW_T *ctl) {
   int x = ctl->x, y = ctl->y, w = ctl->w, h = ctl->h;
   if (!ctl->sync && (w == 0 || h == 0)) return;
   uint32_t *pixels = ctl->pixels;
+	//写FB_ADDR处的内存
   uint32_t *fb = (uint32_t *)(uintptr_t)FB_ADDR;
   uint32_t screen_w = inl(VGACTL_ADDR) >> 16;
-  for (int i = y; i < y+h; i++) {
-    for (int j = x; j < x+w; j++) {
-      fb[screen_w*i+j] = pixels[w*(i-y)+(j-x)];
+  for (int j = y; j < y+h; j++) {
+    for (int i = x; i < x+w; i++) {
+      fb[screen_w*j+i] = pixels[w*(j-y)+(i-x)];
     }
   }
 	//设置同步寄存器
