@@ -6,7 +6,9 @@ void __am_timer_init() {
 	outl(RTC_ADDR + 4, 0);
 }
 
+//AM_TIMER_UPTIME_T在abstract-machine/am/include/amdev.h
 void __am_timer_uptime(AM_TIMER_UPTIME_T *uptime) {
+	//inl最后编译成nemu里的read内存
 	uint32_t high = inl(RTC_ADDR + 4);
 	uint32_t low = inl(RTC_ADDR);
   uptime->us = (uint64_t)low + (((uint64_t)high) << 32);

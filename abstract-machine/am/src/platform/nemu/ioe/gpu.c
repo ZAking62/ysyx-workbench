@@ -8,7 +8,9 @@ void __am_gpu_init() {
 
 }
 
+//从硬件(nemu特定内存地址)中读出数据，配置给抽象寄存器
 void __am_gpu_config(AM_GPU_CONFIG_T *cfg) {
+	//获取屏幕大小
   uint32_t screen_wh = inl(VGACTL_ADDR);
   uint32_t h = screen_wh & 0xffff;
   uint32_t w = screen_wh >> 16;
@@ -19,6 +21,7 @@ void __am_gpu_config(AM_GPU_CONFIG_T *cfg) {
   };
 }
 
+//正确实现写入绘图信息功能
 void __am_gpu_fbdraw(AM_GPU_FBDRAW_T *ctl) {
   int x = ctl->x, y = ctl->y, w = ctl->w, h = ctl->h;
   if (!ctl->sync && (w == 0 || h == 0)) return;
@@ -30,6 +33,7 @@ void __am_gpu_fbdraw(AM_GPU_FBDRAW_T *ctl) {
       fb[screen_w*i+j] = pixels[w*(i-y)+(j-x)];
     }
   }
+	//设置同步寄存器
   if (ctl->sync) {
     outl(SYNC_ADDR, 1);
   }

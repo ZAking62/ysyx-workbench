@@ -97,6 +97,7 @@
 #define unlikely(cond) __builtin_expect(cond, 0)
 #endif
 
+// io_read()和io_write()这两个宏, 分别对ioe_read()和ioe_write()这两个API进行了进一步的封装
 // for AM IOE
 #define io_read(reg) \
   ({ reg##_T __io_param; \

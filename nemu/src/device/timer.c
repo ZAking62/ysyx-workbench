@@ -41,12 +41,13 @@ static void timer_intr() {
 #endif
 
 //设备的名称, addr, 映射的目标空间, 空间长度和回调函数.
+//映射到两个32位的RTC寄存器. CPU可以访问这两个寄存器来获得用64位表示的当前时间
 void init_timer() {
   rtc_port_base = (uint32_t *)new_space(8);
 #ifdef CONFIG_HAS_PORT_IO
   add_pio_map ("rtc", CONFIG_RTC_PORT, rtc_port_base, 8, rtc_io_handler);
 #else
-	//void add_mmio_map(**,  io_callback_t callback) 
+	//注册0xa0000048处长度为8字节的MMIO空间,注册地址定义在Kconfig里
   add_mmio_map("rtc", CONFIG_RTC_MMIO, rtc_port_base, 8, rtc_io_handler);
 #endif
   IFNDEF(CONFIG_TARGET_AM, add_alarm_handle(timer_intr));

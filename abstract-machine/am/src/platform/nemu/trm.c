@@ -13,7 +13,7 @@ Area heap = RANGE(&_heap_start, PMEM_END);
 //传入MAINARGS=“”作为mainargs,32line
 static const char mainargs[] = MAINARGS;
 
-//用于输出一个字符
+//用于输出一个字符,输出到设备(串口)
 void putch(char ch) {
 	//outb定义abstract-machine/am/src/riscv/riscv.h
   outb(SERIAL_PORT, ch);
