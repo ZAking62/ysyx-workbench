@@ -61,7 +61,6 @@ void     ioe_write   (int reg, void *buf);
 // ---------- CTE: Interrupt Handling and Context Switching ----------
 //当发生事件时, CTE将会把事件和相关的上下文作为参数, 来调用这个回调函数, 交由操作系统进行后续处理
 bool     cte_init    (Context *(*handler)(Event ev, Context *ctx));
-//进行自陷操作, 会触发一个编号为EVENT_YIELD事件
 void     yield       (void);
 bool     ienabled    (void);
 void     iset        (bool enable);
