@@ -19,8 +19,8 @@
 #include <common.h>
 
 typedef struct {
-  word_t mcause; //存放触发异常的原因
   vaddr_t mepc;  //存放触发异常的PC
+  word_t mcause; //存放触发异常的原因
   word_t mstatus;  
   word_t mtvec;  //异常入口地址
 } riscv32_CSRs;
