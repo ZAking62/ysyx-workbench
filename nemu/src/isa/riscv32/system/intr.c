@@ -15,6 +15,7 @@
 
 #include <isa.h>
 
+//抛出一个号码为NO的异常, 其中epc为触发异常的指令PC, 返回异常处理的出口地址.
 word_t isa_raise_intr(word_t NO, vaddr_t epc) {
   /* TODO: Trigger an interrupt/exception with ``NO''.
    * Then return the address of the interrupt/exception vector.
@@ -23,6 +24,7 @@ word_t isa_raise_intr(word_t NO, vaddr_t epc) {
   return 0;
 }
 
+//查询当前是否有未处理的中断, 若有则返回中断号码, 否则返回INTR_EMPTY.
 word_t isa_query_intr() {
   return INTR_EMPTY;
 }

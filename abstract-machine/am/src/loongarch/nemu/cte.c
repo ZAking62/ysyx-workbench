@@ -4,6 +4,7 @@
 
 static Context* (*user_handler)(Event, Context*) = NULL;
 
+//最终将事件和上下文一并通过回调函数hander传给操作系统
 Context* __am_irq_handle(Context *c) {
   if (user_handler) {
     Event ev = {0};
