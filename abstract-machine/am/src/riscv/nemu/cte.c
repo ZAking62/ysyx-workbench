@@ -15,6 +15,7 @@ Context* __am_irq_handle(Context *c) {
     }
 		//处理事件，返回上下文
     c = user_handler(ev, c);
+		printf("mcause is %d\n", c->mcause);
     assert(c != NULL);
   }
 
