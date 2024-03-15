@@ -20,7 +20,7 @@ LDFLAGS   += -T $(AM_HOME)/scripts/linker.ld \
 LDFLAGS   += --gc-sections -e _start
 
 ##模拟器运行参数NEMUFLAGS
-NEMUFLAGS += -l $(shell dirname $(IMAGE).elf)/nemu-log.txt -b
+NEMUFLAGS += -l $(shell dirname $(IMAGE).elf)/nemu-log.txt 
 
 CFLAGS += -DMAINARGS=\"$(mainargs)\"
 CFLAGS += -I$(AM_HOME)/am/src/platform/nemu/include
