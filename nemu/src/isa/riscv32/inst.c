@@ -36,7 +36,7 @@ enum {
 #define immJ() do { *imm = (SEXT(BITS(i, 31, 31), 1) << 20) | (BITS(i, 19, 12) << 12)| (BITS(i, 20, 20) << 11) | (BITS(i, 30, 21) << 1); }while(0)
 #define immB() do { *imm = (SEXT(BITS(i, 31, 31), 1) << 12) | (BITS(i, 7, 7) << 11) | (BITS(i, 30, 25) << 5) | (BITS(i, 11, 8) << 1); }while(0)
 
-static vaddr_t *csr_register(uint64_t imm) {
+static vaddr_t *csr_register(word_t imm) {
   switch (imm)
   {
   case 0x341: return &(cpu.csr.mepc);
