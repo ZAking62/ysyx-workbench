@@ -18,11 +18,14 @@ typedef struct {
   void *start, *end;
 } Area;
 
+//Context的具体成员由不同的架构自己定义,x86-nemu的abstract-machine/am/include/arch/x86-nemu.h
 // Arch-dependent processor context
 typedef struct Context Context;
 
+//每个架构在实现各自的CTE API时, 都统一通过Event来描述执行流切换的原因
 // An event of type @event, caused by @cause of pointer @ref
 typedef struct {
+	//统一的事件编号
   enum {
     EVENT_NULL = 0,
     EVENT_YIELD, EVENT_SYSCALL, EVENT_PAGEFAULT, EVENT_ERROR,
@@ -56,7 +59,9 @@ void     ioe_write   (int reg, void *buf);
 #include "amdev.h"
 
 // ---------- CTE: Interrupt Handling and Context Switching ----------
+//当发生事件时, CTE将会把事件和相关的上下文作为参数, 来调用这个回调函数, 交由操作系统进行后续处理
 bool     cte_init    (Context *(*handler)(Event ev, Context *ctx));
+//进行自陷操作, 会触发一个编号为EVENT_YIELD事件
 void     yield       (void);
 bool     ienabled    (void);
 void     iset        (bool enable);
