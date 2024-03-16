@@ -7,7 +7,7 @@ static Context* (*user_handler)(Event, Context*) = NULL;
 Context* __am_irq_handle(Context *c) {
   if (user_handler) {
     Event ev = {0};
-		printf("mcause is %d\n", c->mcause);
+		//printf("mcause is %d\n", c->mcause);
     switch (c->mcause) {
 			case 1:
 				ev.event = EVENT_YIELD; break;
@@ -15,7 +15,6 @@ Context* __am_irq_handle(Context *c) {
     }
 		//处理事件，返回上下文
     c = user_handler(ev, c);
-		printf("mcause is %d\n", c->mcause);
     assert(c != NULL);
   }
 
@@ -49,6 +48,7 @@ void yield() {
 #ifdef __riscv_e
   asm volatile("li a5, -1; ecall");
 #else
+	//1是自陷，看提供接口event的定义
   asm volatile("li a7, 1; ecall");
 #endif
 }
