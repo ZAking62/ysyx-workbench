@@ -1,4 +1,5 @@
 #include <common.h>
+void do_syscall(Context *c);
 
 static Context* do_event(Event e, Context* c) {
   switch (e.event) {
@@ -7,6 +8,7 @@ static Context* do_event(Event e, Context* c) {
 		 	break;
 		case 2:
 			Log("syscall");
+			do_syscall(c);
 			break;
     default: panic("Unhandled event ID = %d", e.event);
   }
