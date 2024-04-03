@@ -26,9 +26,9 @@ Context* __am_irq_handle(Context *c) {
 			case 9:
 			case 10:
 			case 11:
-				//if(c->GPR1 == 1){
-				//	ev.event = EVENT_YIELD; break;
-				//}
+				if(c->GPR1 == 1){
+					ev.event = EVENT_YIELD; break;
+				}
 				ev.event = EVENT_SYSCALL; break;
       default: ev.event = EVENT_ERROR; break;
     }
