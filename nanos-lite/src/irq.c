@@ -5,7 +5,7 @@ static Context* do_event(Event e, Context* c) {
   switch (e.event) {
 		case 1:
 			Log("yield");
-			yield();
+			//你需要在其中识别出自陷事件EVENT_YIELD, 然后输出一句话即可, 目前无需进行其它操作
 		 	break;
 		case 2:
 			Log("syscall");
