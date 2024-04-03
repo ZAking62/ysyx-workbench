@@ -48,8 +48,8 @@ void do_syscall(Context *c) {
 			halt(0);
 			break;
     case SYS_yield:
-			sys_yield(c);
 			Log("SYS_yield, GPRx = %d", c->GPRx);
+			sys_yield(c);
 			break;
 		case SYS_write:
 			sys_write(c);
