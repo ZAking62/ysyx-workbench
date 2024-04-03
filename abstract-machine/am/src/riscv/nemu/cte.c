@@ -1,8 +1,6 @@
 #include <am.h>
 #include <riscv/riscv.h>
 #include <klib.h>
-#define Machine_Software_Interrupt (11)
-#define User_Software_Interrupt (4)
 #define IRQ_TIMER 0x80000007
 
 static Context* (*user_handler)(Event, Context*) = NULL;
@@ -12,8 +10,18 @@ Context* __am_irq_handle(Context *c) {
     Event ev = {0};
 		printf("mcause is %d\n", c->mcause);
     switch (c->mcause) {
-      case Machine_Software_Interrupt:
-      case User_Software_Interrupt:
+			case 0:
+			case 1:
+			case 2:
+			case 3:
+			case 4:
+			case 5:
+			case 6:
+      case 7:
+			case 8:
+			case 9:
+			case 10:
+			case 11:
 				if(c->GPR1 == -1){
 					ev.event = EVENT_YIELD; break;
 				}
