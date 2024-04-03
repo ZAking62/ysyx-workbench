@@ -2,13 +2,17 @@
 #include <riscv/riscv.h>
 #include <klib.h>
 #define IRQ_TIMER 0x80000007
+#define Log(format, ...) \
+  printf("\33[1;35m[%s,%d,%s] " format "\33[0m\n", \
+      __FILE__, __LINE__, __func__, ## __VA_ARGS__)
+
 
 static Context* (*user_handler)(Event, Context*) = NULL;
 
 Context* __am_irq_handle(Context *c) {
   if (user_handler) {
     Event ev = {0};
-
+		Log("dd");
     switch (c->mcause) {
 			case 0:
 			case 1:
