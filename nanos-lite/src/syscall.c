@@ -25,7 +25,7 @@ enum {
 };
 
 static void strace(Context *c){
-  Log("System call trace\nmcause\t\tGPR1\t\tGPR2\t\tGPR3\t\tGPR4 \n0x%x\t%d\t\t0x%x\t\t0x%x\t\t0x%x",
+  Log("System call trace\nmcause = %d GPR1 = %d GPR2 = %dGPR3 = %d GPR4 =%d",
       c->mcause, c->GPR1, c->GPR2, c->GPR3, c->GPR4);
 }
 
@@ -53,13 +53,10 @@ void do_syscall(Context *c) {
 			halt(0);
 			break;
     case SYS_yield:
-			Log("SYS_yield, GPRx = %d", c->GPRx);
 			sys_yield(c);
-			Log("SYS_yield, GPRx = %d", c->GPRx);
 			break;
 		case SYS_write:
 			sys_write(c);
-			Log("SYS_write, GPRx = %d", c->GPRx);
 			break;
     default: panic("Unhandled syscall ID = %d", a[0]);
   }
