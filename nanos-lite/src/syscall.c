@@ -45,7 +45,6 @@ void sys_write(Context *c){
 void do_syscall(Context *c) {
   uintptr_t a[4];
   a[0] = c->GPR1; //a7
-	Log("a7 = %d", a[0]);
 	strace(c);
 	//参考应用的系统调用号
   switch (a[0]) {
