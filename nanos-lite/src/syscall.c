@@ -8,7 +8,7 @@ void do_syscall(Context *c) {
 	//参考应用的系统调用号
   switch (a[0]) {
     case 0:
-			Log("SYS_exit");
+			Log("SYS_exit, GPRx = %d", c->GPRx);
 			//c->GPRx=0;
 			halt(c->GPRx);//SYS_exit系统调用
     case 1:
