@@ -1,6 +1,9 @@
 #include <am.h>
 #include <riscv/riscv.h>
 #include <klib.h>
+#define Machine_Software_Interrupt (11)
+#define User_Software_Interrupt (8)
+#define IRQ_TIMER 0x80000007
 
 static Context* (*user_handler)(Event, Context*) = NULL;
 
@@ -9,8 +12,11 @@ Context* __am_irq_handle(Context *c) {
     Event ev = {0};
 		printf("mcause is %d\n", c->mcause);
     switch (c->mcause) {
-			case 0:
-			case 4:
+      case Machine_Software_Interrupt:
+      case User_Software_Interrupt:
+				if(c->GPR1 == -1){
+					ev.event = EVENT_YIELD; break;
+				}
 				ev.event = EVENT_SYSCALL; break;
 	//		case 1:
 	//			ev.event = EVENT_YIELD; break;
@@ -51,8 +57,7 @@ void yield() {
 #ifdef __riscv_e
   asm volatile("li a5, -1; ecall");
 #else
-	//1是自陷，看提供接口event的定义
-  asm volatile("li a7, 1; ecall");
+  asm volatile("li a7, -1; ecall");
 #endif
 }
 
