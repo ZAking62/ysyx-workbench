@@ -45,17 +45,15 @@ void do_syscall(Context *c) {
 	//参考应用的系统调用号
   switch (a[0]) {
     case SYS_exit:
-			Log("SYS_exit, GPRx = %d", c->GPRx);
-			//c->GPRx=0;
-			halt(c->GPRx);
+			halt(0);
 			break;
     case SYS_yield:
-			Log("SYS_yield, GPRx = %d", c->GPRx);
 			sys_yield(c);
+			Log("SYS_yield, GPRx = %d", c->GPRx);
 			break;
 		case SYS_write:
-			Log("SYS_write, GPRx = %d", c->GPRx);
 			sys_write(c);
+			Log("SYS_write, GPRx = %d", c->GPRx);
 			break;
     default: panic("Unhandled syscall ID = %d", a[0]);
   }
