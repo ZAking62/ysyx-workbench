@@ -72,6 +72,12 @@ int _write(int fd, void *buf, size_t count) {
   return count;
 }
 
+SYS_write(intptr_t *buf, size_t count){
+  for (int i = 0; i < count; i++) {
+    putch(*((char*)buf + i));
+  }
+  
+}
 void *_sbrk(intptr_t increment) {
   return (void *)-1;
 }
