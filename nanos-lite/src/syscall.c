@@ -12,7 +12,7 @@ void do_syscall(Context *c) {
 			//c->GPRx=0;
 			halt(c->GPRx);//SYS_exit系统调用
     case 1:
-			Log("SYS_yield");
+			Log("SYS_yield, GPRX = %d", c->GPRx);
 			yield(); //SYS_yield系统调用
     default: panic("Unhandled syscall ID = %d", a[0]);
   }
