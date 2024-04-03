@@ -17,7 +17,7 @@ static uintptr_t loader(PCB *pcb, const char *filename) {
   ramdisk_read(&ehdr, 0, sizeof(Elf_Ehdr));
   // check valid elf
   assert((*(uint32_t *)ehdr.e_ident == 0x464c457f));
-	assert(ehdr.e_machine == EM_RISCV);
+	//assert(ehdr.e_machine == EM_RISCV);
 	
 	//ELF中采用program header table来管理segment, 其一个表项描述了一个segment的所有属性
 	//包括类型, 虚拟地址, 标志, 对齐方式, 以及文件内偏移量和segment大小. 
@@ -36,6 +36,7 @@ static uintptr_t loader(PCB *pcb, const char *filename) {
   return ehdr.e_entry;
 }
 
+//其中的pcb参数目前暂不使用, 可以忽略, 而因为ramdisk中目前只有一个文件, filename参数也可以忽略. 在下一个阶段实现文件系统之后, filename就派上用场了
 void naive_uload(PCB *pcb, const char *filename) {
   uintptr_t entry = loader(pcb, filename);
   Log("Jump to entry = %p", entry);
