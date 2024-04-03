@@ -5,7 +5,7 @@ static Context* do_event(Event e, Context* c) {
   switch (e.event) {
 		case 1:
 			Log("yield");
-			yield();
+			halt(0);
 		 	break;
 		case 2:
 			Log("syscall");
