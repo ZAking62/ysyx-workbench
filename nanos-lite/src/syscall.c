@@ -24,6 +24,11 @@ enum {
   SYS_gettimeofday
 };
 
+void sys_yield(Context *c){
+  yield();
+  c->GPRx = 0;
+}
+
 void do_syscall(Context *c) {
   uintptr_t a[4];
   a[0] = c->GPR1; //a7
@@ -34,12 +39,15 @@ void do_syscall(Context *c) {
     case SYS_exit:
 			Log("SYS_exit, GPRx = %d", c->GPRx);
 			//c->GPRx=0;
-			halt(c->GPRx);//SYS_exit系统调用
+			halt(c->GPRx);
+			break;
     case SYS_yield:
 			Log("SYS_yield, GPRx = %d", c->GPRx);
-			yield(); //SYS_yield系统调用
+			sys_yield(c);
+			break;
 		case SYS_write:
 			Log("SYS_write, GPRx = %d", c->GPRx);
+			break;
     default: panic("Unhandled syscall ID = %d", a[0]);
   }
 }
