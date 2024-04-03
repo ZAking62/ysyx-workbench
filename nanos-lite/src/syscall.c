@@ -45,16 +45,21 @@ void sys_write(Context *c){
 void do_syscall(Context *c) {
   uintptr_t a[4];
   a[0] = c->GPR1; //a7
-	strace(c);
 	//参考应用的系统调用号
   switch (a[0]) {
     case SYS_exit:
+			Log("SYS_exit");
+			strace(c);
 			halt(0);
 			break;
     case SYS_yield:
+			Log("SYS_yield");
+			strace(c);
 			sys_yield(c);
 			break;
 		case SYS_write:
+			Log("SYS_write");
+			strace(c);
 			sys_write(c);
 			break;
     default: panic("Unhandled syscall ID = %d", a[0]);
