@@ -8,7 +8,7 @@ static Context* (*user_handler)(Event, Context*) = NULL;
 Context* __am_irq_handle(Context *c) {
   if (user_handler) {
     Event ev = {0};
-		printf("abstract-machine/am/src/riscv/nemu/cte.c mcause is %d\n", c->mcause);
+
     switch (c->mcause) {
 			case 0:
 			case 1:
