@@ -24,6 +24,11 @@ enum {
   SYS_gettimeofday
 };
 
+static void strace(Context *c){
+  Log("System call trace\nmcause\t\tGPR1\t\tGPR2\t\tGPR3\t\tGPR4 \n0x%x\t%d\t\t0x%x\t\t0x%x\t\t0x%x",
+      c->mcause, c->GPR1, c->GPR2, c->GPR3, c->GPR4);
+}
+
 void sys_yield(Context *c){
   yield();
   c->GPRx = 0;
@@ -41,7 +46,7 @@ void do_syscall(Context *c) {
   uintptr_t a[4];
   a[0] = c->GPR1; //a7
 	Log("a7 = %d", a[0]);
-
+	strace(c);
 	//参考应用的系统调用号
   switch (a[0]) {
     case SYS_exit:
@@ -50,6 +55,7 @@ void do_syscall(Context *c) {
     case SYS_yield:
 			Log("SYS_yield, GPRx = %d", c->GPRx);
 			sys_yield(c);
+			Log("SYS_yield, GPRx = %d", c->GPRx);
 			break;
 		case SYS_write:
 			sys_write(c);
