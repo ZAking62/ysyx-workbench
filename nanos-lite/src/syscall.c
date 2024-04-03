@@ -9,8 +9,8 @@ void do_syscall(Context *c) {
   switch (a[0]) {
     case 0:
 			Log("SYS_exit");
-			c->GPRx=0;
-			halt(0);//SYS_exit系统调用
+			//c->GPRx=0;
+			halt(c->GPRx);//SYS_exit系统调用
     case 1:
 			Log("SYS_yield");
 			yield(); //SYS_yield系统调用
