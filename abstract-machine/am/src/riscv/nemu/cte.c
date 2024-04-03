@@ -2,7 +2,7 @@
 #include <riscv/riscv.h>
 #include <klib.h>
 #define Machine_Software_Interrupt (11)
-#define User_Software_Interrupt (8)
+#define User_Software_Interrupt (4)
 #define IRQ_TIMER 0x80000007
 
 static Context* (*user_handler)(Event, Context*) = NULL;
