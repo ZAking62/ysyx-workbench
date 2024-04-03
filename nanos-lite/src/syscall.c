@@ -29,6 +29,14 @@ void sys_yield(Context *c){
   c->GPRx = 0;
 }
 
+void sys_write(Context *c){
+  assert(c->GPR2 == 1 || c->GPR2 == 2);
+  for (int i = 0; i < c->GPR4; ++i){
+		putch(*(((char *)c->GPR3) + i));
+  }
+  c->GPRx = c->GPR4;
+}
+
 void do_syscall(Context *c) {
   uintptr_t a[4];
   a[0] = c->GPR1; //a7
@@ -47,6 +55,7 @@ void do_syscall(Context *c) {
 			break;
 		case SYS_write:
 			Log("SYS_write, GPRx = %d", c->GPRx);
+			sys_write(c);
 			break;
     default: panic("Unhandled syscall ID = %d", a[0]);
   }
