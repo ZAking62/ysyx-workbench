@@ -12,7 +12,7 @@ static Context* (*user_handler)(Event, Context*) = NULL;
 Context* __am_irq_handle(Context *c) {
   if (user_handler) {
     Event ev = {0};
-		Log("c->mcause = %d, c->GPR1 = %d", c->mcause, c->GPR1);
+		//Log("c->mcause = %d, c->GPR1 = %d", c->mcause, c->GPR1);
     switch (c->mcause) {
 			case 0:
 			case 1:
