@@ -42,6 +42,9 @@ void sys_write(Context *c){
   c->GPRx = c->GPR4;
 }
 
+void sys_brk(Context *c){
+  c->GPRx = 0;
+}
 void do_syscall(Context *c) {
   uintptr_t a[4];
   a[0] = c->GPR1; //a7
@@ -62,6 +65,11 @@ void do_syscall(Context *c) {
 			strace(c);
 			sys_write(c);
 			break;
+    case SYS_brk:
+      Log("SYS_brk");
+      strace(c);
+      sys_brk(c);
+      break;
     default: panic("Unhandled syscall ID = %d", a[0]);
   }
 }
