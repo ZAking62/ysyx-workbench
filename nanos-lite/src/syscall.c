@@ -38,6 +38,7 @@ void sys_write(Context *c){
   for (int i = 0; i < c->GPR4; ++i){
 		putch(*(((char *)c->GPR3) + i));
   }
+  c->GPRx = c->GPR4;
 }
 
 void sys_brk(Context *c){
