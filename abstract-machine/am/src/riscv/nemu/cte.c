@@ -12,7 +12,7 @@ static Context* (*user_handler)(Event, Context*) = NULL;
 Context* __am_irq_handle(Context *c) {
   if (user_handler) {
     Event ev = {0};
-		//Log("c->mcause = %d, c->GPR1 = %d", c->mcause, c->GPR1);
+		Log("c->mcause = %d, c->GPR1 = %d", c->mcause, c->GPR1);
     switch (c->mcause) {
 			case 0:
 			case 1:
@@ -30,7 +30,7 @@ Context* __am_irq_handle(Context *c) {
 		//			ev.event = EVENT_YIELD; break;
 		//		}
 				ev.event = EVENT_SYSCALL; break;
-      //default: ev.event = EVENT_ERROR; break;
+      default: ev.event = EVENT_ERROR; break;
     }
 		//处理事件，返回上下文
     c = user_handler(ev, c);
