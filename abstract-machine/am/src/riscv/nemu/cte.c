@@ -14,9 +14,7 @@ Context* __am_irq_handle(Context *c) {
     Event ev = {0};
 		Log("c->mcause = %d, c->GPR1 = %d", c->mcause, c->GPR1);
     switch (c->mcause) {
-			case -1:
-        ev.event = EVENT_YIELD; break;
-      case 0:
+			case 0:
 			case 1:
 			case 2:
 			case 3:
@@ -69,7 +67,7 @@ void yield() {
 #ifdef __riscv_e
   asm volatile("li a5, -1; ecall");
 #else
-  asm volatile("li a7, -1; ecall");
+  asm volatile("li a7, 0; ecall");
 #endif
 }
 
