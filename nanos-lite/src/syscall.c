@@ -25,8 +25,8 @@ enum {
 };
 
 static void strace(Context *c){
-  Log("System call trace\nmcause = %d GPR1 = %d GPR2 = %dGPR3 = %d GPR4 =%d",
-      c->mcause, c->GPR1, c->GPR2, c->GPR3, c->GPR4);
+  Log("System call trace\nmcause = %d GPR1 = %d GPR2 = %d GPR3 = %d GPR4 = %d ret = %d",
+      c->mcause, c->GPR1, c->GPR2, c->GPR3, c->GPR4, c->GPRx);
 }
 
 void sys_yield(Context *c){
