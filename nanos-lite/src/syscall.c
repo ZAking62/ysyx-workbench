@@ -35,11 +35,11 @@ void sys_yield(Context *c){
 }
 
 void sys_write(Context *c){
- // assert(c->GPR2 == 1 || c->GPR2 == 2);
+  assert(c->GPR2 == 1 || c->GPR2 == 2);
   for (int i = 0; i < c->GPR4; ++i){
 		putch(*(((char *)c->GPR3) + i));
   }
-  c->GPRx = c->GPR4;
+  //c->GPRx = c->GPR4;
 }
 
 void sys_brk(Context *c){
