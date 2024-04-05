@@ -40,6 +40,7 @@ void sys_write(Context *c){
 		putch(*(((char *)c->GPR3) + i));
   }
   c->GPRx = c->GPR4;
+  c->GPR1=9;
 }
 
 void sys_brk(Context *c){
