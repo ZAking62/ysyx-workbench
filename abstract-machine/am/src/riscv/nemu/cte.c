@@ -26,10 +26,6 @@ Context* __am_irq_handle(Context *c) {
 			case 9:
 			case 10:
 			case 11:
-      case 12:
-      case 13:
-      case 14:
-      case 15:
 		//		if(c->GPR1 == 0){
 		//			ev.event = EVENT_YIELD; break;
 		//		}
