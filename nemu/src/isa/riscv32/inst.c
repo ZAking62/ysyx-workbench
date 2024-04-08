@@ -48,7 +48,7 @@ static vaddr_t *csr_register(word_t imm) {
 }
 
 #define ECALL(dnpc) { bool success; dnpc = (isa_raise_intr(isa_reg_str2val("a7", &success), s->pc)); }
-// #define ECALL(dnpc) { dnpc = (isa_raise_intr(isa_query_intr(), s->pc)); }
+// #define ECALL(dnpc) { dnpc = (isa_raise_intr(isa_query_intr(), s->pc)); }   有问题 ，异常号和系统调用号混一起了
 #define CSR(i) *csr_register(i)
 
 static void decode_operand(Decode *s, int *rd, word_t *src1, word_t *src2, word_t *imm, int type) {
