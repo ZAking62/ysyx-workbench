@@ -24,11 +24,12 @@ word_t isa_raise_intr(word_t NO, vaddr_t epc) {
   /* TODO: Trigger an interrupt/exception with ``NO''.
    * Then return the address of the interrupt/exception vector.
    */
-  //系统调用时epc都要加
-  if(NO != 0){
-    epc += 4;
-  }
-  Log("reset mcause");
+
+  // if(NO != 0){
+  //   epc += 4;
+  // }
+  epc += 4;
+  //Log("set mcause");
 	cpu.csr.mcause = NO;
   cpu.csr.mepc = epc;
 
