@@ -26,9 +26,9 @@ Context* __am_irq_handle(Context *c) {
 			case 9:
 			case 10:
 			case 11:
-		//		if(c->GPR1 == 0){
-		//			ev.event = EVENT_YIELD; break;
-		//		}
+				if(c->GPR1 == 0){
+					ev.event = EVENT_YIELD; break;
+				}
 				ev.event = EVENT_SYSCALL; break;
       default: ev.event = EVENT_ERROR; break;
     }
@@ -43,6 +43,7 @@ Context* __am_irq_handle(Context *c) {
 extern void __am_asm_trap(void);
 
 //当发生事件时, CTE将会把事件和相关的上下文作为参数, 来调用这个回调函数, 交由操作系统进行后续处理
+//nanos-lite/src/irq.c:22:  cte_init(do_event);
 bool cte_init(Context*(*handler)(Event, Context*)) {
   // initialize exception entry
 	// 将异常入口地址设置到mtvec寄存器中,异常处理的入口地址设置为__am_asm_trap
@@ -63,10 +64,12 @@ Context *kcontext(Area kstack, void (*entry)(void *), void *arg) {
 
 //将异常种类存放到a7寄存器中，以及发起自陷
 //其中ecall会使得程序流程转到之前注册的异常处理入口函数中去执行,即__am_asm_trap
+//yield()用于进行自陷操作, 会触发一个编号为EVENT_YIELD事件
 void yield() {
 #ifdef __riscv_e
   asm volatile("li a5, -1; ecall");
 #else
+  Log("yield, set a7 = 0");
   asm volatile("li a7, 0; ecall");
 #endif
 }
