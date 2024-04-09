@@ -1,4 +1,5 @@
 #include <proc.h>
+#include "fs.h"
 
 #define MAX_NR_PROC 4
 

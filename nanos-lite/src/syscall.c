@@ -2,30 +2,6 @@
 #include "syscall.h"
 #include "fs.h"
 
-// enum {
-//   SYS_exit,
-//   SYS_yield,
-//   SYS_open,
-//   SYS_read,
-//   SYS_write,
-//   SYS_kill,
-//   SYS_getpid,
-//   SYS_close,
-//   SYS_lseek,
-//   SYS_brk,
-//   SYS_fstat,
-//   SYS_time,
-//   SYS_signal,
-//   SYS_execve,
-//   SYS_fork,
-//   SYS_link,
-//   SYS_unlink,
-//   SYS_wait,
-//   SYS_times,
-//   SYS_gettimeofday
-// };
-
-
 static void strace(Context *c){
   Log("System call trace\nirqtype = %d syscalltype = %d arg1 = %d arg2 = %d arg3 = %d ret = %d",
       c->mcause, c->GPR1, c->GPR2, c->GPR3, c->GPR4, c->GPRx);
