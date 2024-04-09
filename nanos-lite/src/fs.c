@@ -2,6 +2,8 @@
 
 typedef size_t (*ReadFn) (void *buf, size_t offset, size_t len);
 typedef size_t (*WriteFn) (const void *buf, size_t offset, size_t len);
+size_t ramdisk_read(void *buf, size_t offset, size_t len);
+size_t ramdisk_write(const void *buf, size_t offset, size_t len);
 
 typedef struct {
   char *name;
@@ -9,6 +11,7 @@ typedef struct {
   size_t disk_offset;
   ReadFn read;
   WriteFn write;
+  size_t open_offset;
 } Finfo;
 
 enum {FD_STDIN, FD_STDOUT, FD_STDERR, FD_FB};
@@ -24,6 +27,8 @@ size_t invalid_write(const void *buf, size_t offset, size_t len) {
 }
 
 /* This is the information about all files in disk. */
+//为了记录ramdisk中各个文件的名字和大小, 我们还需要一张"文件记录表"
+//文件数目是固定的, 我们可以简单地把文件记录表的下标作为相应文件的文件描述符返回给用户程序
 static Finfo file_table[] __attribute__((used)) = {
   [FD_STDIN]  = {"stdin", 0, 0, invalid_read, invalid_write},
   [FD_STDOUT] = {"stdout", 0, 0, invalid_read, invalid_write},
@@ -33,4 +38,76 @@ static Finfo file_table[] __attribute__((used)) = {
 
 void init_fs() {
   // TODO: initialize the size of /dev/fb
+}
+
+//返回相应的文件描述符
+int fs_open(const char *pathname, int flags, int mode){
+  for (int i = FD_FB; i < sizeof(file_table) / sizeof(Finfo); ++i){
+    if (strcmp(pathname, file_table[i].name) == 0){
+      file_table[i].open_offset = 0;
+      return i;
+    }
+  }
+  panic("file %s not found", pathname);
+}
+size_t fs_read(int fd, void *buf, size_t len){
+  Finfo *info = &file_table[fd];
+  if (info->open_offset > info->size) return 0;
+  size_t read_len;
+  read_len = info->open_offset + len <= info->size ? len : info->size - info->open_offset;
+  ramdisk_read(buf, info->disk_offset + info->open_offset, read_len);
+  info->open_offset += read_len;
+  return read_len;
+}
+
+size_t fs_write(int fd, const void *buf, size_t len){
+  //stdout
+  if (fd == 1 || fd == 2) {
+    for (size_t i = 0; i < len; ++i)
+      putch(*((char *)buf + i));
+    return len;
+  }
+
+  Finfo *info = &file_table[fd];
+  if (info->open_offset > info->size) return 0;
+  size_t write_len;
+  write_len = info->open_offset + len <= info->size ? len : info->size - info->open_offset;
+  ramdisk_write(buf, info->disk_offset + info->open_offset, write_len);
+  info->open_offset += write_len;
+  return write_len;
+}
+
+size_t fs_lseek(int fd, size_t offset, int whence){
+  if (fd <= 2) {
+    Log("ignore lseek %s", file_table[fd].name);
+    return 0;
+  }
+
+  Finfo *info = &file_table[fd];
+  switch(whence){
+    case SEEK_SET:
+      assert(offset <= info->size);
+      info->open_offset = offset;
+      break;
+
+    case SEEK_CUR:
+      assert(info->open_offset + offset <= info->size);
+      info->open_offset += offset;
+      break;
+
+    case SEEK_END:
+      assert(offset <= info->size);
+      info->open_offset = info->size + offset;
+      break;
+
+    default:
+      assert(0);
+  }
+
+  return info->open_offset;
+}
+
+int fs_close(int fd){
+  file_table[fd].open_offset = 0;
+  return 0;
 }

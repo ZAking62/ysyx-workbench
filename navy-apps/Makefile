@@ -2,7 +2,7 @@
 
 ### *Get a more readable version of this Makefile* by `make html` (requires python-markdown)
 html:
-	cat Makefile | sed 's/^\([^#]\)/    \1/g' | markdown_py > Makefile.html
+	cat Makefile | sed 's/^\([^#]\)/    \1/g'  > Makefile.html
 .PHONY: html
 
 ## 1. Basic Setup and Checks
@@ -167,7 +167,7 @@ $(CLEAN_ALL):
 
 ### Build fsimg and ramdisk for Nanos-lite
 APPS =
-TESTS = dummy hello
+TESTS = file-test
 
 fsimg: $(addprefix apps/, $(APPS)) $(addprefix tests/, $(TESTS))
 	-for t in $^; do $(MAKE) -s -C $(NAVY_HOME)/$$t install; done
