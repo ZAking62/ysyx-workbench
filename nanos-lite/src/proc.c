@@ -27,7 +27,7 @@ void init_proc() {
   Log("Initializing processes...");
 
   // load program here
-	naive_uload(NULL, "/build/ramdisk.img");
+	naive_uload(NULL, "build/ramdisk.img");
 }
 
 Context* schedule(Context *prev) {
