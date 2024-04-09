@@ -35,8 +35,7 @@ word_t isa_raise_intr(word_t NO, vaddr_t epc) {
 
 //查询当前是否有未处理的中断, 若有则返回中断号码, 否则返回INTR_EMPTY.
 word_t isa_query_intr() {
-  //return INTR_EMPTY;
-  return 0;
+  return INTR_EMPTY;
 }
 
 
