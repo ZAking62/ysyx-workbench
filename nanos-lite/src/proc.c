@@ -28,7 +28,7 @@ void init_proc() {
 
   // load program here
   //只需要修改传入naive_uload()函数的文件名即可
-	naive_uload(NULL, "/bin/hello");
+	naive_uload(NULL, "/nanos-lite/build/ramdisk.img");
 }
 
 Context* schedule(Context *prev) {
