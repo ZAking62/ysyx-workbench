@@ -17,7 +17,6 @@ int main() {
   }
 
   fseek(fp, 0, SEEK_SET);
-  printf("PASS\n");
   for (i = 0; i < 500; i ++) {
     fprintf(fp, "%4d\n", i + 1 + 1000);
   }
