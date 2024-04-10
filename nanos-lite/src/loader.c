@@ -11,7 +11,8 @@
 # define Elf_Phdr Elf32_Phdr
 #endif
 
-size_t ramdisk_read(void *buf, size_t offset, size_t len); 
+size_t ramdisk_read(void *buf, size_t offset, size_t len);
+ 
 static uintptr_t loader(PCB *pcb, const char *filename) {
   int fd = fs_open(filename, 0, 0);
 
