@@ -22,7 +22,7 @@ void sys_write(Context *c){
     // for (size_t i = 0; i < c->GPR4; ++i){
     //   putch(*((char *)(c->GPR3) + i));
     // }
-    putch(*((char *)(c->GPR3)));
+    // putch(*((char *)(c->GPR3)));
     c->GPRx = c->GPR4;
     return;
   }
