@@ -18,6 +18,13 @@ void sys_read(Context *c){
 }
 
 void sys_write(Context *c){
+  if (c->GPR2 == 1 || c->GPR2 == 2) {
+    for (size_t i = 0; i < c->GPR4; ++i){
+      putch(*((char *)(c->GPR3) + i));
+    }
+    c->GPRx = c->GPR4;
+    return;
+  }
   int ret = fs_write(c->GPR2, (void *)c->GPR3, c->GPR4);
   c->GPRx = ret;
 }

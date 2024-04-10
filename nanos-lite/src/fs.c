@@ -62,11 +62,11 @@ size_t fs_read(int fd, void *buf, size_t len){
 
 size_t fs_write(int fd, const void *buf, size_t len){
   //stdout
-  // if (fd == 1 || fd == 2) {
-  //   for (size_t i = 0; i < len; ++i)
-  //     putch(*((char *)buf + i));
-  //   return len;
-  // }
+  if (fd == 1 || fd == 2) {
+    for (size_t i = 0; i < len; ++i)
+      putch(*((char *)buf + i));
+    return len;
+  }
 
   Finfo *info = &file_table[fd];
   if (info->open_offset > info->size) return 0;
