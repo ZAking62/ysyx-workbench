@@ -69,18 +69,22 @@ void do_syscall(Context *c) {
       break;
     case SYS_open:
       Log("SYS_open");
+      strace(c);
       sys_open(c);
       break;
     case SYS_close:
       Log("SYS_close");
+      strace(c);
       sys_close(c);
       break;
     case SYS_read:
-      Log("SYS_read");      
+      Log("SYS_read");   
+      strace(c);   
       sys_read(c);
       break;
     case SYS_lseek:
       Log("SYS_lseek");
+      strace(c);
       sys_lseek(c);
       break;
     default: panic("Unhandled syscall ID = %d", a[0]);
