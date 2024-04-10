@@ -25,6 +25,7 @@ void sys_write(Context *c){
     c->GPRx = c->GPR4;
     return;
   }
+  
   int ret = fs_write(c->GPR2, (void *)c->GPR3, c->GPR4);
   c->GPRx = ret;
 }

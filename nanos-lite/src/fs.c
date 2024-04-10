@@ -61,20 +61,23 @@ size_t fs_read(int fd, void *buf, size_t len){
 }
 
 size_t fs_write(int fd, const void *buf, size_t len){
-  //stdout
-  // if (fd == 1 || fd == 2) {
-  //   for (size_t i = 0; i < len; ++i)
-  //     putch(*((char *)buf + i));
-  //   return len;
-  // }
 
-  Finfo *info = &file_table[fd];
-  if (info->open_offset > info->size) return 0;
-  size_t write_len;
-  write_len = info->open_offset + len <= info->size ? len : info->size - info->open_offset;
-  ramdisk_write(buf, info->disk_offset + info->open_offset, write_len);
-  info->open_offset += write_len;
-  return write_len;
+  // Finfo *info = &file_table[fd];
+  // if (info->open_offset > info->size) return 0;
+  // size_t write_len;
+  // write_len = info->open_offset + len <= info->size ? len : info->size - info->open_offset;
+  // ramdisk_write(buf, info->disk_offset + info->open_offset, write_len);
+  // info->open_offset += write_len;
+  // return write_len;
+    size_t write_len = len;
+    size_t open_offset = file_table[fd].open_offset;
+    size_t size = file_table[fd].size;
+    size_t disk_offset = file_table[fd].disk_offset;
+    if (open_offset > size) return 0;
+    if (open_offset + len > size) write_len = size - open_offset;
+    ramdisk_write(buf, disk_offset + open_offset, write_len);
+    file_table[fd].open_offset += write_len;
+    return write_len;
 }
 
 size_t fs_lseek(int fd, size_t offset, int whence){
