@@ -28,7 +28,7 @@ void init_proc() {
 
   // load program here
   //只需要修改传入naive_uload()函数的文件名即可
-	naive_uload(NULL, "/home/zyf/ysyx-workbench/nanos-lite/build/ramdisk.img");
+	naive_uload(NULL, "/bin/file-test");
 }
 
 Context* schedule(Context *prev) {
