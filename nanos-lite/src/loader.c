@@ -22,20 +22,20 @@ static uintptr_t loader(PCB *pcb, const char *filename) {
   // check valid elf
   assert((*(uint32_t *)elf.e_ident == 0x464c457f));
 	assert(elf.e_machine == EM_RISCV);
-	
+	Elf_Phdr phdr;
 	//ELF中采用program header table来管理segment, 其一个表项描述了一个segment的所有属性
 	//包括类型, 虚拟地址, 标志, 对齐方式, 以及文件内偏移量和segment大小. 
-	//e_phnum;    程序表的数量program header table entry count
-  Elf_Phdr phdr;
-	//ehdr.e_phoff, Program header table file offset 
-  //headers_entry_size
+	//e_phnum Program header table entry count
+	//e_phoff Program header table file offset 
+  //e_phentsize Program header table entry size
+
   for (int i = 0; i < elf.e_phnum; i++) {
     uint32_t base = elf.e_phoff + i * elf.e_phentsize;
  
     fs_lseek(fd, base, 0);
-    assert(fs_read(fd, &phdr, elf.e_phentsize) == elf.e_phentsize);
+    fs_read(fd, &phdr, elf.e_phentsize);
     
-    // 需要装载的段
+    // 装载segment
     if (phdr.p_type == PT_LOAD) {
  
       char * buf_malloc = (char *)malloc(phdr.p_filesz);
@@ -50,14 +50,6 @@ static uintptr_t loader(PCB *pcb, const char *filename) {
     }
   }
 
-  // for (int i = 0; i < ehdr.e_phnum; i++) {
-  //   if (phdr[i].p_type == PT_LOAD) {
-	// 		//读入segment
-  //     ramdisk_read((void*)phdr[i].p_vaddr, phdr[i].p_offset, phdr[i].p_memsz);
-	// 		//.bss置零
-  //     memset((void*)(phdr[i].p_vaddr+phdr[i].p_filesz), 0, phdr[i].p_memsz - phdr[i].p_filesz);
-  //   }
-  // }
   fs_close(fd);
   return elf.e_entry;
 }
