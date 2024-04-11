@@ -67,7 +67,7 @@ void yield() {
 #ifdef __riscv_e
   asm volatile("li a5, -1; ecall");
 #else
-  // Log("yield set a7 = 0");
+  Log("yield set a7 = 0");
   //asm volatile("li a7, 0; ecall");
   asm volatile("li a7, 0; ecall");
 #endif
