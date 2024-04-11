@@ -70,7 +70,7 @@ void yield() {
 #else
   Log("yield set a5 = -1");
   //asm volatile("li a7, 0; ecall");
-  asm volatile("li a5, -1; li a7, 0; ecall");
+  asm volatile("li a5, -1; ecall");
 #endif
 }
 
