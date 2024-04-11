@@ -15,6 +15,7 @@ Context* __am_irq_handle(Context *c) {
 		// Log("c->mcause = %d, c->GPR1 = %d", c->mcause, c->GPR1);
     switch (c->mcause) {
 			case 0:
+        ev.event=EVENT_YIELD; break;
 			case 1:
 			case 2:
 			case 3:
