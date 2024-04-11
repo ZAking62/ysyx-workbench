@@ -3,7 +3,7 @@
 #include "fs.h"
 
 static void strace(Context *c){
-  Log("System call trace\nirqtype = %d syscalltype = %d arg1 = %u arg2 = %d arg3 = %d ret = %d",
+  Log("System call trace\nirqtype = %d syscalltype = %d arg1 = %d arg2 = %u arg3 = %d ret = %d",
       c->mcause, c->GPR1, c->GPR2, c->GPR3, c->GPR4, c->GPRx);
 }
 
