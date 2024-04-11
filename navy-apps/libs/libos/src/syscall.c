@@ -79,7 +79,8 @@ int _close(int fd) {
 
 extern char _end;
 static intptr_t cur_brk = (intptr_t)&_end;
- 
+
+//sbrk()将程序数据空间增加increment字节
 void *_sbrk(intptr_t increment) {
   intptr_t old_brk = cur_brk;
   intptr_t new_brk = old_brk + increment;
@@ -87,6 +88,7 @@ void *_sbrk(intptr_t increment) {
     return (void*)-1; 
   }
   cur_brk = new_brk;
+  //返回之前的程序间断点地址
   return (void*)old_brk;
 }
 
