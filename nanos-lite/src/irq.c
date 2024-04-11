@@ -8,7 +8,7 @@ static Context* do_event(Event e, Context* c) {
 			//你需要在其中识别出自陷事件EVENT_YIELD, 然后输出一句话即可, 目前无需进行其它操作
 			break;
 		case 2:
-			// Log("EVENT_SYSCALL");
+			//Log("EVENT_SYSCALL");
 			do_syscall(c);
 			break;
     default: panic("Unhandled event ID = %d", e.event);

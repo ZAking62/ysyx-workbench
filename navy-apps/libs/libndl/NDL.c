@@ -15,7 +15,10 @@ uint32_t NDL_GetTicks() {
   return tv.tv_usec / 1000 + tv.tv_sec * 1000;
 }
 
+// 读出一条事件信息, 将其写入`buf`中, 最长写入`len`字节
 int NDL_PollEvent(char *buf, int len) {
+
+  //成功1
   return 0;
 }
 
