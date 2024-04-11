@@ -28,6 +28,14 @@ Context* __am_irq_handle(Context *c) {
 			case 9:
 			case 10:
 			case 11:
+      case 12:
+      case 13:
+      case 14:
+      case 15:
+      case 16:
+      case 17:
+      case 18:
+      case 19:
 				ev.event = EVENT_SYSCALL; break;
       default: ev.event = EVENT_ERROR; break;
     }
@@ -68,9 +76,9 @@ void yield() {
 #ifdef __riscv_e
   asm volatile("li a5, -1; ecall");
 #else
-  Log("yield set a5 = -1");
-  //asm volatile("li a7, 0; ecall");
-  asm volatile("li a5, -1; ecall");
+  //Log("yield set a5 = -1");
+  asm volatile("li a7, 0; ecall");
+  //asm volatile("li a5, -1; ecall");
 #endif
 }
 
