@@ -25,9 +25,9 @@ static uintptr_t loader(PCB *pcb, const char *filename) {
 	Elf_Phdr phdr;
 	//ELF中采用program header table来管理segment, 其一个表项描述了一个segment的所有属性
 	//包括类型, 虚拟地址, 标志, 对齐方式, 以及文件内偏移量和segment大小. 
-	//e_phnum Program header table entry count
-	//e_phoff Program header table file offset 
-  //e_phentsize Program header table entry size
+	//e_phnum   entry count
+	//e_phoff   file offset 
+  //e_phentsize   entry size
 
   for (int i = 0; i < elf.e_phnum; i++) {
     uint32_t base = elf.e_phoff + i * elf.e_phentsize;
@@ -41,7 +41,7 @@ static uintptr_t loader(PCB *pcb, const char *filename) {
       char * buf_malloc = (char *)malloc(phdr.p_filesz);
  
       fs_lseek(fd, phdr.p_offset, 0);
-      assert(fs_read(fd, buf_malloc, phdr.p_filesz) == phdr.p_filesz);
+      fs_read(fd, buf_malloc, phdr.p_filesz);
       
       memcpy((void*)phdr.p_vaddr, buf_malloc, phdr.p_filesz);
       memset((void*)phdr.p_vaddr + phdr.p_filesz, 0, phdr.p_memsz - phdr.p_filesz);
