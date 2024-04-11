@@ -96,8 +96,8 @@ void do_syscall(Context *c) {
       sys_lseek(c);
       break;
     case SYS_gettimeofday:
-      Log("SYS_gettimeofday");
-      strace(c);
+      //Log("SYS_gettimeofday");
+      //strace(c);
       sys_gettimeofday(c);
       break;
     default: panic("Unhandled syscall ID = %d", a[0]);
