@@ -13,9 +13,7 @@ int main(){
     time = NDL_GetTicks();
     while(time < msec) {
       time = NDL_GetTicks();
-      printf("time = %u", time);
     };
-    
     printf("0.5s have been lost...\n");
     msec += 500;
   }
