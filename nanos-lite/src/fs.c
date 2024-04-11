@@ -4,6 +4,7 @@ typedef size_t (*ReadFn) (void *buf, size_t offset, size_t len);
 typedef size_t (*WriteFn) (const void *buf, size_t offset, size_t len);
 size_t ramdisk_read(void *buf, size_t offset, size_t len);
 size_t ramdisk_write(const void *buf, size_t offset, size_t len);
+size_t serial_write(const void *buf, size_t offset, size_t len);
 
 typedef struct {
   char *name;
@@ -31,8 +32,8 @@ size_t invalid_write(const void *buf, size_t offset, size_t len) {
 //文件数目是固定的, 我们可以简单地把文件记录表的下标作为相应文件的文件描述符返回给用户程序
 static Finfo file_table[] __attribute__((used)) = {
   [FD_STDIN]  = {"stdin", 0, 0, invalid_read, invalid_write},
-  [FD_STDOUT] = {"stdout", 0, 0, invalid_read, invalid_write},
-  [FD_STDERR] = {"stderr", 0, 0, invalid_read, invalid_write},
+  [FD_STDOUT] = {"stdout", 0, 0, invalid_read, serial_write},
+  [FD_STDERR] = {"stderr", 0, 0, invalid_read, serial_write},
 #include "files.h"
 };
 
@@ -52,6 +53,9 @@ int fs_open(const char *pathname, int flags, int mode){
 }
 size_t fs_read(int fd, void *buf, size_t len){
   Finfo *info = &file_table[fd];
+  if(info->read){
+    return info->read(buf, 0, len);
+  }
   if (info->open_offset > info->size) return 0;
   size_t read_len;
   read_len = info->open_offset + len <= info->size ? len : info->size - info->open_offset;
@@ -63,7 +67,10 @@ size_t fs_read(int fd, void *buf, size_t len){
 size_t fs_write(int fd, const void *buf, size_t len){
 
   Finfo *info = &file_table[fd];
-  size_t write_len = len;
+  if(info->write){
+    return info->write(buf, 0, len);
+  }
+    size_t write_len = len;
   if (info->open_offset > info->size) return 0;
   if (info->open_offset + len > info->size) write_len = info->size - info->open_offset;
   ramdisk_write(buf, info->disk_offset + info->open_offset, write_len);

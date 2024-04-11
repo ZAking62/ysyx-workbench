@@ -1,6 +1,7 @@
 #include <common.h>
 #include "syscall.h"
 #include "fs.h"
+#include <sys/time.h>
 
 static void strace(Context *c){
   Log("System call trace\nirqtype = %d syscalltype = %d arg1 = %d arg2 = %d arg3 = %d ret = %d",
@@ -18,14 +19,6 @@ void sys_read(Context *c){
 }
 
 void sys_write(Context *c){
-  if (c->GPR2 == 1 || c->GPR2 == 2) {
-    for (size_t i = 0; i < c->GPR4; ++i){
-      putch(*((char *)(c->GPR3) + i));
-    }
-    c->GPRx = c->GPR4;
-    return;
-  }
-  
   int ret = fs_write(c->GPR2, (void *)c->GPR3, c->GPR4);
   c->GPRx = ret;
 }
@@ -49,6 +42,13 @@ void sys_lseek(Context *c){
   c->GPRx = ret;
 }
 
+void sys_gettimeofday(Context* c){
+  struct timeval *tv = (struct timeval *)(c->GPR2);
+  uint64_t time = io_read(AM_TIMER_UPTIME).us;
+  tv->tv_sec = (time / 1000000);
+  tv->tv_usec = (time % 1000000);
+  c->GPRx = 0;
+}
 
 void do_syscall(Context *c) {
   uintptr_t a[4];
@@ -94,6 +94,11 @@ void do_syscall(Context *c) {
       Log("SYS_lseek");
       strace(c);
       sys_lseek(c);
+      break;
+    case SYS_gettimeofday:
+      Log("SYS_gettimeofday");
+      strace(c);
+      sys_gettimeofday(c);
       break;
     default: panic("Unhandled syscall ID = %d", a[0]);
   }
