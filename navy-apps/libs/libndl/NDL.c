@@ -8,6 +8,10 @@
 static int evtdev = -1;
 static int fbdev = -1;
 static int screen_w = 0, screen_h = 0;
+//画布大小
+static int canvas_w = 0, canvas_h = 0;
+//相对于屏幕左上角的画布位置坐标
+static int canvas_x = 0, canvas_y = 0;
 
 uint32_t NDL_GetTicks() {
   struct timeval tv;
@@ -15,11 +19,12 @@ uint32_t NDL_GetTicks() {
   return tv.tv_usec / 1000 + tv.tv_sec * 1000;
 }
 
-// 读出一条事件信息, 将其写入`buf`中, 最长写入`len`字节
+// 读出一条事件信息到buf中, 最长len字节
 int NDL_PollEvent(char *buf, int len) {
-
-  //成功1
-  return 0;
+  int fd = open("/dev/events", 0, 0);
+  int ret = read(fd, buf, len);
+  close(fd);
+  return ret == 0 ? 0 : 1;
 }
 
 void NDL_OpenCanvas(int *w, int *h) {
@@ -43,6 +48,12 @@ void NDL_OpenCanvas(int *w, int *h) {
 }
 
 void NDL_DrawRect(uint32_t *pixels, int x, int y, int w, int h) {
+  int fd = open("/dev/fb", 0, 0);
+  for (int i = 0; i < h && y + i < canvas_h; ++i) {
+    lseek(fd, ((y + canvas_y + i) * screen_w + (x + canvas_x)) * 4, SEEK_SET);
+    write(fd, pixels + i * w, 4 * (w < canvas_w - x ? w : canvas_w - x));
+  }
+  close(fd);
 }
 
 void NDL_OpenAudio(int freq, int channels, int samples) {
