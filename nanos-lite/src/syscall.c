@@ -2,7 +2,7 @@
 #include "syscall.h"
 #include "fs.h"
 #include <sys/time.h>
-#define STRACE
+//#define STRACE
 
 #ifdef STRACE
 static void strace(Context *c){
@@ -94,7 +94,7 @@ void do_syscall(Context *c) {
       sys_lseek(c);
       break;
     case SYS_gettimeofday:
-      //Log("SYS_gettimeofday");
+      // Log("SYS_gettimeofday");
       sys_gettimeofday(c);
       break;
     default: panic("Unhandled syscall ID = %d", a[0]);

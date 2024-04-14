@@ -31,7 +31,6 @@ size_t invalid_write(const void *buf, size_t offset, size_t len) {
 }
 
 /* This is the information about all files in disk. */
-//为了记录ramdisk中各个文件的名字和大小, 我们还需要一张"文件记录表"
 //文件数目是固定的, 我们可以简单地把文件记录表的下标作为相应文件的文件描述符返回给用户程序
 static Finfo file_table[] __attribute__((used)) = {
   [FD_STDIN]  = {"stdin", 0, 0, invalid_read, invalid_write},
@@ -46,6 +45,7 @@ static Finfo file_table[] __attribute__((used)) = {
 void init_fs() {
   // TODO: initialize the size of /dev/fb
   AM_GPU_CONFIG_T ev = io_read(AM_GPU_CONFIG);
+  Log("width = %d, height = %d", ev.width, ev.height);
   file_table[FD_FB].size = ev.width * ev.height * sizeof(uint32_t);
 }
 

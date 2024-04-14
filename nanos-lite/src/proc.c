@@ -26,9 +26,8 @@ void init_proc() {
 
   Log("Initializing processes...");
 
-  // load program here
-  //只需要修改传入naive_uload()函数的文件名即可
-	naive_uload(NULL, "/bin/event-test");
+  // load program here 修改传入文件名
+	naive_uload(NULL, "/bin/bmp-test");
 }
 
 Context* schedule(Context *prev) {
