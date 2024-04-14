@@ -2,7 +2,7 @@
 #include "syscall.h"
 #include "fs.h"
 #include <sys/time.h>
-//#define STRACE
+#define STRACE
 
 #ifdef STRACE
 static void strace(Context *c){
