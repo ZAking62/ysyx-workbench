@@ -99,14 +99,14 @@ void NDL_OpenCanvas(int *w, int *h) {
  
   screen_w = width;
   screen_h = height;
-if (*w == 0 && *h == 0) {
-    *w = screen_w;
-    *h = screen_h;
-  }
-  canvas_w = *w;
-  canvas_h = *h;
-  canvas_x=(screen_w - canvas_w) / 2;
-  canvas_y=(screen_h - canvas_h) / 2;
+// if (*w == 0 && *h == 0) {
+//     *w = screen_w;
+//     *h = screen_h;
+//   }
+//   canvas_w = *w;
+//   canvas_h = *h;
+//   canvas_x=(screen_w - canvas_w) / 2;
+//   canvas_y=(screen_h - canvas_h) / 2;
   if (getenv("NWM_APP")) {
     int fbctl = 4;
     fbdev = 5;
