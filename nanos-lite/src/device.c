@@ -50,3 +50,4 @@ void init_device() {
   Log("Initializing devices...");
   ioe_init();
 }
+
