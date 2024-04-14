@@ -64,12 +64,12 @@ void NDL_OpenCanvas(int *w, int *h) {
 // 向画布`(x, y)`坐标处绘制`w*h`的矩形图像, 并将该绘制区域同步到屏幕上
 // 图像像素按行优先方式存储在`pixels`中, 每个像素用32位整数以`00RRGGBB`的方式描述颜色
 void NDL_DrawRect(uint32_t *pixels, int x, int y, int w, int h) {
-  int fd = open("/dev/fb", 0, 0);
-  for (int i = 0; i < h && y + i < canvas_h; ++i) {
-    lseek(fd, ((y + canvas_y + i) * screen_w + (x + canvas_x)) * 4, SEEK_SET);
-    write(fd, pixels + i * w, 4 * (w < canvas_w - x ? w : canvas_w - x));
-  }
-  close(fd);
+  // int fd = open("/dev/fb", 0, 0);
+  // for (int i = 0; i < h && y + i < canvas_h; ++i) {
+  //   lseek(fd, ((y + canvas_y + i) * screen_w + (x + canvas_x)) * 4, SEEK_SET);
+  //   write(fd, pixels + i * w, 4 * (w < canvas_w - x ? w : canvas_w - x));
+  // }
+  // close(fd);
 }
 
 void NDL_OpenAudio(int freq, int channels, int samples) {
@@ -87,61 +87,61 @@ int NDL_QueryAudio() {
 }
 
 int NDL_Init(uint32_t flags) {
-  int buf_size = 1024; 
-  char * buf = (char *)malloc(buf_size * sizeof(char));
-  int fd = open("/proc/dispinfo", 0, 0);
-  int ret = read(fd, buf, buf_size);
-  assert(ret < buf_size); // to be cautious...
-  assert(close(fd) == 0);
+//   int buf_size = 1024; 
+//   char * buf = (char *)malloc(buf_size * sizeof(char));
+//   int fd = open("/proc/dispinfo", 0, 0);
+//   int ret = read(fd, buf, buf_size);
+//   assert(ret < buf_size); // to be cautious...
+//   assert(close(fd) == 0);
  
-  int i = 0;
-  int width = 0, height = 0;
-//使用 strncmp 函数检查字符串 "WIDTH" 是否位于 buf 中 i 处开始的位置，以确保文件内容的格式正确。
-  assert(strncmp(buf + i, "WIDTH", 5) == 0);
-  //这一行将 i 增加 5，以跳过字符串 "WIDTH"。
-  i += 5;
-  for (; i < buf_size; ++i) {
-      if (buf[i] == ':') { i++; break; }
-      assert(buf[i] == ' ');
-  }
-  for (; i < buf_size; ++i) {
-    //检查当前字符是否是数字字符。如果是，它跳出循环以开始解析宽度值。
-      if (buf[i] >= '0' && buf[i] <= '9') break;
-      assert(buf[i] == ' ');
-  }
-  for (; i < buf_size; ++i) {
+//   int i = 0;
+//   int width = 0, height = 0;
+// //使用 strncmp 函数检查字符串 "WIDTH" 是否位于 buf 中 i 处开始的位置，以确保文件内容的格式正确。
+//   assert(strncmp(buf + i, "WIDTH", 5) == 0);
+//   //这一行将 i 增加 5，以跳过字符串 "WIDTH"。
+//   i += 5;
+//   for (; i < buf_size; ++i) {
+//       if (buf[i] == ':') { i++; break; }
+//       assert(buf[i] == ' ');
+//   }
+//   for (; i < buf_size; ++i) {
+//     //检查当前字符是否是数字字符。如果是，它跳出循环以开始解析宽度值。
+//       if (buf[i] >= '0' && buf[i] <= '9') break;
+//       assert(buf[i] == ' ');
+//   }
+//   for (; i < buf_size; ++i) {
     
-      if (buf[i] >= '0' && buf[i] <= '9') {
-        //检查当前字符是否是数字字符。如果是，它将当前字符的数字值添加到 width 变量中。
-          width = width * 10 + buf[i] - '0';
-      } else {
-          break;
-      }
-  }
-  assert(buf[i++] == '\n');
+//       if (buf[i] >= '0' && buf[i] <= '9') {
+//         //检查当前字符是否是数字字符。如果是，它将当前字符的数字值添加到 width 变量中。
+//           width = width * 10 + buf[i] - '0';
+//       } else {
+//           break;
+//       }
+//   }
+//   assert(buf[i++] == '\n');
  
-  assert(strncmp(buf + i, "HEIGHT", 6) == 0);
-  i += 6;
-  for (; i < buf_size; ++i) {
-      if (buf[i] == ':') { i++; break; }
-      assert(buf[i] == ' ');
-  }
-  for (; i < buf_size; ++i) {
-      if (buf[i] >= '0' && buf[i] <= '9') break;
-      assert(buf[i] == ' ');
-  }
-  for (; i < buf_size; ++i) {
-      if (buf[i] >= '0' && buf[i] <= '9') {
-          height = height * 10 + buf[i] - '0';
-      } else {
-          break;
-      }
-  }
+//   assert(strncmp(buf + i, "HEIGHT", 6) == 0);
+//   i += 6;
+//   for (; i < buf_size; ++i) {
+//       if (buf[i] == ':') { i++; break; }
+//       assert(buf[i] == ' ');
+//   }
+//   for (; i < buf_size; ++i) {
+//       if (buf[i] >= '0' && buf[i] <= '9') break;
+//       assert(buf[i] == ' ');
+//   }
+//   for (; i < buf_size; ++i) {
+//       if (buf[i] >= '0' && buf[i] <= '9') {
+//           height = height * 10 + buf[i] - '0';
+//       } else {
+//           break;
+//       }
+//   }
  
-  free(buf);
+//   free(buf);
  
-  screen_w = width;
-  screen_h = height;
+//   screen_w = width;
+//   screen_h = height;
 
   
   if (getenv("NWM_APP")) {
