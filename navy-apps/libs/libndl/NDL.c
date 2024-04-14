@@ -34,6 +34,7 @@ int NDL_PollEvent(char *buf, int len) {
 // 打开一张(*w) X (*h)的画布
 // 如果*w和*h均为0, 则将系统全屏幕作为画布, 并将*w和*h分别设为系统屏幕的大小
 void NDL_OpenCanvas(int *w, int *h) {
+  printf("wid = %d, hei = %d\n", screen_w, screen_h);
   if (*w == 0 && *h == 0) {
     *w = screen_w;
     *h = screen_h;
@@ -94,8 +95,8 @@ int NDL_Init(uint32_t flags) {
   int fd = open("/proc/dispinfo", 0, 0);
   int ret = read(fd, buf, buf_size);
   close(fd);
-  printf("%s\n", buf);
-  // sscanf(buf, "WIDTH:%d\nHEIGHT:%d\n", screen_h, screen_w);
+  // printf("%s\n", buf);
+  sscanf(buf, "WIDTH:%d\nHEIGHT:%d\n", &screen_h, &screen_w);
 //   int i = 0;
 //   int width = 0, height = 0;
 // //使用 strncmp 函数检查字符串 "WIDTH" 是否位于 buf 中 i 处开始的位置，以确保文件内容的格式正确。
