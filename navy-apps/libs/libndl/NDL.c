@@ -26,7 +26,10 @@ int NDL_PollEvent(char *buf, int len) {
   int fd = open("/dev/events", 0, 0);
   int ret = read(fd, buf, len);
   close(fd);
-  return ret == 0 ? 0 : 1;
+  if(ret == 0){
+    return 0;
+  }
+  return 1;
 }
 
 // 打开一张(*w) X (*h)的画布

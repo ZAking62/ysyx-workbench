@@ -25,6 +25,7 @@ size_t serial_write(const void *buf, size_t offset, size_t len) {
 size_t events_read(void *buf, size_t offset, size_t len) {
   AM_INPUT_KEYBRD_T t = io_read(AM_INPUT_KEYBRD);
   if(t.keycode != 0){
+    //返回写入的实际长度,,,,ddd
     return snprintf((char *)buf, len, "%s %s\n", t.keydown ? "kd" : "ku", keyname[t.keycode]);
   }
   return 0;
