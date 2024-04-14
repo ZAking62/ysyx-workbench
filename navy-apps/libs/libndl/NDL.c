@@ -30,6 +30,7 @@ int NDL_PollEvent(char *buf, int len) {
   return 1;
 }
 
+// 在NDL中读出这个文件的内容, 从中解析出屏幕大小
 // 打开一张(*w) X (*h)的画布
 // 如果*w和*h均为0, 则将系统全屏幕作为画布, 并将*w和*h分别设为系统屏幕的大小
 void NDL_OpenCanvas(int *w, int *h) {
@@ -89,12 +90,12 @@ int NDL_QueryAudio() {
 int NDL_Init(uint32_t flags) {
 
   int buf_size = 1024; 
-  char * buf = (char *)malloc(buf_size * sizeof(char));
+  char *buf = (char *)malloc(buf_size * sizeof(char));
   int fd = open("/proc/dispinfo", 0, 0);
   int ret = read(fd, buf, buf_size);
-  assert(ret < buf_size); // to be cautious...
-  assert(close(fd) == 0);
- 
+  close(fd);
+  sscanf(buf, "WIDTH:%d\nHEIGHT:%d\n", screen_h, screen_w);
+  printf("WIDTH:%d\nHEIGHT:%d\n", screen_h, screen_w);
 //   int i = 0;
 //   int width = 0, height = 0;
 // //使用 strncmp 函数检查字符串 "WIDTH" 是否位于 buf 中 i 处开始的位置，以确保文件内容的格式正确。
