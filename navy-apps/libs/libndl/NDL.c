@@ -99,14 +99,14 @@ void NDL_OpenCanvas(int *w, int *h) {
  
   screen_w = width;
   screen_h = height;
-// if (*w == 0 && *h == 0) {
-//     *w = screen_w;
-//     *h = screen_h;
-//   }
-//   canvas_w = *w;
-//   canvas_h = *h;
-//   canvas_x=(screen_w - canvas_w) / 2;
-//   canvas_y=(screen_h - canvas_h) / 2;
+  if (*w == 0 && *h == 0) {
+      *w = screen_w;
+      *h = screen_h;
+    }
+    canvas_w = *w;
+    canvas_h = *h;
+    canvas_x=(screen_w - canvas_w) / 2;
+    canvas_y=(screen_h - canvas_h) / 2;
   if (getenv("NWM_APP")) {
     int fbctl = 4;
     fbdev = 5;
@@ -129,18 +129,18 @@ void NDL_OpenCanvas(int *w, int *h) {
 // 向画布`(x, y)`坐标处绘制`w*h`的矩形图像, 并将该绘制区域同步到屏幕上
 // 图像像素按行优先方式存储在`pixels`中, 每个像素用32位整数以`00RRGGBB`的方式描述颜色
 void NDL_DrawRect(uint32_t *pixels, int x, int y, int w, int h) {
-  // int fd = open("/dev/fb", 0, 0);
-  // for (int i = 0; i < h && y + i < canvas_h; ++i) {
-  //   lseek(fd, ((y + canvas_y + i) * screen_w + (x + canvas_x)) * 4, SEEK_SET);
-  //   write(fd, pixels + i * w, 4 * (w < canvas_w - x ? w : canvas_w - x));
-  // }
-  // close(fd);
-  int graphics = open("/dev/fb", O_RDWR);
-  
-  for (int i = 0; i < h; ++i){
-    lseek(graphics, ((canvas_y + y + i) * screen_w + (canvas_x + x)) * sizeof(uint32_t), SEEK_SET);
-    ssize_t s = write(graphics, pixels + w * i, w * sizeof(uint32_t));
+  int fd = open("/dev/fb", 0, 0);
+  for (int i = 0; i < h && y + i < canvas_h; ++i) {
+    lseek(fd, ((y + canvas_y + i) * screen_w + (x + canvas_x)) * 4, SEEK_SET);
+    write(fd, pixels + i * w, 4 * (w < canvas_w - x ? w : canvas_w - x));
   }
+  close(fd);
+  // int graphics = open("/dev/fb", O_RDWR);
+  
+  // for (int i = 0; i < h; ++i){
+  //   lseek(graphics, ((canvas_y + y + i) * screen_w + (canvas_x + x)) * sizeof(uint32_t), SEEK_SET);
+  //   ssize_t s = write(graphics, pixels + w * i, w * sizeof(uint32_t));
+  // }
 }
 
 void NDL_OpenAudio(int freq, int channels, int samples) {
