@@ -59,6 +59,7 @@ int fs_open(const char *pathname, int flags, int mode){
   }
   panic("file %s not found", pathname);
 }
+
 size_t fs_read(int fd, void *buf, size_t len){
   Finfo *info = &file_table[fd];
   if(info->read){
