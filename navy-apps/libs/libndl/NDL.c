@@ -94,8 +94,8 @@ int NDL_Init(uint32_t flags) {
   int fd = open("/proc/dispinfo", 0, 0);
   int ret = read(fd, buf, buf_size);
   close(fd);
-  sscanf(buf, "WIDTH:%d\nHEIGHT:%d\n", screen_h, screen_w);
-  printf("WIDTH:%d\nHEIGHT:%d\n", screen_h, screen_w);
+  
+  // sscanf(buf, "WIDTH:%d\nHEIGHT:%d\n", screen_h, screen_w);
 //   int i = 0;
 //   int width = 0, height = 0;
 // //使用 strncmp 函数检查字符串 "WIDTH" 是否位于 buf 中 i 处开始的位置，以确保文件内容的格式正确。
