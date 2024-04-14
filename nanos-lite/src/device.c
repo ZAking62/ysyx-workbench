@@ -31,7 +31,7 @@ size_t events_read(void *buf, size_t offset, size_t len) {
 size_t dispinfo_read(void *buf, size_t offset, size_t len) {
   AM_GPU_CONFIG_T ev = io_read(AM_GPU_CONFIG);
   Log("width = %d, height = %d", ev.width, ev.height);
-  return sprintf((char *)buf, "WIDTH:%d\nHEIGHT:%d\n", ev.width, ev.height);
+  return snprintf((char *)buf, len, "WIDTH:%d\nHEIGHT:%d\n", ev.width, ev.height);
 }
 
 size_t fb_write(const void *buf, size_t offset, size_t len) {
