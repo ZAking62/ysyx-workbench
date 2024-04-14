@@ -37,7 +37,7 @@ void NDL_OpenCanvas(int *w, int *h) {
   int buf_size = 1024; 
   char * buf = (char *)malloc(buf_size * sizeof(char));
   int ret = read(fd, buf, buf_size);
-  printf("%s\n" ,buf);;
+  printf("%s\n" ,buf);
   close(fd);
   if (*w == 0 && *h == 0) {
     *w = screen_w;
