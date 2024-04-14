@@ -33,6 +33,12 @@ int NDL_PollEvent(char *buf, int len) {
 // 打开一张(*w) X (*h)的画布
 // 如果*w和*h均为0, 则将系统全屏幕作为画布, 并将*w和*h分别设为系统屏幕的大小
 void NDL_OpenCanvas(int *w, int *h) {
+  int fd = open("/proc/dispinfo", 0, 0);
+  int buf_size = 1024; 
+  char * buf = (char *)malloc(buf_size * sizeof(char));
+  int ret = read(fd, buf, buf_size);
+  printf("%s\n" ,buf);;
+  close(fd);
   if (*w == 0 && *h == 0) {
     *w = screen_w;
     *h = screen_h;
@@ -87,6 +93,7 @@ int NDL_QueryAudio() {
 }
 
 int NDL_Init(uint32_t flags) {
+
 //   int buf_size = 1024; 
 //   char * buf = (char *)malloc(buf_size * sizeof(char));
 //   int fd = open("/proc/dispinfo", 0, 0);
