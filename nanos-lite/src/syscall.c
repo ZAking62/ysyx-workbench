@@ -3,10 +3,10 @@
 #include "fs.h"
 #include <sys/time.h>
 
-static void strace(Context *c){
-  Log("System call trace\nirqtype = %d syscalltype = %d arg1 = %d arg2 = %d arg3 = %d ret = %d",
-      c->mcause, c->GPR1, c->GPR2, c->GPR3, c->GPR4, c->GPRx);
-}
+// static void strace(Context *c){
+//   Log("System call trace\nirqtype = %d syscalltype = %d arg1 = %d arg2 = %d arg3 = %d ret = %d",
+//       c->mcause, c->GPR1, c->GPR2, c->GPR3, c->GPR4, c->GPRx);
+// }
 
 void sys_yield(Context *c){
   yield();
@@ -54,50 +54,42 @@ void do_syscall(Context *c) {
   uintptr_t a[4];
   a[0] = c->GPR1; //a7
 	//参考应用的系统调用号
+  //strace(c);
   switch (a[0]) {
     case SYS_exit:
-			Log("SYS_exit");
-			strace(c);
+			// Log("SYS_exit");
 			halt(0);
 			break;
     case SYS_yield:
-			Log("SYS_yield");
-			strace(c);
+			// Log("SYS_yield");
 			sys_yield(c);
 			break;
 		case SYS_write:
-			Log("SYS_write");
-			strace(c);
+			// Log("SYS_write");
 			sys_write(c);
 			break;
     case SYS_brk:
-      Log("SYS_brk");
-      strace(c);
+      // Log("SYS_brk");
       sys_brk(c);
       break;
     case SYS_open:
-      Log("SYS_open");
-      strace(c);
+      // Log("SYS_open");
       sys_open(c);
       break;
     case SYS_close:
-      Log("SYS_close");
-      strace(c);
+      // Log("SYS_close");
       sys_close(c);
       break;
     case SYS_read:
-      Log("SYS_read");   
-      strace(c);   
+      // Log("SYS_read");   
       sys_read(c);
       break;
     case SYS_lseek:
-      Log("SYS_lseek");
-      strace(c);
+      // Log("SYS_lseek");
       sys_lseek(c);
       break;
     case SYS_gettimeofday:
       //Log("SYS_gettimeofday");
-      //strace(c);
       sys_gettimeofday(c);
       break;
     default: panic("Unhandled syscall ID = %d", a[0]);
