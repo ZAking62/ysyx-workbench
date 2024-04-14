@@ -10,7 +10,7 @@
   [AM_KEY_##key] = #key,
 
 static const char *keyname[256] __attribute__((used)) = {
-  [AM_KEY_NONE] = "NONE",
+  // [AM_KEY_NONE] = "NONE",
   AM_KEYS(NAME)
 };
 

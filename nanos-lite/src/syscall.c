@@ -3,10 +3,10 @@
 #include "fs.h"
 #include <sys/time.h>
 
-// static void strace(Context *c){
-//   Log("System call trace\nirqtype = %d syscalltype = %d arg1 = %d arg2 = %d arg3 = %d ret = %d",
-//       c->mcause, c->GPR1, c->GPR2, c->GPR3, c->GPR4, c->GPRx);
-// }
+static void strace(Context *c){
+  Log("System call trace\nirqtype = %d syscalltype = %d arg1 = %d arg2 = %d arg3 = %d ret = %d",
+      c->mcause, c->GPR1, c->GPR2, c->GPR3, c->GPR4, c->GPRx);
+}
 
 void sys_yield(Context *c){
   yield();
@@ -54,7 +54,7 @@ void do_syscall(Context *c) {
   uintptr_t a[4];
   a[0] = c->GPR1; //a7
 	//参考应用的系统调用号
-  //strace(c);
+  strace(c);
   switch (a[0]) {
     case SYS_exit:
 			// Log("SYS_exit");
