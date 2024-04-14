@@ -2,12 +2,14 @@
 #include "syscall.h"
 #include "fs.h"
 #include <sys/time.h>
-#define STRACE
+//#define STRACE
 
+#ifdef STRACE
 static void strace(Context *c){
   Log("System call trace\nirqtype = %d syscalltype = %d arg1 = %d arg2 = %d arg3 = %d ret = %d",
       c->mcause, c->GPR1, c->GPR2, c->GPR3, c->GPR4, c->GPRx);
 }
+#endif
 
 void sys_yield(Context *c){
   yield();
