@@ -39,7 +39,7 @@ size_t fb_write(const void *buf, size_t offset, size_t len) {
   int width = ev.width;
 
   offset /= 4;
-  len /= 4;
+  // len /= 4;
   int y = offset / width;
   int x = offset - y * width;
  
