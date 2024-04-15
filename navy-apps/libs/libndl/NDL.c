@@ -30,19 +30,20 @@ int NDL_PollEvent(char *buf, int len) {
   return 1;
 }
 
-// 在NDL中读出这个文件的内容, 从中解析出屏幕大小
-// 打开一张(*w) X (*h)的画布
-// 如果*w和*h均为0, 则将系统全屏幕作为画布, 并将*w和*h分别设为系统屏幕的大小
 void NDL_OpenCanvas(int *w, int *h) {
-  printf("NDL get width = %d, height = %d\n", screen_w, screen_h);
+  printf("NDL get screen width = %d, height = %d\n", screen_w, screen_h);
+  
+  //如果*w和*h均为0, 则将系统全屏幕作为画布, 并将*w和*h分别设为系统屏幕的大小
   if (*w == 0 && *h == 0) {
     *w = screen_w;
     *h = screen_h;
   }
+  // 打开一张(*w) X (*h)的画布
   canvas_w = *w;
   canvas_h = *h;
-  canvas_x=(screen_w - canvas_w) / 2;
-  canvas_y=(screen_h - canvas_h) / 2;
+  printf("canvas width = %d, height = %d\n", canvas_w, canvas_h);
+  // canvas_x=(screen_w - canvas_w) / 2;
+  // canvas_y=(screen_h - canvas_h) / 2;
 
   if (getenv("NWM_APP")) {
     int fbctl = 4;
