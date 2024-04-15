@@ -38,13 +38,15 @@ size_t fb_write(const void *buf, size_t offset, size_t len) {
   AM_GPU_CONFIG_T ev = io_read(AM_GPU_CONFIG);
   int width = ev.width;
 
+  // buf = pixels + i * w
+  // offset = ((y + canvas_y + i) * screen_w + (x + canvas_x)) * 4
+  // len = 4 * (w < canvas_w - x ? w : canvas_w - x)
   offset /= 4;
   len /= 4;
   int y = offset / width;
   int x = offset - y * width;
-  
+
   io_write(AM_GPU_FBDRAW, x, y, (void *)buf, len, 1, true);
- 
   return len;
 }
 
