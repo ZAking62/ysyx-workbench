@@ -62,7 +62,7 @@ int fs_open(const char *pathname, int flags, int mode){
 size_t fs_read(int fd, void *buf, size_t len){
   Finfo *info = &file_table[fd];
   if(info->read){
-    return info->read(buf, 0, len);
+    return info->read(buf, info->open_offset, len);
   }
   if (info->open_offset > info->size) return 0;
   size_t read_len;
@@ -76,7 +76,7 @@ size_t fs_write(int fd, const void *buf, size_t len){
 
   Finfo *info = &file_table[fd];
   if(info->write){
-    return info->write(buf, 0, len);
+    return info->write(buf, info->open_offset, len);
   }
     size_t write_len = len;
   if (info->open_offset > info->size) return 0;
