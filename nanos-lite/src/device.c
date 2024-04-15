@@ -40,7 +40,7 @@ size_t fb_write(const void *buf, size_t offset, size_t len) {
   printf("width = %d", width);
   offset /= 4;
   len /= 4;
- 
+  printf("offset = %d len = %d", offset, len);  
   int y = offset / width;
   int x = offset - y * width;
  
