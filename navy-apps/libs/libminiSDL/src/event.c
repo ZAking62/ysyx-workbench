@@ -28,8 +28,9 @@ static int inline read_keyinfo(uint8_t *type, uint8_t *sym){
     return 0;
   }
   printf("%s\n", key_buf);
-  key_action = strtok(key_buf, " ");
-  key_key = strtok(NULL, " ");
+  // key_action = strtok(key_buf, " ");
+  // key_key = strtok(NULL, " ");
+  sscanf(key_buf, "%[^,],%s", key_action, key_key);
   printf("key_action=%s    key_key = %s", key_action, key_key);
   key_action = key_buf;
   int i;
