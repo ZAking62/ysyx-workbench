@@ -11,8 +11,7 @@ static const char *keyname[] = {
   _KEYS(keyname)
 };
 
-static uint8_t key_state[sizeof(keyname) / sizeof(keyname[0])] = {0};
-static char key_buf[64], *key_action, *key_key;
+// static uint8_t key_state[sizeof(keyname) / sizeof(keyname[0])] = {0};
 
 int SDL_PushEvent(SDL_Event *ev) {
   return 0;
@@ -23,6 +22,7 @@ int SDL_PollEvent(SDL_Event *ev) {
 }
 
 static int inline read_keyinfo(uint8_t *type, uint8_t *sym){
+  char *key_buf, *key_action, *key_key;
   int ret = NDL_PollEvent(key_buf, sizeof(key_buf));
   if (ret == 0){
     return 0;
