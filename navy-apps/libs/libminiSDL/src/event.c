@@ -64,15 +64,15 @@ int SDL_WaitEvent(SDL_Event *event) {
   event->type = type;
   event->key.keysym.sym = sym;
 
-  switch(type){
-    case SDL_KEYDOWN:
-      key_state[sym] = 1;
-      break;
+  // switch(type){
+  //   case SDL_KEYDOWN:
+  //     key_state[sym] = 1;
+  //     break;
     
-    case SDL_KEYUP:
-      key_state[sym] = 0;
-      break;
-  }
+  //   case SDL_KEYUP:
+  //     key_state[sym] = 0;
+  //     break;
+  // }
   return 1;
 }
 
