@@ -31,12 +31,11 @@ static int inline read_keyinfo(uint8_t *type, uint8_t *sym){
   key_action = strtok(key_buf, " ");
   key_key = strtok(NULL, " ");
   int i = 0;
-  while(key_key[i] != '\0'){
+  for(int i = 0; key_key[i] != '\0'; i++){
     if(key_key[i] == '\n'){
       key_key[i] = '\0';
       break;
     }
-    i++;
   }
   //printf("key_action = %s, key_key = %s\n", key_action, key_key);
 
@@ -47,7 +46,6 @@ static int inline read_keyinfo(uint8_t *type, uint8_t *sym){
   }
 
   for (int i = 0; i < sizeof(keyname) / sizeof(char *); ++i){
-    //剪枝掉很多
     if (key_key[0] == keyname[i][0] && strcmp(key_key, keyname[i]) == 0){
       *sym = i;
       printf("%d sym = %d\n", *type, *sym);
