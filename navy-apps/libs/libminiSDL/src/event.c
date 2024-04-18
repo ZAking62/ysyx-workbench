@@ -11,8 +11,6 @@ static const char *keyname[] = {
   _KEYS(keyname)
 };
 
-// static uint8_t key_state[sizeof(keyname) / sizeof(keyname[0])] = {0};
-
 int SDL_PushEvent(SDL_Event *ev) {
   return 0;
 }
@@ -21,6 +19,7 @@ int SDL_PollEvent(SDL_Event *ev) {
   return 1;
 }
 
+// 从NDL中获取事件信息
 static int inline read_keyinfo(uint8_t *type, uint8_t *sym){
   char key_buf[64], *key_action, *key_key;
   int ret = NDL_PollEvent(key_buf, sizeof(key_buf));
@@ -53,7 +52,6 @@ static int inline read_keyinfo(uint8_t *type, uint8_t *sym){
 }
 
 // 它用于等待一个事件. 你需要将NDL中提供的事件封装成SDL事件返回给应用程序
-// If event is not NULL, the next event is removed from the queue and stored in that area.
 int SDL_WaitEvent(SDL_Event *event) {
   uint8_t type = 0, sym = 0;
 
@@ -63,7 +61,8 @@ int SDL_WaitEvent(SDL_Event *event) {
   
   event->type = type;
   event->key.keysym.sym = sym;
-
+  
+  // static uint8_t key_state[sizeof(keyname) / sizeof(keyname[0])] = {0};
   // switch(type){
   //   case SDL_KEYDOWN:
   //     key_state[sym] = 1;

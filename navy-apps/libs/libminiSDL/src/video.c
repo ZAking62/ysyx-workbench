@@ -4,7 +4,7 @@
 #include <string.h>
 #include <stdlib.h>
 
-static inline uint32_t translate_color(SDL_Color *color){
+uint32_t translate_color(SDL_Color *color){
   return (color->a << 24) | (color->r << 16) | (color->g << 8) | color->b;
 }
 
