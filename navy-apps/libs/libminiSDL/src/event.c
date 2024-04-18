@@ -31,7 +31,7 @@ static int inline read_keyinfo(uint8_t *type, uint8_t *sym){
   key_key = strtok(NULL, " ");
   int i = 0;
   while(key_key[i] != '\0'){
-    if(key_key[i] = '\n'){
+    if(key_key[i] == '\n'){
       key_key[i] = '\0';
       break;
     }
