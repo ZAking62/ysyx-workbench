@@ -32,6 +32,7 @@ typedef struct {
 } SDL_Palette;
 
 typedef struct {
+	// if the BitsPerPixel>8
 	SDL_Palette *palette;
 	uint8_t BitsPerPixel;
 	uint8_t BytesPerPixel;

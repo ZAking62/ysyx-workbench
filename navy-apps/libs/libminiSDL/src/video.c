@@ -16,39 +16,41 @@ void SDL_BlitSurface(SDL_Surface *src, SDL_Rect *srcrect, SDL_Surface *dst, SDL_
 void SDL_FillRect(SDL_Surface *dst, SDL_Rect *dstrect, uint32_t color) {
 }
 
+// 将画布中的指定矩形区域同步到屏幕上
 void SDL_UpdateRect(SDL_Surface *s, int x, int y, int w, int h) {
   if (s->format->BitsPerPixel == 32){
+    // If 'x', 'y', 'w' and 'h' are all 0, SDL_UpdateRect will update the entire screen
     if (w == 0 && h == 0 && x ==0 && y == 0){
-      //printf("%d %d\n", s->w, s->h);
       NDL_DrawRect((uint32_t *)s->pixels, 0, 0, s->w, s->h);
       return ;
     }
     
     uint32_t *pixels = malloc(w * h * sizeof(uint32_t));
-    assert(pixels);
     uint32_t *src = (uint32_t *)s->pixels;
     for (int i = 0; i < h; ++i){
       memcpy(&pixels[i * w], &src[(y + i) * s->w + x], sizeof(uint32_t) * w);
     }
+    
     NDL_DrawRect(pixels, x, y, w, h);
 
     free(pixels);
   }else if(s->format->BitsPerPixel == 8){
+  // to determine the color of a pixel in a 8-bit surface, we read the color index from surface->pixels 
+  // and we use that index to read the SDL_Color structure from surface->format->palette->colors
     if (w == 0 && h == 0 && x ==0 && y == 0){
-      w = s->w; h = s->h;
-      x = 0;    y = 0;
+      w = s->w; 
+      h = s->h;
     }
 
     uint32_t *pixels = malloc(w * h * sizeof(uint32_t));
-    assert(pixels);
     uint8_t *src = (uint8_t *)s->pixels;
 
     for (int i = 0; i < h; ++i){
       for (int j = 0; j < w; ++j){
         pixels[i * w + j] = translate_color(&s->format->palette->colors[src[(y + i) * s->w + x + j]]);
-        //pixels[i * w + j] = s->format->palette->colors[src[(y + i) * s->w + x + j]].val;
       }
     }
+
     NDL_DrawRect(pixels, x, y, w, h);
 
     free(pixels);
