@@ -22,7 +22,7 @@ int SDL_PollEvent(SDL_Event *ev) {
 }
 
 static int inline read_keyinfo(uint8_t *type, uint8_t *sym){
-  char *key_buf, *key_action, *key_key;
+  char key_buf[64], *key_action, *key_key;
   int ret = NDL_PollEvent(key_buf, sizeof(key_buf));
   if (ret == 0){
     return 0;
