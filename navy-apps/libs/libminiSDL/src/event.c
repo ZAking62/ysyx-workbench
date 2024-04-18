@@ -29,7 +29,19 @@ static int inline read_keyinfo(uint8_t *type, uint8_t *sym){
   }
   key_action = strtok(key_buf, " ");
   key_key = strtok(NULL, " ");
-  //printf("key_action = %s, key_key = %s", key_action, key_key);
+  printf("key_action = %s, key_key = %s", key_action, key_key);
+  key_action = key_buf;
+  int i;
+  for (i = 0; key_buf[i] != ' '; i++){}
+  key_buf[i] = '\0';
+  key_key = &key_buf[i + 1]; 
+  
+  //截断\n
+  for (i = 0;  key_key[i] != '\0' && key_key[i] != '\n'; i++){}
+  if (key_key[i] == '\n'){
+    key_key[i] = '\0';
+  }
+  printf("key_action = %s, key_key = %s", key_action, key_key);
   if (key_action[1] == 'd'){
     *type = SDL_KEYDOWN;
   }else{
@@ -40,7 +52,7 @@ static int inline read_keyinfo(uint8_t *type, uint8_t *sym){
     //剪枝掉很多
     if (key_key[0] == keyname[i][0] && strcmp(key_key, keyname[i]) == 0){
       *sym = i;
-      printf("type = %d sym = %d\n", *type, *sym);
+      //printf("%d %d\n", *type, *sym);
       return ret;
     }
   }
