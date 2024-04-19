@@ -27,7 +27,7 @@ void init_proc() {
   Log("Initializing processes...");
 
   // load program here 修改传入文件名
-	naive_uload(NULL, "/bin/bird");
+	naive_uload(NULL, "/bin/pal");
 }
 
 Context* schedule(Context *prev) {
