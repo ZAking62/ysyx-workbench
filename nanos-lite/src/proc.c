@@ -27,7 +27,7 @@ void init_proc() {
   Log("Initializing processes...");
 
   // load program here 修改传入文件名
-	naive_uload(NULL, "/bin/nterm");
+	naive_uload(NULL, "/bin/bird");
 }
 
 Context* schedule(Context *prev) {
