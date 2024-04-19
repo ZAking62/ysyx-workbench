@@ -8,12 +8,86 @@ static inline uint32_t translate_color(SDL_Color *color){
   return (color->a << 24) | (color->r << 16) | (color->g << 8) | color->b;
 }
 
+// 将一张画布中的指定矩形区域复制到另一张画布的指定位置
 void SDL_BlitSurface(SDL_Surface *src, SDL_Rect *srcrect, SDL_Surface *dst, SDL_Rect *dstrect) {
   assert(dst && src);
   assert(dst->format->BitsPerPixel == src->format->BitsPerPixel);
+  if (src->format->BitsPerPixel == 32){
+    uint32_t* src_pixels = (uint32_t*)src->pixels;
+    uint32_t* dst_pixels = (uint32_t*)dst->pixels;
+
+    int rect_w, rect_h, src_x, src_y, dst_x, dst_y;
+    // If srcrect is NULL, the entire surface is copied
+    if (srcrect){
+      rect_w = srcrect->w; rect_h = srcrect->h;
+      src_x = srcrect->x; src_y = srcrect->y; 
+    }else {
+      rect_w = src->w; rect_h = src->h;
+      src_x = 0; src_y = 0;
+    }
+    if (dstrect){
+      dst_x = dstrect->x, dst_y = dstrect->y;
+    }else {
+      dst_x = 0; dst_y = 0;
+    }
+    
+    for (int i = 0; i < rect_h; ++i){
+      for (int j = 0; j < rect_w; ++j){
+        dst_pixels[(dst_y + i) * dst->w + dst_x + j] = src_pixels[(src_y + i) * src->w + src_x + j];
+      }
+    }
+  }else if (src->format->BitsPerPixel == 8){
+    uint8_t* src_pixels = (uint8_t*)src->pixels;
+    uint8_t* dst_pixels = (uint8_t*)dst->pixels;
+
+    int rect_w, rect_h, src_x, src_y, dst_x, dst_y;
+    if (srcrect){
+      rect_w = srcrect->w; rect_h = srcrect->h;
+      src_x = srcrect->x; src_y = srcrect->y; 
+    }else {
+      rect_w = src->w; rect_h = src->h;
+      src_x = 0; src_y = 0;
+    }
+    if (dstrect){
+      dst_x = dstrect->x, dst_y = dstrect->y;
+    }else {
+      dst_x = 0; dst_y = 0;
+    }
+    
+    for (int i = 0; i < rect_h; ++i){
+      for (int j = 0; j < rect_w; ++j){
+        dst_pixels[(dst_y + i) * dst->w + dst_x + j] = src_pixels[(src_y + i) * src->w + src_x + j];
+      }
+    }
+  }else {
+    assert(0);
+  }
 }
 
+// 往画布的指定矩形区域中填充指定的颜色
 void SDL_FillRect(SDL_Surface *dst, SDL_Rect *dstrect, uint32_t color) {
+  uint32_t *pixels = (uint32_t *)dst->pixels;
+  int dst_w = dst->w;
+  int rect_h, rect_w, rect_x, rect_y;
+
+  // If dstrect is NULL, the whole surface will be filled with color
+  if (dstrect == NULL){
+    rect_w = dst->w;
+    rect_h = dst->h;
+    rect_x = 0;
+    rect_y = 0;
+  }else {
+    rect_w = dstrect->w;
+    rect_h = dstrect->h;
+    rect_x = dstrect->x;
+    rect_y = dstrect->y;
+  }
+
+  for (int i = 0; i < rect_h; ++i){
+    for (int j = 0; j < rect_w; ++j){
+      pixels[(rect_y + i) * dst_w + rect_x + j] = color;
+    }
+  }
 }
 
 // 将画布中的指定矩形区域同步到屏幕上
