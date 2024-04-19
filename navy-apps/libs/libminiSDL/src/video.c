@@ -25,6 +25,7 @@ void SDL_BlitSurface(SDL_Surface *src, SDL_Rect *srcrect, SDL_Surface *dst, SDL_
       rect_w = src->w; rect_h = src->h;
       src_x = 0; src_y = 0;
     }
+    // If dstrect is NULL, then the destination position (upper left corner) is (0, 0)
     if (dstrect){
       dst_x = dstrect->x, dst_y = dstrect->y;
     }else {

@@ -11,14 +11,6 @@ static const char *keyname[] = {
   _KEYS(keyname)
 };
 
-int SDL_PushEvent(SDL_Event *ev) {
-  return 0;
-}
-
-int SDL_PollEvent(SDL_Event *ev) {
-  return 1;
-}
-
 // 从NDL中获取事件信息
 static int inline read_keyinfo(uint8_t *type, uint8_t *sym){
   char key_buf[64], *key_action, *key_key;
@@ -49,6 +41,35 @@ static int inline read_keyinfo(uint8_t *type, uint8_t *sym){
       return ret;
     }
   }
+}
+
+int SDL_PushEvent(SDL_Event *ev) {
+  return 0;
+}
+
+// 它和SDL_WaitEvent()不同的是, 如果当前没有任何事件, 就会立即返回
+int SDL_PollEvent(SDL_Event *ev) {
+  uint8_t type = 0, sym = 0;
+
+  if (read_keyinfo(&type, &sym)){
+    ev->type = type;
+    ev->key.keysym.sym = sym;
+
+    // switch(type){
+    // case SDL_KEYDOWN:
+    //   key_state[sym] = 1;
+    //   //printf("%d Down\n", (int)sym);
+    //   break;
+    
+    // case SDL_KEYUP:
+    //   key_state[sym] = 0;
+    //   //printf("%d Up\n", (int)sym);
+    //   break;
+    // }
+  }else {
+    return 0;
+  }
+  return 1;
 }
 
 // 它用于等待一个事件. 你需要将NDL中提供的事件封装成SDL事件返回给应用程序
